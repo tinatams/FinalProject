@@ -2,7 +2,6 @@ import java.io.*;
 import java.net.*;
 
 public class GameStarter{
-    public static final int WORLDX, WORLDY;
     private GameFrame frame;
     private Socket theSocket;
 

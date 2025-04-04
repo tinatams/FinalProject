@@ -26,11 +26,11 @@ public class Player{
 
 
         skin = s;
-        spriteW = 16 * 3; // when game panel is made make these contants, tileSize * scale or just scaledTile
-        spriteH = 16 * 3;
+        spriteW = GameFrame.SCALED; 
+        spriteH = GameFrame.SCALED;
 
-        screenX = 400 - spriteW/2; //half the screen - the tileSize
-        screenY = 300 - spriteH;
+        screenX = GameFrame.WIDTH/2 - spriteW/2; 
+        screenY = GameFrame.HEIGHT/2 - spriteH;
 
         direction = IDLE;
         counter = 0;

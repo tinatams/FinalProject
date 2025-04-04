@@ -3,6 +3,13 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class GameFrame{
+    public static final int WIDTH = 1024;
+    public static final int HEIGHT = 768;
+    
+    public static final int PIXELRATIO = 16;
+    public static final int SCALED = PIXELRATIO * 3;
+    
+
     private JFrame frame;
     private JPanel cp;
     private GameCanvas canvas;
@@ -14,7 +21,7 @@ public class GameFrame{
         cp = (JPanel) frame.getContentPane();
         cp.setFocusable(true);
 
-        selectedPlayer = new Player("CamGreen", 9*48, 6*48);
+        selectedPlayer = new Player("CamGreen", 9*SCALED, 6*SCALED);
         canvas = new GameCanvas(data, selectedPlayer);
     }
 
@@ -27,7 +34,7 @@ public class GameFrame{
     }
 
     public void setUpGUI(){
-        frame.setSize(800, 600);
+        frame.setSize(WIDTH, HEIGHT);
         frame.setTitle("work please");
 
         cp.add(canvas);
