@@ -47,7 +47,7 @@ public class MapHandler{
 
             int row = 0, col = 0;
 
-            for (int tileIndex = 0; tileIndex < 155; tileIndex++) {
+            for (int tileIndex = 0; tileIndex < 13*17; tileIndex++) {
                 BufferedImage temp = bkgTileSource.getSubimage(col * spriteSize, row * spriteSize, spriteSize, spriteSize);
                 baseTiles[tileIndex] = temp;
 
