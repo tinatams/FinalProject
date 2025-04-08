@@ -28,7 +28,7 @@ public abstract class ButtonItem implements Collidable, Interactable{
 
     public void loadImage(){
         try {
-            BufferedImage buttonSprite = ImageIO.read(new File("./res/TilesetDungeon.png")); 
+            BufferedImage buttonSprite = ImageIO.read(new File("./res/tileSets/TilesetDungeon.png")); 
             int tileSize = 16;
 
             pressed = buttonSprite.getSubimage(0 * tileSize, 1 * tileSize, tileSize, tileSize);

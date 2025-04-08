@@ -10,6 +10,8 @@ public class Player implements Collidable{
     private int spriteW, spriteH, counter, version, direction;
     private String skin;
 
+    private int[][] collisionMap;
+
     public static final int IDLE = 0;
     public static final int UP = 1;
     public static final int LEFT = 2;
@@ -42,12 +44,13 @@ public class Player implements Collidable{
         sprites = new BufferedImage[5][2];
 
         inventory = new ArrayList<SuperItem>();
+
         setUpSprites();
     }
 
     public void setUpSprites(){
         try{
-            spriteSheet = ImageIO.read(new File(String.format("./res/%s.png",skin)));
+            spriteSheet = ImageIO.read(new File(String.format("./res/playerSkins/%s.png",skin)));
             int tileSize = 16;
             //idle
             sprites[0][0] = spriteSheet.getSubimage(0 * tileSize, 0 * tileSize, tileSize, tileSize);
@@ -97,7 +100,28 @@ public class Player implements Collidable{
         }
     }
 
+    public boolean cannotMove(){
+        hitBox = new Rectangle(worldX + 10, worldY + 10, spriteH-20, spriteW-10);
+        int worldXPos = hitBox.x/GameFrame.SCALED;
+        int worldX2Pos = (hitBox.x + hitBox.width)/GameFrame.SCALED;
+        int worldYPos = hitBox.y/GameFrame.SCALED;
+        int worldY2Pos = (hitBox.y + hitBox.height)/GameFrame.SCALED;
+
+        if (worldXPos < 0 || worldYPos < 0 || worldX2Pos < 0 || worldX2Pos > Map.maxColumn || worldY2Pos > Map.maxRow){
+            return true;
+        }
+            
+
+        if (collisionMap[worldXPos][worldYPos] == 0 || collisionMap[worldX2Pos][worldYPos] == 0 || collisionMap[worldXPos][worldYPos] == -2 || collisionMap[worldX2Pos][worldYPos] == -2|| collisionMap[worldXPos][worldY2Pos] == -2){
+            return true;
+        }
+        else 
+            return false;
+    }
+
     public void update(){
+        int origX = worldX, origY = worldY;
+        System.out.println(String.format("%d, %d", worldX/48, worldY/48));
         switch (direction){
             case UP:
                 worldY -= speed;
@@ -112,6 +136,11 @@ public class Player implements Collidable{
                 worldX -= speed;
                 break;
         }
+
+        if (cannotMove()){
+            worldY = origY;
+            worldX = origX;
+        }
     }
 
     public void setDirection(int dir){
@@ -121,6 +150,11 @@ public class Player implements Collidable{
     public void setOther(int dir, int v){
         direction = dir;
         version = v;
+    }
+
+    public void teleportPlayer(int x, int y){
+        worldX = x;
+        worldY = y;
     }
 
     public void interact(Collidable item){
@@ -142,11 +176,11 @@ public class Player implements Collidable{
 
         // add if else for type Interactable
         // add if else for type NPC
-    }
+    } 
 
     @Override
     public boolean isColliding(Collidable c){
-        hitBox = new Rectangle(worldX + 10, worldY + 10, spriteH-20, spriteW-10);
+        hitBox = new Rectangle(worldX + 10, worldY + 10, spriteW-20, spriteH-10);
         Rectangle itemHitBox = c.getHitBox();
 
         return hitBox.intersects(itemHitBox);
@@ -206,4 +240,7 @@ public class Player implements Collidable{
         return  version;
     }
 
-}
+    public void setCollisionMap(int[][] cm){
+        collisionMap = cm;
+    }
+}   

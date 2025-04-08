@@ -43,7 +43,7 @@ public class MapHandler{
     public void setUpTiles(){
         int spriteSize = 16;
         try {
-            BufferedImage bkgTileSource = ImageIO.read(new File("./res/CompiledCompact.png"));
+            BufferedImage bkgTileSource = ImageIO.read(new File("./res/tileSets/CompiledCompact.png"));
 
             int row = 0, col = 0;
 
@@ -58,7 +58,7 @@ public class MapHandler{
                 }
             }
 
-            BufferedImage decoTileSource = ImageIO.read(new File("./res/TileSetDeco.png"));
+            BufferedImage decoTileSource = ImageIO.read(new File("./res/tileSets/TileSetDeco.png"));
 
             row = 0;
             col = 0;
@@ -170,5 +170,9 @@ public class MapHandler{
                 pFollow.teleportPlayer(tele.teleportPlayerX(), tele.teleportPlayerY());
             }
         }
+    }
+
+    public int getCurrentMap(){
+        return currentMap;
     }
  }

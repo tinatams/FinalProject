@@ -13,7 +13,7 @@ public class BranchItem extends SuperItem implements Collidable{
     @Override 
     public void loadImage(){
         try{
-            sprite = ImageIO.read(new File("./res/Branch.png"));
+            sprite = ImageIO.read(new File("./res/items/Branch.png"));
         } catch (IOException e){
             
         }

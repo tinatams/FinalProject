@@ -13,7 +13,7 @@ public class RockItem extends SuperItem implements Collidable{
     @Override 
     public void loadImage(){
         try{
-            sprite = ImageIO.read(new File("./res/Rock.png"));
+            sprite = ImageIO.read(new File("./res/items/Rock.png"));
         } catch (IOException e){
             
         }

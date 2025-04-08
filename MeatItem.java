@@ -13,7 +13,7 @@ public class MeatItem extends SuperItem implements Collidable{
     @Override 
     public void loadImage(){
         try{
-            sprite = ImageIO.read(new File("./res/Meat.png"));
+            sprite = ImageIO.read(new File("./res/items/Meat.png"));
         } catch (IOException e){
             
         }
