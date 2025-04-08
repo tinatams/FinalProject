@@ -5,10 +5,11 @@ import javax.swing.*;
 
 public class GameCanvas extends JComponent{
     private ArrayList<Player> players;
-
+    private NPC npc= new NPC("Prophet",12,11);
     private String dataFromServer;
     private Player selectedPlayer;
     private int clientNumber;
+    
 
     private MapHandler mapH;
 
@@ -47,9 +48,12 @@ public class GameCanvas extends JComponent{
                             Player temp = new Player(s,x,y);
                             temp.setOther(direc, version);
                             players.add(temp);
+                            
                         }
                     }
                 }
+
+                
             }
         }
         g2d.translate(-selectedPlayer.getWorldX() + selectedPlayer.getScreenX(), -selectedPlayer.getWorldY()+selectedPlayer.getScreenY());
@@ -61,6 +65,7 @@ public class GameCanvas extends JComponent{
                 player.draw(g2d);
             }
         }
+        npc.draw(g2d);
         
         g2d.setTransform(reset);
         selectedPlayer.drawSelected(g2d);

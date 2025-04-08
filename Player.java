@@ -121,7 +121,7 @@ public class Player implements Collidable{
 
     public void update(){
         int origX = worldX, origY = worldY;
-        System.out.println(String.format("%d, %d", worldX/48, worldY/48));
+        // System.out.println(String.format("%d, %d", worldX/48, worldY/48));
         switch (direction){
             case UP:
                 worldY -= speed;
