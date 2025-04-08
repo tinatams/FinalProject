@@ -51,7 +51,7 @@ public class GameStarter{
     }
 
     public void setUpFrame(){
-        frame = new GameFrame(serverData);
+        frame = new GameFrame(serverData, clientNumber);
         frame.setUpGUI();
         frame.addKeyBindings();
     }
@@ -65,8 +65,7 @@ public class GameStarter{
             while (true) { 
                 try {
                     Player clientPlayer = frame.getSelectedSq();
-                    frame.setClientNumber(clientNumber);
-                    clientData = String.format("%d,%d,%d,%s,%d,%d", clientNumber, clientPlayer.getX(), clientPlayer.getY(), clientPlayer.getSkin(), clientPlayer.getDirection(), clientPlayer.getVer());
+                    clientData = String.format("%d,%d,%d,%s,%d,%d,%s", clientNumber, clientPlayer.getWorldX(), clientPlayer.getWorldY(), clientPlayer.getSkin(), clientPlayer.getDirection(), clientPlayer.getVer(), frame.getMap());
                     dataOut.writeUTF(clientData);
                     try {
                         Thread.sleep(10);

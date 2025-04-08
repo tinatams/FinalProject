@@ -1,7 +1,5 @@
-
 import java.awt.Color;
 import java.awt.event.*;
-import java.util.ArrayList;
 import javax.swing.*;
 
 public class GameFrame{
@@ -12,30 +10,28 @@ public class GameFrame{
     public static final int SCALER = 3;
     public static final int SCALED = PIXELRATIO * SCALER;
     
-    private int clientNumber;
+    private static int CN=1;
 
+    private int clientNumber;
     private JFrame frame;
     private JPanel cp;
     private GameCanvas canvas;
-    private String serverData;
     private Player selectedPlayer;
 
-    public GameFrame(String data, int CN){
+    public GameFrame(){
         frame = new JFrame();
         cp = (JPanel) frame.getContentPane();
         cp.setFocusable(true);
 
         clientNumber = CN;
+        CN++;
+
         String skin = (CN % 2 == 0) ? "Hunter" : "Vill4";
         int x = (CN % 2 == 0) ? 10 : 34;
         int y = (CN % 2 == 0) ? 11 : 11;
  
         selectedPlayer = new Player(skin, x * SCALED, y * SCALED);
-        canvas = new GameCanvas(data, selectedPlayer, CN);
-    }
-
-    public void recieveData(String data){
-        canvas.recieveData(data);
+        canvas = new GameCanvas(selectedPlayer, CN);
     }
 
     public void setUpGUI(){
@@ -49,14 +45,6 @@ public class GameFrame{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }   
-
-    public Player getSelectedSq(){
-        return selectedPlayer;
-    }
-
-    public String getMap(){
-        return canvas.getMap();
-    }
 
     public void addKeyBindings(){
         ActionMap am = cp.getActionMap();
@@ -97,38 +85,17 @@ public class GameFrame{
             }
         };
 
-
-        //MAKE IT SO THAT THEY ARE SEPARATED...
-        // INTERACTABLES, COLLECTABLES ...
-        AbstractAction Interact = new AbstractAction(){
-            @Override
-            public void actionPerformed(ActionEvent ae){
-                ArrayList<Collidable> items = canvas.getItems();
-                if (selectedPlayer.getCollidingWith(items) != null){
-                    Collidable item = selectedPlayer.getCollidingWith(items);
-                    selectedPlayer.interact(item);
-
-                    if (item instanceof SuperItem){
-                        items.remove(item);
-                    }
-                }
-            }
-        };
-
         am.put("UP", UP);
         am.put("DOWN", DOWN);
         am.put("RIGHT", RIGHT);
         am.put("LEFT", LEFT);
         am.put("IDLE", IDLE);
 
-        am.put("INT", Interact);
 
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, false), "UP");
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, false), "LEFT");
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, false), "DOWN");
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, false), "RIGHT");
-
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, 0, false), "INT");
 
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, true), "IDLE");
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, true), "IDLE");

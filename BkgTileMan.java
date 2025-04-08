@@ -7,8 +7,8 @@ import javax.imageio.*;
 public class BkgTileMan{
     private BufferedImage[] tiles; 
     private int[][] mapTile;
-    private final int maxColumn = 50;
-    private final int maxRow = 50;
+    private final int maxColumn = 300;
+    private final int maxRow = 300;
     private final int tileSize = 48;
 
     private Player pFollow;
@@ -22,6 +22,28 @@ public class BkgTileMan{
     }
 
     public void setUpTiles(){
+        int spriteSize = 16;
+        try {
+            BufferedImage bkgTileSource = ImageIO.read(new File("./res/CompiledCompact.png"));
+
+            int row = 0, col = 0;
+
+            for (int tileIndex = 0; tileIndex < 155; tileIndex++) {
+                BufferedImage temp = bkgTileSource.getSubimage(col * spriteSize, row * spriteSize, spriteSize, spriteSize);
+                tiles[tileIndex] = temp;
+
+                col++;
+                if (col == 13) {  // Changed from 11 to 13
+                    col = 0;
+                    row++;
+                }
+            }
+
+        } catch (IOException ex) {
+        }
+    }
+
+    public void setUpTiles2(){
         int spriteSize = 16;
         try {
             BufferedImage bkgTileSource = ImageIO.read(new File("./res/TilesetFloor.png"));
@@ -90,15 +112,15 @@ public class BkgTileMan{
     }
     public void draw(Graphics2D g2d){
         int worldCol = 0, worldRow = 0;
-        int bufferSize = 500;
+        int bufferSize = 700;
 
         while (worldCol < maxColumn && worldRow < maxRow){
             int worldX = worldCol * tileSize, worldY = worldRow * tileSize;
             
             
             if (mapTile[worldCol][worldRow] != -1 &&
-            worldX < pFollow.getX() + bufferSize && worldX > pFollow.getX() -  bufferSize &&
-            worldY < pFollow.getY() + bufferSize && worldY > pFollow.getScreenY() - bufferSize)
+            worldX < pFollow.getWorldX() + bufferSize && worldX > pFollow.getWorldX() -  bufferSize &&
+            worldY < pFollow.getWorldY() + bufferSize && worldY > pFollow.getScreenY() - bufferSize)
             g2d.drawImage(tiles[mapTile[worldCol][worldRow]], worldX, worldY, tileSize, tileSize, null);
 
             worldCol ++;
