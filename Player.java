@@ -137,6 +137,7 @@ public class Player implements Collidable{
                 break;
         }
 
+        System.out.println(cannotMove());
         if (cannotMove()){
             worldY = origY;
             worldX = origX;

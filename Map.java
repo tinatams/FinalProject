@@ -43,11 +43,11 @@ public class Map{
     private void loadBaseMap(){
         int row = 0, col = 0;
         try {
-            File map = new File(String.format("./res/maps/%s/base.txt",mapName));
+            File map = new File(String.format("./res/maps/%s/base.csv",mapName));
             Scanner mapReader = new Scanner(map);
             while (mapReader.hasNextLine()) {
                 String mapLine = mapReader.nextLine();
-                String[] mapLineSplit = mapLine.split("\t");
+                String[] mapLineSplit = mapLine.split(",");
                 for (String num : mapLineSplit){
                     baseTileMap[col][row] = Integer.parseInt(num) ;
                     col ++;
@@ -68,11 +68,11 @@ public class Map{
     private void loadDecoMap(){
         int row = 0, col = 0;
         try {
-            File map = new File(String.format("./res/maps/%s/deco.txt",mapName));
+            File map = new File(String.format("./res/maps/%s/deco.csv",mapName));
             Scanner mapReader = new Scanner(map);
             while (mapReader.hasNextLine()) {
                 String mapLine = mapReader.nextLine();
-                String[] mapLineSplit = mapLine.split("\t");
+                String[] mapLineSplit = mapLine.split(",");
                 for (String num : mapLineSplit){
                     decoTileMap[col][row] = Integer.parseInt(num) ;
                     col ++;
@@ -91,11 +91,11 @@ public class Map{
     private void loadColMap(){
         int row = 0, col = 0;
         try {
-            File map = new File(String.format("./res/maps/%s/collisions.txt",mapName));
+            File map = new File(String.format("./res/maps/%s/collisions.csv",mapName));
             Scanner mapReader = new Scanner(map);
             while (mapReader.hasNextLine()) {
                 String mapLine = mapReader.nextLine();
-                String[] mapLineSplit = mapLine.split("\t");
+                String[] mapLineSplit = mapLine.split(",");
                 for (String num : mapLineSplit){
                     collisionMap[col][row] = Integer.parseInt(num) ;
                     col ++;
@@ -114,11 +114,11 @@ public class Map{
     private void loadColAbleMap(){
         int row = 0, col = 0;
         try {
-            File map = new File(String.format("./res/maps/%s/collidables.txt",mapName));
+            File map = new File(String.format("./res/maps/%s/collidables.csv",mapName));
             Scanner mapReader = new Scanner(map);
             while (mapReader.hasNextLine()) {
                 String mapLine = mapReader.nextLine();
-                String[] mapLineSplit = mapLine.split("\t");
+                String[] mapLineSplit = mapLine.split(",");
                 for (String num : mapLineSplit){
                     collidablesMap[col][row] = Integer.parseInt(num) ;
                     col ++;
