@@ -44,7 +44,7 @@ public class GameCanvas extends JComponent{
                 if (sData.length == 7){
                     if (Integer.parseInt(sData[0]) != clientNumber){
                         int otherMap = Integer.parseInt(sData[6]);
-                        System.out.println(otherMap == mapH.getCurrentMap());
+                        //.out.println(otherMap == mapH.getCurrentMap());
                         if(otherMap == mapH.getCurrentMap()){
                             int x = Integer.parseInt(sData[1]);
                             int y = Integer.parseInt(sData[2]);
@@ -74,12 +74,7 @@ public class GameCanvas extends JComponent{
             }
         }
         npc.draw(g2d);
-        
-        //g2d.setTransform(reset);
         selectedPlayer.draw(g2d);
-
-        //g2d.translate(-selectedPlayer.getWorldX() + selectedPlayer.getScreenX(), -selectedPlayer.getWorldY()+selectedPlayer.getScreenY());
-        
         mapH.drawColAbles(g2d);
         g2d.setTransform(reset);
     }
