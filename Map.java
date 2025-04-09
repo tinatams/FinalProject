@@ -16,6 +16,7 @@ public class Map{
     private int mapHeight;
 
     private ArrayList<Teleporter> teleporters;
+    private ArrayList<Interactable> interacts;
 
     public Map(String n){
         baseTileMap = new int[maxRow][maxColumn];
@@ -24,6 +25,7 @@ public class Map{
         collidablesMap = new int[maxRow][maxColumn];
 
         teleporters = new ArrayList<>();
+        interacts = new ArrayList<>();
 
         mapName = n;
 
@@ -151,6 +153,32 @@ public class Map{
     }
 
     private void loadTeleporters() {
+        try {
+            File map = new File(String.format("./res/maps/%s/teleporters.txt",mapName));
+            Scanner mapReader = new Scanner(map);
+            while (mapReader.hasNextLine()) {
+                String mapLine = mapReader.nextLine();
+                String[] mapData = mapLine.split(",");
+                if (mapData.length > 0){
+                    int x = Integer.parseInt(mapData[0]) * GameFrame.SCALED;
+                    int y = Integer.parseInt(mapData[1]) * GameFrame.SCALED;
+                    int w = Integer.parseInt(mapData[2]) * GameFrame.SCALED;
+                    int h = Integer.parseInt(mapData[3]) * GameFrame.SCALED;
+                    int mapTo = Integer.parseInt(mapData[4]);
+                    int newX = Integer.parseInt(mapData[5]) * GameFrame.SCALED; //player position in new map
+                    int newY = Integer.parseInt(mapData[6]) * GameFrame.SCALED; //player position in new map
+                    
+                    teleporters.add(new Teleporter(x, y, w, h, mapTo, newX, newY));
+                }
+            }
+            mapReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
+    private void loadInteract() {
         try {
             File map = new File(String.format("./res/maps/%s/teleporters.txt",mapName));
             Scanner mapReader = new Scanner(map);

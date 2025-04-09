@@ -91,9 +91,7 @@ public class MapHandler{
         while (worldCol < Map.maxColumn && worldRow < Map.maxRow){
             int worldX = worldCol * GameFrame.SCALED, worldY = worldRow * GameFrame.SCALED;
             
-            if (currentMap[worldCol][worldRow] != -1 &&
-            worldX < pFollow.getWorldX() + bufferSize && worldX > pFollow.getWorldX() -  bufferSize &&
-            worldY < pFollow.getWorldY() + bufferSize && worldY > pFollow.getScreenY() - bufferSize)
+            if (currentMap[worldCol][worldRow] != -1 && canDraw(worldX, worldY))
             g2d.drawImage(baseTiles[currentMap[worldCol][worldRow]], worldX, worldY, GameFrame.SCALED, GameFrame.SCALED, null);
 
             worldCol ++;
@@ -114,9 +112,7 @@ public class MapHandler{
         while (worldCol < Map.maxColumn && worldRow < Map.maxRow){
             int worldX = worldCol * GameFrame.SCALED, worldY = worldRow * GameFrame.SCALED;
             
-            if (currentMap[worldCol][worldRow] != -1 &&
-            worldX < pFollow.getWorldX() + bufferSize && worldX > pFollow.getWorldX() -  bufferSize &&
-            worldY < pFollow.getWorldY() + bufferSize && worldY > pFollow.getScreenY() - bufferSize)
+            if (currentMap[worldCol][worldRow] != -1 && canDraw(worldX, worldY))
             g2d.drawImage(decoTiles[currentMap[worldCol][worldRow]], worldX, worldY, GameFrame.SCALED, GameFrame.SCALED, null);
 
             worldCol ++;
@@ -137,9 +133,7 @@ public class MapHandler{
         while (worldCol < Map.maxColumn && worldRow < Map.maxRow){
             int worldX = worldCol * GameFrame.SCALED, worldY = worldRow * GameFrame.SCALED;
             
-            if (currentMap[worldCol][worldRow] != -1 &&
-            worldX < pFollow.getWorldX() + bufferSize && worldX > pFollow.getWorldX() -  bufferSize &&
-            worldY < pFollow.getWorldY() + bufferSize && worldY > pFollow.getScreenY() - bufferSize)
+            if (currentMap[worldCol][worldRow] != -1 && canDraw(worldX, worldY))
             g2d.drawImage(decoTiles[currentMap[worldCol][worldRow]], worldX, worldY, GameFrame.SCALED, GameFrame.SCALED, null);
 
             worldCol ++;
@@ -180,6 +174,11 @@ public class MapHandler{
     public int getMapHeight(){
         Map cm = maps[currentMap];
         return cm.getHeight();
+    }
+
+    public boolean canDraw(int X, int Y){
+        return (X < pFollow.getWorldX() + bufferSize && X > pFollow.getWorldX() -  bufferSize &&
+            Y < pFollow.getWorldY() + bufferSize && Y > pFollow.getScreenY() - bufferSize);
     }
 
  }

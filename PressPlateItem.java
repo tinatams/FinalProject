@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import javax.imageio.*;
 
-public abstract class PressPlateItem implements Collidable, Interactable{
+public abstract class PressPlateItem implements Interactable{
     protected int worldX, worldY, spriteW, spriteH;
     protected String name;
     protected BufferedImage pressed, notPressed;

@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import javax.imageio.*;
 
-public class NPC implements Collidable{
+public class NPC implements Collidable{ //should extend interactable
     private int worldX, worldY, screenX, screenY, speed;
     private int spriteW, spriteH;
     private String skin;

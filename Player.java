@@ -171,8 +171,13 @@ public class Player implements Collidable{
             but.interact();
         }
 
+        else if (item instanceof Interactable){
+            Interactable temp = (Interactable) item;
+            temp.interact();
+        }
+
         else {
-        System.out.println("Unknown item type: " + item.getClass().getSimpleName());
+        System.out.println("Unknown item type");
         }
 
         // add if else for type Interactable
