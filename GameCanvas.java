@@ -8,8 +8,10 @@ public class GameCanvas extends JComponent{
     private NPC npc= new NPC("Prophet",12,11);
     private String dataFromServer;
     private Player selectedPlayer;
+
     private int clientNumber;
-    
+
+    private int cameraX, cameraY, cameraW, cameraH;  
 
     private MapHandler mapH;
 
@@ -21,6 +23,10 @@ public class GameCanvas extends JComponent{
 
         mapH = new MapHandler(selectedPlayer);
         selectedPlayer.setCollisionMap(mapH.getColMap());
+        cameraW = GameFrame.WIDTH;
+        cameraH = GameFrame.HEIGHT;
+
+        checkBounds();
     }
     
     @Override
@@ -56,7 +62,9 @@ public class GameCanvas extends JComponent{
                 
             }
         }
-        g2d.translate(-selectedPlayer.getWorldX() + selectedPlayer.getScreenX(), -selectedPlayer.getWorldY()+selectedPlayer.getScreenY());
+        checkBounds(); 
+
+        g2d.translate(-cameraX, -cameraY);
         mapH.drawBase(g2d);
         mapH.drawDeco(g2d);
         
@@ -67,10 +75,10 @@ public class GameCanvas extends JComponent{
         }
         npc.draw(g2d);
         
-        g2d.setTransform(reset);
-        selectedPlayer.drawSelected(g2d);
+        //g2d.setTransform(reset);
+        selectedPlayer.draw(g2d);
 
-        g2d.translate(-selectedPlayer.getWorldX() + selectedPlayer.getScreenX(), -selectedPlayer.getWorldY()+selectedPlayer.getScreenY());
+        //g2d.translate(-selectedPlayer.getWorldX() + selectedPlayer.getScreenX(), -selectedPlayer.getWorldY()+selectedPlayer.getScreenY());
         
         mapH.drawColAbles(g2d);
         g2d.setTransform(reset);
@@ -80,6 +88,17 @@ public class GameCanvas extends JComponent{
         selectedPlayer.update();
         mapH.update();
         
+    }
+
+    public void checkBounds(){
+        
+        cameraX = (selectedPlayer.getWorldX() - cameraW/2) + GameFrame.SCALED;
+        cameraY = (selectedPlayer.getWorldY() - cameraH/2) + GameFrame.SCALED;
+
+        if (cameraX < 0) cameraX = 0;
+        if (cameraY < 0) cameraY = 0;
+        if(cameraX + cameraW > mapH.getMapWidth()*GameFrame.SCALED) cameraX = mapH.getMapWidth()*GameFrame.SCALED - cameraW;
+        if(cameraY + cameraH > mapH.getMapHeight()*GameFrame.SCALED) cameraY = mapH.getMapHeight()*GameFrame.SCALED - cameraH;
     }
 
     public void recieveData(String data){

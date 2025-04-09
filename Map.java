@@ -12,6 +12,9 @@ public class Map{
     private int[][] collisionMap;
     private int[][] collidablesMap;
 
+    private int mapWidth;
+    private int mapHeight;
+
     private ArrayList<Teleporter> teleporters;
 
     public Map(String n){
@@ -49,10 +52,12 @@ public class Map{
                     baseTileMap[col][row] = Integer.parseInt(num) ;
                     col ++;
                 }
+        
+                mapWidth = col;
                 row++;
                 col = 0;
-                
-            }
+            }  
+            mapHeight = row;
             mapReader.close();
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
@@ -189,5 +194,13 @@ public class Map{
 
     public ArrayList<Teleporter> getTeleporters(){
         return teleporters;
+    }
+
+    public int getHeight() {
+        return mapHeight;
+    }
+
+    public int getWidth() {
+        return mapWidth;
     }
 }

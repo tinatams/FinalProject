@@ -22,6 +22,8 @@ public class MapHandler{
     public static final int MINES = 6;
     public static final int LABYRINTH = 7;
 
+    private int bufferSize = GameFrame.WIDTH;
+
     public MapHandler(Player pf){
         baseTiles = new BufferedImage[1000];
         decoTiles = new BufferedImage[1000];
@@ -85,11 +87,9 @@ public class MapHandler{
         int[][] currentMap = cm.getBaseMap();
 
         int worldCol = 0, worldRow = 0;
-        int bufferSize = 700;
 
         while (worldCol < Map.maxColumn && worldRow < Map.maxRow){
             int worldX = worldCol * GameFrame.SCALED, worldY = worldRow * GameFrame.SCALED;
-            
             
             if (currentMap[worldCol][worldRow] != -1 &&
             worldX < pFollow.getWorldX() + bufferSize && worldX > pFollow.getWorldX() -  bufferSize &&
@@ -110,11 +110,9 @@ public class MapHandler{
         int[][] currentMap = cm.getDecoMap();
 
         int worldCol = 0, worldRow = 0;
-        int bufferSize = 700;
 
         while (worldCol < Map.maxColumn && worldRow < Map.maxRow){
             int worldX = worldCol * GameFrame.SCALED, worldY = worldRow * GameFrame.SCALED;
-            
             
             if (currentMap[worldCol][worldRow] != -1 &&
             worldX < pFollow.getWorldX() + bufferSize && worldX > pFollow.getWorldX() -  bufferSize &&
@@ -135,11 +133,9 @@ public class MapHandler{
         int[][] currentMap = cm.getColAbleMap();
 
         int worldCol = 0, worldRow = 0;
-        int bufferSize = 700;
 
         while (worldCol < Map.maxColumn && worldRow < Map.maxRow){
             int worldX = worldCol * GameFrame.SCALED, worldY = worldRow * GameFrame.SCALED;
-            
             
             if (currentMap[worldCol][worldRow] != -1 &&
             worldX < pFollow.getWorldX() + bufferSize && worldX > pFollow.getWorldX() -  bufferSize &&
@@ -175,4 +171,15 @@ public class MapHandler{
     public int getCurrentMap(){
         return currentMap;
     }
+
+    public int getMapWidth(){
+        Map cm = maps[currentMap];
+        return cm.getWidth();
+    }
+
+    public int getMapHeight(){
+        Map cm = maps[currentMap];
+        return cm.getHeight();
+    }
+
  }
