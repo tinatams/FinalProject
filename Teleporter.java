@@ -42,8 +42,6 @@ public class Teleporter implements Collidable{
         return putPlayerY;
     }
 
-
-    @Override
     public boolean isColliding(Collidable c){
         hitBox = new Rectangle(worldX, worldY, width, height);
         Rectangle itemHitBox = c.getHitBox();
@@ -51,7 +49,6 @@ public class Teleporter implements Collidable{
         return hitBox.intersects(itemHitBox);
     }
 
-    @Override
     public Collidable getCollidingWith(ArrayList<Collidable> items) {
         for (Collidable other: items){
             if (isColliding(other))

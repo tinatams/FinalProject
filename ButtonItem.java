@@ -1,16 +1,15 @@
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
-import java.util.ArrayList;
 import javax.imageio.*;
 
 public abstract class ButtonItem implements Interactable{
-    protected int worldX, worldY, spriteW, spriteH;
-    protected String name;
-    protected BufferedImage pressed, notPressed;
+    private int worldX, worldY, spriteW, spriteH;
+    private String name;
+    private BufferedImage pressed, notPressed;
 
-    protected boolean press;
-    protected Rectangle hitBox;
+    private boolean press;
+    private Rectangle hitBox;
 
     public ButtonItem(int x, int y){
         spriteW = GameFrame.SCALED;
@@ -43,29 +42,14 @@ public abstract class ButtonItem implements Interactable{
         g2d.drawImage(toDraw, worldX, worldY, spriteW, spriteH, null);
     }
 
+    //extend this class to see what action to do
+    //maybe turn this into literally an empty method, then like anonymous class extend buttonitem (?);
     public abstract void actionToDo();
 
     @Override
     public void interact(){
         press = !press;
         actionToDo();
-    }
-
-    @Override
-    public boolean isColliding(Collidable c) {
-        Rectangle itemHitBox = c.getHitBox();
-
-        return hitBox.intersects(itemHitBox);
-    }
-
-    @Override
-    public Collidable getCollidingWith(ArrayList<Collidable> items) {
-        for (Collidable other: items){
-            if (isColliding(other))
-                return other;
-        }
-
-        return null;
     }
 
     @Override

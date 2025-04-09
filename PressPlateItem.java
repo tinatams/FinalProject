@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
-import java.util.ArrayList;
 import javax.imageio.*;
 
 public abstract class PressPlateItem implements Interactable{
@@ -49,22 +48,6 @@ public abstract class PressPlateItem implements Interactable{
     public void interact(){
         press = !press;
         actionToDo();
-    }
-
-    @Override
-    public boolean isColliding(Collidable c) {
-        Rectangle itemHitBox = c.getHitBox();
-        return hitBox.intersects(itemHitBox);
-    }
-
-    @Override
-    public Collidable getCollidingWith(ArrayList<Collidable> items) {
-        for (Collidable other: items){
-            if (isColliding(other))
-                return other;
-        }
-
-        return null;
     }
     
     @Override

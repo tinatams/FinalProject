@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.io.*;
-import java.util.ArrayList;
 import javax.imageio.*;
 
 public class BranchItem extends SuperItem implements Collidable{
@@ -17,23 +16,6 @@ public class BranchItem extends SuperItem implements Collidable{
         } catch (IOException e){
             
         }
-    }
-
-    @Override
-    public boolean isColliding(Collidable c) {
-        Rectangle itemHitBox = c.getHitBox();
-
-        return hitBox.intersects(itemHitBox);
-    }
-
-    @Override
-    public Collidable getCollidingWith(ArrayList<Collidable> items) {
-        for (Collidable other: items){
-            if (isColliding(other))
-                return other;
-        }
-
-        return null;
     }
 
     public int getWorldX(){

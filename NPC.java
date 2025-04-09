@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
-import java.util.ArrayList;
 import javax.imageio.*;
 
 public class NPC implements Collidable{ //should extend interactable
@@ -41,23 +40,23 @@ public class NPC implements Collidable{ //should extend interactable
         g.drawImage(sprite, worldX, worldY, spriteW, spriteH, null);
     }
 
-    @Override
-    public boolean isColliding(Collidable c){
-        hitBox = new Rectangle(worldX + 10, worldY + 10, spriteW-20, spriteH-10);
-        Rectangle itemHitBox = c.getHitBox();
+    // @Override
+    // public boolean isColliding(Collidable c){
+    //     hitBox = new Rectangle(worldX + 10, worldY + 10, spriteW-20, spriteH-10);
+    //     Rectangle itemHitBox = c.getHitBox();
 
-        return hitBox.intersects(itemHitBox);
-    }
+    //     return hitBox.intersects(itemHitBox);
+    // }
 
-    @Override
-    public Collidable getCollidingWith(ArrayList<Collidable> items) {
-        for (Collidable other: items){
-            if (isColliding(other))
-                return other;
-        }
+    // @Override
+    // public Collidable getCollidingWith(ArrayList<Collidable> items) {
+    //     for (Collidable other: items){
+    //         if (isColliding(other))
+    //             return other;
+    //     }
 
-        return null;
-    }
+    //     return null;
+    // }
 
     @Override
     public int getSpriteW() {

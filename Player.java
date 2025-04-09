@@ -184,7 +184,6 @@ public class Player implements Collidable{
         // add if else for type NPC
     } 
 
-    @Override
     public boolean isColliding(Collidable c){
         hitBox = new Rectangle(worldX + 10, worldY + 10, spriteW-20, spriteH-10);
         Rectangle itemHitBox = c.getHitBox();
@@ -192,7 +191,6 @@ public class Player implements Collidable{
         return hitBox.intersects(itemHitBox);
     }
 
-    @Override
     public Collidable getCollidingWith(ArrayList<Collidable> items) {
         for (Collidable other: items){
             if (isColliding(other))

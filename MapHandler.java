@@ -154,7 +154,7 @@ public class MapHandler{
         ArrayList<Teleporter> teleporters = cm.getTeleporters();
 
         for (Teleporter tele : teleporters){
-            if (tele.isColliding(pFollow)){
+            if (pFollow.isColliding(tele)){
                 currentMap = tele.teleportToMap();
                 pFollow.setCollisionMap(maps[currentMap].getColMap());
                 pFollow.teleportPlayer(tele.teleportPlayerX(), tele.teleportPlayerY());
