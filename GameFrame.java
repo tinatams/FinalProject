@@ -26,8 +26,8 @@ public class GameFrame{
 
         clientNumber = CN;
         String skin = (CN % 2 == 0) ? "Hunter" : "Vill4";
-        int x = (CN % 2 == 0) ? 10 : 34;
-        int y = (CN % 2 == 0) ? 11 : 11;
+        int x = (CN % 2 == 0) ? 15 : 43;
+        int y = (CN % 2 == 0) ? 16 : 17;
  
         selectedPlayer = new Player(skin, x * SCALED, y * SCALED);
         canvas = new GameCanvas(data, selectedPlayer, CN);
