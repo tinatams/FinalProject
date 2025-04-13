@@ -54,7 +54,7 @@ public class Player implements Collidable{
             int tileSize = 16;
             //idle
             sprites[0][0] = spriteSheet.getSubimage(0 * tileSize, 0 * tileSize, tileSize, tileSize);
-            sprites[0][1] = spriteSheet.getSubimage(0 * tileSize, 0 * tileSize, tileSize, tileSize);
+            sprites[0][1] = sprites[0][0];
 
             //walking animations
             //down

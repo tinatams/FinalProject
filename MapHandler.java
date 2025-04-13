@@ -12,15 +12,23 @@ public class MapHandler{
     private BufferedImage[] decoTiles;
 
     private int currentMap;
-    public static final int SPAWN = 0;
-    public static final int DEMETER = 1;
-    public static final int ATHENA = 2;
-    public static final int ASSIST1 = 3;
-    public static final int ASSIST2 = 4;
 
-    public static final int POSIEDON = 5;
-    public static final int MINES = 6;
-    public static final int LABYRINTH = 7;
+    //BOTH PLAYERS
+    public static final int SPAWN = 0;
+
+    //PLAYER 1
+    public static final int DEMETER = 1;
+    public static final int DIONYSUS = 2;
+    public static final int DHOUSE = 3;
+    public static final int ASSIST1 = 4;
+    public static final int ASSIST2 = 5;
+
+    //PLAYER 2
+    public static final int POSEIDON = 6;
+    public static final int MINES = 7;
+    public static final int WORKSHOP = 8;
+    public static final int MINOTAUR = 9;
+    public static final int LABYRINTH = 10;
 
     private int bufferSize = GameFrame.WIDTH;
 
@@ -28,7 +36,7 @@ public class MapHandler{
         baseTiles = new BufferedImage[1000];
         decoTiles = new BufferedImage[1000];
         
-        maps = new Map[2];
+        maps = new Map[11];
         pFollow = pf;
 
         currentMap = SPAWN;
@@ -40,6 +48,16 @@ public class MapHandler{
     public void setUpMaps(){
         maps[SPAWN] = new Map("spawn");
         maps[DEMETER] = new Map("demeter");
+        maps[DIONYSUS] = new Map("dionysus");
+        maps[DHOUSE] = new Map("d_house");  
+        maps[ASSIST1] = new Map("assist1");
+        //insert Assist2
+        maps[POSEIDON] = new Map("poseidon");
+        maps[MINES] = new Map("mine");
+        maps[WORKSHOP] = new Map("workshop");
+        maps[MINOTAUR] = new Map("mino");
+        //inset Labyrinth
+
     }
 
     public void setUpTiles(){
@@ -65,7 +83,7 @@ public class MapHandler{
             row = 0;
             col = 0;
 
-            for (int tileIndex = 0; tileIndex < 220; tileIndex++) {
+            for (int tileIndex = 0; tileIndex < 17*18; tileIndex++) {
                 BufferedImage temp = decoTileSource.getSubimage(col * spriteSize, row * spriteSize, spriteSize, spriteSize);
                 decoTiles[tileIndex] = temp;
 

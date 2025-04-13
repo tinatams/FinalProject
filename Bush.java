@@ -1,8 +1,7 @@
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import javax.imageio.*;
 
 public class Bush implements Interactable{
