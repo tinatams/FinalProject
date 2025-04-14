@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
-import java.util.ArrayList;
+import java.util.*;
 import javax.imageio.*;
 
 public class MapHandler{
@@ -162,22 +162,48 @@ public class MapHandler{
         }
     }
 
-    public int[][] getColMap(){
+    public void drawInteracts(Graphics2D g2d){
         Map cm = maps[currentMap];
-        return cm.getColMap();
+        ArrayList<Interactable> interacts = cm.getInteractables();
+
+        for (Interactable interactObj : interacts){
+            interactObj.draw(g2d);
+        }
     }
-    
+
     public void update(){
         Map cm = maps[currentMap];
         ArrayList<Teleporter> teleporters = cm.getTeleporters();
+        ArrayList<Interactable> interactables = cm.getInteractables();
 
         for (Teleporter tele : teleporters){
             if (pFollow.isColliding(tele)){
                 currentMap = tele.teleportToMap();
-                pFollow.setCollisionMap(maps[currentMap].getColMap());
                 pFollow.teleportPlayer(tele.teleportPlayerX(), tele.teleportPlayerY());
             }
         }
+
+        for (int i = 0; i < interactables.size(); i++){
+            Interactable interactionObj = interactables.get(i);
+            if (interactionObj instanceof Tree){
+                Tree treeObj = (Tree) interactionObj;
+                if(treeObj.getHealth() <=0){
+                    Timer treeTimer = new Timer();
+                    TimerTask newTree = new TimerTask(){
+                        @Override 
+                        public void run(){
+                            interactables.add(new Tree(treeObj.getWorldX()/48,treeObj.getWorldY()/48));
+                        }
+                    };
+                    interactables.remove(interactionObj);
+                    treeTimer.schedule(newTree, 240000);
+                }
+            }
+        }
+    }
+    
+    public int[][] getColMap(){
+        return maps[currentMap].getColMap();
     }
 
     public int getCurrentMap(){
@@ -196,7 +222,11 @@ public class MapHandler{
 
     public boolean canDraw(int X, int Y){
         return (X < pFollow.getWorldX() + bufferSize && X > pFollow.getWorldX() -  bufferSize &&
-            Y < pFollow.getWorldY() + bufferSize && Y > pFollow.getScreenY() - bufferSize);
+            Y < pFollow.getWorldY() + bufferSize && Y > pFollow.getWorldY() - bufferSize);
+    }
+
+    public ArrayList<Interactable> getInteractables() {
+        return maps[currentMap].getInteractables();
     }
 
  }

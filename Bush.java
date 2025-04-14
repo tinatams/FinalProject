@@ -11,7 +11,7 @@ public class Bush implements Interactable{
     private int health;
 
     private boolean hasBerries;
-    private Rectangle hitBox;
+    private Rectangle hitBox, interactionBox;
 
     public Bush(int x, int y){
         spriteW = GameFrame.SCALED * 3;
@@ -25,6 +25,7 @@ public class Bush implements Interactable{
         hasBerries = true;
 
         hitBox = new Rectangle(worldX ,worldY ,spriteH, spriteW);
+        interactionBox = new Rectangle(worldX - GameFrame.SCALED/2,worldY - GameFrame.SCALED/2, spriteH + GameFrame.SCALED*2, spriteW + GameFrame.SCALED*2);
 
         loadImage();
     }
@@ -47,7 +48,7 @@ public class Bush implements Interactable{
     }
 
     @Override
-    public void interact() {
+    public void interact(Player player) {
         hasBerries = false;
         Timer berryTimer = new Timer();
         TimerTask berryBack = new TimerTask(){
@@ -91,5 +92,10 @@ public class Bush implements Interactable{
 
     public boolean hasBerries(){
         return hasBerries;
+    }
+
+    @Override
+    public Rectangle getInteractionBox() {
+        return interactionBox;
     }
 }

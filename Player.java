@@ -4,13 +4,12 @@ import java.io.*;
 import java.util.ArrayList;
 import javax.imageio.*;
 
-
 public class Player implements Collidable{
     private int worldX, worldY, screenX, screenY, speed;
     private int spriteW, spriteH, counter, version, direction;
     private String skin;
 
-    private int[][] collisionMap;
+    private MapHandler mapH;
 
     public static final int IDLE = 0;
     public static final int UP = 1;
@@ -21,8 +20,6 @@ public class Player implements Collidable{
     private BufferedImage spriteSheet;
     private BufferedImage[][] sprites;
     private Rectangle hitBox;
-
-    private ArrayList<SuperItem> inventory;
 
     public Player(String s, int x, int y){
         worldX = x;
@@ -42,8 +39,6 @@ public class Player implements Collidable{
         version = 0;
 
         sprites = new BufferedImage[5][2];
-
-        inventory = new ArrayList<SuperItem>();
 
         setUpSprites();
     }
@@ -88,6 +83,31 @@ public class Player implements Collidable{
         }
     }
 
+    public void update(){
+        int origX = worldX, origY = worldY;
+        //System.out.println(String.format("%d, %d", worldX, worldY));
+        switch (direction){
+            case UP:
+                worldY -= speed;
+                break;
+            case DOWN:
+                worldY += speed;
+                break;
+            case RIGHT:
+                worldX += speed;
+                break;
+            case LEFT:
+                worldX -= speed;
+                break;
+        }
+
+        //System.out.println(cannotMove());
+        if (cannotMove()){
+            worldY = origY;
+            worldX = origX;
+        }
+    }
+
     public void drawSelected(Graphics2D g){
         g.drawImage(sprites[direction][version], screenX, screenY, spriteW, spriteH, null);
 
@@ -110,39 +130,14 @@ public class Player implements Collidable{
         if (worldXPos < 0 || worldYPos < 0 || worldX2Pos < 0 || worldX2Pos > Map.maxColumn || worldY2Pos > Map.maxRow){
             return true;
         }
-            
 
+        int[][] collisionMap = mapH.getColMap();
         if (collisionMap[worldXPos][worldYPos] == 0 || collisionMap[worldX2Pos][worldYPos] == 0 || collisionMap[worldXPos][worldYPos] == -2 || collisionMap[worldX2Pos][worldYPos] == -2|| collisionMap[worldXPos][worldY2Pos] == -2){
             return true;
         }
         else 
             return false;
-    }
-
-    public void update(){
-        int origX = worldX, origY = worldY;
-        System.out.println(String.format("%d, %d", worldX/48, worldY/48));
-        switch (direction){
-            case UP:
-                worldY -= speed;
-                break;
-            case DOWN:
-                worldY += speed;
-                break;
-            case RIGHT:
-                worldX += speed;
-                break;
-            case LEFT:
-                worldX -= speed;
-                break;
-        }
-
-        System.out.println(cannotMove());
-        if (cannotMove()){
-            worldY = origY;
-            worldX = origX;
-        }
-    }
+    } 
 
     public void setDirection(int dir){
         direction = dir;
@@ -158,46 +153,30 @@ public class Player implements Collidable{
         worldY = y;
     }
 
-    public void interact(Collidable item){
-        if (item instanceof SuperItem){
-            SuperItem temp = (SuperItem) item;
-            temp.setOwner(this);
-            inventory.add(temp);
-            System.out.println(temp + "Collected");
-        }
-
-        else if (item instanceof ButtonItem){
-            ButtonItem but = (ButtonItem) item;
-            but.interact();
-        }
-
-        else if (item instanceof Interactable){
-            Interactable temp = (Interactable) item;
-            temp.interact();
-        }
-
-        else {
-        System.out.println("Unknown item type");
-        }
-
-        // add if else for type Interactable
-        // add if else for type NPC
-    } 
-
     public boolean isColliding(Collidable c){
         hitBox = new Rectangle(worldX + 10, worldY + 10, spriteW-20, spriteH-10);
         Rectangle itemHitBox = c.getHitBox();
 
+        if (c instanceof Interactable){
+            Interactable interactObj = (Interactable) c;
+            itemHitBox = interactObj.getInteractionBox();
+        }
+
         return hitBox.intersects(itemHitBox);
     }
 
-    public Collidable getCollidingWith(ArrayList<Collidable> items) {
-        for (Collidable other: items){
+    public Interactable getInteractable(ArrayList<Interactable> interactables) {
+        for (Interactable other: interactables){
             if (isColliding(other))
                 return other;
         }
 
         return null;
+    }
+
+    public void interact(){
+        Interactable interactionObj = getInteractable(mapH.getInteractables());
+        if (interactionObj != null) interactionObj.interact(this);
     }
 
     @Override
@@ -223,14 +202,6 @@ public class Player implements Collidable{
     public Rectangle getHitBox() {
         return hitBox;
     }
-
-    public int getScreenY() {
-        return screenY;
-    }
-
-    public int getScreenX() {
-        return screenX;
-    }
     
     public int getDirection() {
         return direction;
@@ -244,7 +215,7 @@ public class Player implements Collidable{
         return  version;
     }
 
-    public void setCollisionMap(int[][] cm){
-        collisionMap = cm;
+    public void setMapHandler(MapHandler mh){
+        mapH = mh;
     }
 }   

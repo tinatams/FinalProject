@@ -5,7 +5,6 @@ import javax.swing.*;
 
 public class GameCanvas extends JComponent{
     private ArrayList<Player> players;
-    private NPC npc= new NPC("Prophet",12,11);
     private String dataFromServer;
     private Player selectedPlayer;
 
@@ -22,7 +21,8 @@ public class GameCanvas extends JComponent{
         clientNumber = CN;
 
         mapH = new MapHandler(selectedPlayer);
-        selectedPlayer.setCollisionMap(mapH.getColMap());
+        selectedPlayer.setMapHandler(this.mapH);
+
         cameraW = GameFrame.WIDTH;
         cameraH = GameFrame.HEIGHT;
 
@@ -67,13 +67,13 @@ public class GameCanvas extends JComponent{
         g2d.translate(-cameraX, -cameraY);
         mapH.drawBase(g2d);
         mapH.drawDeco(g2d);
+        mapH.drawInteracts(g2d);
         
         if (players != null && players.size() > 0){
             for(Player player : players){
                 player.draw(g2d);
             }
         }
-        npc.draw(g2d);
         selectedPlayer.draw(g2d);
         mapH.drawColAbles(g2d);
         g2d.setTransform(reset);

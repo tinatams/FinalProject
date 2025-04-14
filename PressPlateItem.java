@@ -45,7 +45,7 @@ public abstract class PressPlateItem implements Interactable{
     public abstract void actionToDo();
 
     @Override
-    public void interact(){
+    public void interact(Player player){
         press = !press;
         actionToDo();
     }
