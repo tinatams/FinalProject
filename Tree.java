@@ -21,7 +21,7 @@ public class Tree implements Interactable{
         health = 5;
 
         hitBox = new Rectangle(worldX +20,worldY+10,spriteW - 40, spriteH -15);
-        interactionBox = new Rectangle(worldX - GameFrame.SCALED/2,worldY - GameFrame.SCALED/2, spriteH + GameFrame.SCALED*2, spriteW + GameFrame.SCALED*2);
+        interactionBox = new Rectangle(worldX - GameFrame.SCALED/2,worldY - GameFrame.SCALED/2, spriteW + GameFrame.SCALED, spriteH + GameFrame.SCALED);
 
         loadImage();
     }

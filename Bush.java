@@ -25,7 +25,7 @@ public class Bush implements Interactable{
         hasBerries = true;
 
         hitBox = new Rectangle(worldX + 15 ,worldY + 15 ,spriteW -30, spriteH-15);
-        interactionBox = new Rectangle(worldX - GameFrame.SCALED/2,worldY - GameFrame.SCALED/2, spriteH + GameFrame.SCALED*2, spriteW + GameFrame.SCALED*2);
+        interactionBox = new Rectangle(worldX - GameFrame.SCALED/2 ,worldY - GameFrame.SCALED/2 , spriteW + GameFrame.SCALED, spriteH + GameFrame.SCALED);
 
         loadImage();
     }
@@ -36,7 +36,7 @@ public class Bush implements Interactable{
             int tileSize = 16;
 
             berries = treeSprite.getSubimage(2 * tileSize, 6 * tileSize, spriteW/GameFrame.SCALED* tileSize, spriteH/GameFrame.SCALED* tileSize);
-            noBerries = treeSprite.getSubimage(2 * tileSize, 6 * tileSize, spriteW/GameFrame.SCALED, spriteH/GameFrame.SCALED);
+            noBerries = treeSprite.getSubimage(2 * tileSize, 8 * tileSize, spriteW/GameFrame.SCALED* tileSize, spriteH/GameFrame.SCALED* tileSize);
         } catch (IOException ex) {
             
         }

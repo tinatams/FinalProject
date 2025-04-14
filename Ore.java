@@ -21,7 +21,7 @@ public class Ore implements Interactable{
         health = 7;
 
         hitBox = new Rectangle(worldX ,worldY ,spriteH, spriteW);
-        interactionBox = new Rectangle(worldX - GameFrame.SCALED/2,worldY - GameFrame.SCALED/2, spriteH + GameFrame.SCALED*2, spriteW + GameFrame.SCALED*2);
+         interactionBox = new Rectangle(worldX - GameFrame.SCALED/2,worldY - GameFrame.SCALED/2, spriteW + GameFrame.SCALED, spriteH + GameFrame.SCALED);
 
         loadImage();
     }
@@ -31,7 +31,7 @@ public class Ore implements Interactable{
             BufferedImage tileSheet = ImageIO.read(new File("./res/tileSets/TileSetDeco.png")); 
             int tileSize = 16;
 
-            treeSprite = tileSheet.getSubimage(16 * tileSize, 0 * tileSize, spriteW/GameFrame.SCALED * tileSize, spriteH/GameFrame.SCALED * tileSize);
+            treeSprite = tileSheet.getSubimage(16 * tileSize, 1 * tileSize, spriteW/GameFrame.SCALED * tileSize, spriteH/GameFrame.SCALED * tileSize);
         } catch (IOException ex) {
             
         }
@@ -40,6 +40,7 @@ public class Ore implements Interactable{
     @Override
     public void draw(Graphics2D g2d){
         g2d.drawImage(treeSprite, worldX, worldY, spriteW, spriteH, null);
+        g2d.draw(interactionBox);
     }
 
     @Override
