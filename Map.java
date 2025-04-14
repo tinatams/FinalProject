@@ -194,11 +194,12 @@ public class Map{
                     switch (type) {
                         case "TREE":
                             interacts.add(new Tree(x, y));
-                            System.out.println("newTree");
                             break;
                         case "BUSH":
                             interacts.add(new Bush(x, y));
                             break;
+                        case "ORE":
+                            interacts.add(new Ore(x, y));
                     }
                 }
             }

@@ -12,7 +12,7 @@ public class GrapeItem extends SuperItem{
     @Override
     public void loadImage() {
         try{
-            sprite = ImageIO.read(new File("./res/items/Rock.png"));
+            sprite = ImageIO.read(new File("./res/items/grape.png"));
         } catch (IOException e){
             
         }

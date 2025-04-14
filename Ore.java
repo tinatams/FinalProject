@@ -1,28 +1,24 @@
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
-import java.util.*;
 import javax.imageio.*;
 
-public class Bush implements Interactable{
+public class Ore implements Interactable{
     private int worldX, worldY, spriteW, spriteH;
     private String name;
-    private BufferedImage berries, noBerries;
+    private BufferedImage treeSprite;
     private int health;
 
-    private boolean hasBerries;
     private Rectangle hitBox, interactionBox;
 
-    public Bush(int x, int y){
-        spriteW = GameFrame.SCALED * 3;
-        spriteH = GameFrame.SCALED * 2;
+    public Ore(int x, int y){
+        spriteW = GameFrame.SCALED;
+        spriteH = GameFrame.SCALED;
         
         worldX = x * GameFrame.SCALED;
         worldY = y * GameFrame.SCALED;
 
-        health = 5;
-
-        hasBerries = true;
+        health = 7;
 
         hitBox = new Rectangle(worldX ,worldY ,spriteH, spriteW);
         interactionBox = new Rectangle(worldX - GameFrame.SCALED/2,worldY - GameFrame.SCALED/2, spriteH + GameFrame.SCALED*2, spriteW + GameFrame.SCALED*2);
@@ -32,36 +28,27 @@ public class Bush implements Interactable{
 
     public void loadImage(){
         try {
-            BufferedImage treeSprite = ImageIO.read(new File("./res/tileSets/TileSetDeco.png")); 
+            BufferedImage tileSheet = ImageIO.read(new File("./res/tileSets/TileSetDeco.png")); 
             int tileSize = 16;
 
-            berries = treeSprite.getSubimage(2 * tileSize, 6 * tileSize, spriteW/GameFrame.SCALED* tileSize, spriteH/GameFrame.SCALED* tileSize);
-            noBerries = treeSprite.getSubimage(2 * tileSize, 6 * tileSize, spriteW/GameFrame.SCALED, spriteH/GameFrame.SCALED);
+            treeSprite = tileSheet.getSubimage(0 * tileSize, 16 * tileSize, spriteW/GameFrame.SCALED * tileSize, spriteH/GameFrame.SCALED * tileSize);
         } catch (IOException ex) {
             
         }
     }
 
+    @Override
     public void draw(Graphics2D g2d){
-        BufferedImage toDraw = hasBerries ? berries : noBerries;
-        g2d.drawImage(toDraw, worldX, worldY, spriteW, spriteH, null);
+        g2d.drawImage(treeSprite, worldX, worldY, spriteW, spriteH, null);
     }
 
     @Override
     public void interact(Player player) {
-        if (hasBerries){
-            player.collect(new GrapeItem(0,0));
-            hasBerries = false;
-            Timer berryTimer = new Timer();
-            TimerTask berryBack = new TimerTask(){
-                @Override 
-                public void run(){
-                    hasBerries = true;
-                }
-            };
-            berryTimer.schedule(berryBack, 240000);
+        health--;
+        System.out.println(health);
+        if (health == 0){
+            player.collect(new IronItem(0,0));
         }
-        
     }
 
     @Override
@@ -91,10 +78,6 @@ public class Bush implements Interactable{
 
     public int getHealth(){
         return health;
-    }
-
-    public boolean hasBerries(){
-        return hasBerries;
     }
 
     @Override

@@ -187,6 +187,8 @@ public class Player implements Collidable{
         Interactable interactionObj = getInteractable(mapH.getInteractables());
         if (interactionObj != null) interactionObj.interact(this);
 
+
+        System.out.println("\n\ninventory:");
         for(SuperItem item : inventory){
             System.out.println(item);
         }

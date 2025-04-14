@@ -168,7 +168,6 @@ public class MapHandler{
 
         for (Interactable interactObj : interacts){
             interactObj.draw(g2d);
-            System.out.println("yo");
         }
     }
 
