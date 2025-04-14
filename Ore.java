@@ -31,7 +31,7 @@ public class Ore implements Interactable{
             BufferedImage tileSheet = ImageIO.read(new File("./res/tileSets/TileSetDeco.png")); 
             int tileSize = 16;
 
-            treeSprite = tileSheet.getSubimage(0 * tileSize, 16 * tileSize, spriteW/GameFrame.SCALED * tileSize, spriteH/GameFrame.SCALED * tileSize);
+            treeSprite = tileSheet.getSubimage(16 * tileSize, 0 * tileSize, spriteW/GameFrame.SCALED * tileSize, spriteH/GameFrame.SCALED * tileSize);
         } catch (IOException ex) {
             
         }

@@ -199,6 +199,13 @@ public class MapHandler{
                     treeTimer.schedule(newTree, 240000);
                 }
             }
+
+            if (interactionObj instanceof Ore){
+                Ore oreObj = (Ore) interactionObj;
+                if(oreObj.getHealth() <=0){
+                    interactables.remove(interactionObj);
+                }
+            }
         }
     }
     
