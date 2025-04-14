@@ -21,6 +21,9 @@ public class Player implements Collidable{
     private BufferedImage[][] sprites;
     private Rectangle hitBox;
 
+    private ArrayList<SuperItem> inventory;
+
+
     public Player(String s, int x, int y){
         worldX = x;
         worldY = y;
@@ -39,6 +42,7 @@ public class Player implements Collidable{
         version = 0;
 
         sprites = new BufferedImage[5][2];
+        inventory = new ArrayList<>();
 
         setUpSprites();
     }
@@ -153,6 +157,11 @@ public class Player implements Collidable{
         worldY = y;
     }
 
+    public void collect(SuperItem item){
+        inventory.add(item);
+        item.setOwner(this);
+    }
+
     public boolean isColliding(Collidable c){
         hitBox = new Rectangle(worldX + 10, worldY + 10, spriteW-20, spriteH-10);
         Rectangle itemHitBox = c.getHitBox();
@@ -177,6 +186,10 @@ public class Player implements Collidable{
     public void interact(){
         Interactable interactionObj = getInteractable(mapH.getInteractables());
         if (interactionObj != null) interactionObj.interact(this);
+
+        for(SuperItem item : inventory){
+            System.out.println(item);
+        }
     }
 
     @Override

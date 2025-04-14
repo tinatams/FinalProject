@@ -47,7 +47,7 @@ public class Tree implements Interactable{
         health--;
         System.out.println(health);
         if (health == 0){
-
+            player.collect(new WoodItem(0,0));
         }
     }
 
