@@ -99,19 +99,12 @@ public class GameFrame{
 
         //MAKE IT SO THAT THEY ARE SEPARATED...
         // INTERACTABLES, COLLECTABLES ...
-        // AbstractAction Interact = new AbstractAction(){
-        //     @Override
-        //     public void actionPerformed(ActionEvent ae){
-        //         if (selectedPlayer.getCollidingWith(items) != null){
-        //             Collidable item = selectedPlayer.getCollidingWith(items);
-        //             selectedPlayer.interact(item);
-
-        //             if (item instanceof SuperItem){
-        //                 items.remove(item);
-        //             }
-        //         }
-        //     }
-        // };
+        AbstractAction Interact = new AbstractAction(){
+            @Override
+            public void actionPerformed(ActionEvent ae){
+                selectedPlayer.interact();
+            }
+        };
 
         am.put("UP", UP);
         am.put("DOWN", DOWN);
@@ -119,14 +112,14 @@ public class GameFrame{
         am.put("LEFT", LEFT);
         am.put("IDLE", IDLE);
 
-        //am.put("INT", Interact);
+        am.put("INT", Interact);
 
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, false), "UP");
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, false), "LEFT");
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, false), "DOWN");
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, false), "RIGHT");
 
-        //im.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, 0, false), "INT");
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, 0, false), "INT");
 
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, true), "IDLE");
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, true), "IDLE");

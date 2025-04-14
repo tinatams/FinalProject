@@ -69,7 +69,7 @@ public class GameCanvas extends JComponent{
         mapH.drawDeco(g2d);
         mapH.drawInteracts(g2d);
         
-        if (players != null && players.size() > 0){
+        if (players != null && players.size()> 0){
             for(Player player : players){
                 player.draw(g2d);
             }

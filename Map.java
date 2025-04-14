@@ -40,6 +40,7 @@ public class Map{
         loadDecoMap();
         loadColMap();
         loadColAbleMap();
+        loadInteract();
     }
 
     private void loadBaseMap(){
@@ -187,15 +188,17 @@ public class Map{
                 String mapLine = mapReader.nextLine();
                 String[] mapData = mapLine.split(",");
                 if (mapData.length > 0) {
-                    String var5 = mapData[0];
-                    int var6 = Integer.parseInt(mapData[1]);
-                    int var7 = Integer.parseInt(mapData[2]);
-                    switch (var5) {
+                    String type = mapData[0];
+                    int x = Integer.parseInt(mapData[1]);
+                    int y = Integer.parseInt(mapData[2]);
+                    switch (type) {
                         case "TREE":
-                            this.interacts.add(new Tree(var6, var7));
+                            interacts.add(new Tree(x, y));
+                            System.out.println("newTree");
                             break;
                         case "BUSH":
-                            this.interacts.add(new Bush(var6, var7));
+                            interacts.add(new Bush(x, y));
+                            break;
                     }
                 }
             }
