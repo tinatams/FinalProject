@@ -24,7 +24,7 @@ public class Bush implements Interactable{
 
         hasBerries = true;
 
-        hitBox = new Rectangle(worldX ,worldY ,spriteH, spriteW);
+        hitBox = new Rectangle(worldX + 15 ,worldY + 15 ,spriteW -30, spriteH-15);
         interactionBox = new Rectangle(worldX - GameFrame.SCALED/2,worldY - GameFrame.SCALED/2, spriteH + GameFrame.SCALED*2, spriteW + GameFrame.SCALED*2);
 
         loadImage();

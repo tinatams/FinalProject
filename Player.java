@@ -45,6 +45,7 @@ public class Player implements Collidable{
         inventory = new ArrayList<>();
 
         setUpSprites();
+        hitBox = new Rectangle(worldX + 10, worldY + 30, spriteW-20, spriteH-30);
     }
 
     public void setUpSprites(){
@@ -104,6 +105,7 @@ public class Player implements Collidable{
                 worldX -= speed;
                 break;
         }
+        hitBox = new Rectangle(worldX + 10, worldY + 30, spriteW-20, spriteH-30);
 
         //System.out.println(cannotMove());
         if (cannotMove()){
@@ -125,7 +127,6 @@ public class Player implements Collidable{
     }
 
     public boolean cannotMove(){
-        hitBox = new Rectangle(worldX + 10, worldY + 10, spriteH-20, spriteW-10);
         int worldXPos = hitBox.x/GameFrame.SCALED;
         int worldX2Pos = (hitBox.x + hitBox.width)/GameFrame.SCALED;
         int worldYPos = hitBox.y/GameFrame.SCALED;
@@ -139,8 +140,16 @@ public class Player implements Collidable{
         if (collisionMap[worldXPos][worldYPos] == 0 || collisionMap[worldX2Pos][worldYPos] == 0 || collisionMap[worldXPos][worldYPos] == -2 || collisionMap[worldX2Pos][worldYPos] == -2|| collisionMap[worldXPos][worldY2Pos] == -2){
             return true;
         }
-        else 
-            return false;
+        
+        ArrayList<Interactable> interactable = mapH.getInteractables();
+        for (Interactable interactObj : interactable){
+            Collidable collisionObj = (Collidable) interactObj;
+            if(hitBox.intersects(collisionObj.getHitBox())){
+                return true;
+            }
+        }
+        
+        return false;
     } 
 
     public void setDirection(int dir){
@@ -163,7 +172,6 @@ public class Player implements Collidable{
     }
 
     public boolean isColliding(Collidable c){
-        hitBox = new Rectangle(worldX + 10, worldY + 10, spriteW-20, spriteH-10);
         Rectangle itemHitBox = c.getHitBox();
 
         if (c instanceof Interactable){
