@@ -78,6 +78,8 @@ public class GameStarter{
     }
 
     public class ReadFromServer extends Thread{
+        private String[] dataTypes = {"Players"};
+
         public ReadFromServer(){
 
         }
@@ -86,10 +88,29 @@ public class GameStarter{
             while (true) { 
                try {
                     serverData = dataIn.readUTF();
-                    frame.recieveData(serverData);
+
+                    String[] sData = serverData.split("\n");
+                    for(String dataType : sData){
+                        String[] data = dataType.split("\\|");
+                        if (data[0].equals("Players")){
+                            frame.recieveData(compile(data));
+                        }
+
+                    }
+
+                    
                 } catch (IOException ex) {
                 } 
             }
+        }
+
+        private String compile(String[] data){
+            String tempString = "";
+            for (int i = 1; i < data.length ; i++){
+                tempString += data[i] + "|";
+            }
+
+            return tempString;
         }
     }
 
