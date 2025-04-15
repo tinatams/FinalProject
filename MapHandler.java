@@ -56,7 +56,7 @@ public class MapHandler{
         maps[MINES] = new Map("mine");
         maps[WORKSHOP] = new Map("workshop");
         maps[MINOTAUR] = new Map("mino");
-        //inset Labyrinth
+        maps[LABYRINTH] = new Labyrinth();
 
     }
 
