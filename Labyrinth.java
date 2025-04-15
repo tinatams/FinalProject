@@ -11,11 +11,14 @@ public class Labyrinth extends Map{
     }
 
     public void loadNewMap(String newMap){
-        version = newMap;
+        if (newMap != version){
+            version = newMap;
 
-        load(decoTileMap, String.format("%s/deco",newMap));
-        load(collisionMap, String.format("%s/collisions",newMap));
-        load(collidablesMap, String.format("%s/collidables",newMap));
-        load(baseTileMap, String.format("%s/base",newMap));
+            load(decoTileMap, String.format("%s/deco",newMap));
+            load(collisionMap, String.format("%s/collisions",newMap));
+            load(collidablesMap, String.format("%s/collidables",newMap));
+            load(baseTileMap, String.format("%s/base",newMap));
+        }
+        
     }
 }
