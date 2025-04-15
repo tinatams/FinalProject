@@ -15,13 +15,13 @@ public class GameCanvas extends JComponent{
 
     private MapHandler mapH;
 
-    public GameCanvas(String data, Player me, int CN){
+    public GameCanvas(String data, Player me, int CN, MapHandler mh){
         dataFromServer = data;
         selectedPlayer = me;
 
         clientNumber = CN;
 
-        mapH = new MapHandler(selectedPlayer);
+        mapH = mh;
         selectedPlayer.setMapHandler(this.mapH);
 
         cameraW = GameFrame.WIDTH;

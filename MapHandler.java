@@ -50,14 +50,21 @@ public class MapHandler{
         maps[DEMETER] = new Map("demeter");
         maps[DIONYSUS] = new Map("dionysus");
         maps[DHOUSE] = new Map("d_house");  
-        maps[ASSIST1] = new Map("assist1");
+        maps[ASSIST1] = new AssistOne();
         //insert Assist2
         maps[POSEIDON] = new Map("poseidon");
         maps[MINES] = new Map("mine");
         maps[WORKSHOP] = new Map("workshop");
         maps[MINOTAUR] = new Map("mino");
-        //inset Labyrinth
+        maps[LABYRINTH] = new Labyrinth();
 
+        for (Map mapObj : maps){
+            if (mapObj != null){
+                mapObj.setUpMaps();
+                mapObj.loadMap();
+            }
+        }
+        
     }
 
     public void setUpTiles(){
@@ -96,8 +103,6 @@ public class MapHandler{
 
         } catch (IOException ex) {
         }
-
-        
     }
 
     public void drawBase(Graphics2D g2d){
@@ -108,7 +113,6 @@ public class MapHandler{
 
         while (worldCol < Map.maxColumn && worldRow < Map.maxRow){
             int worldX = worldCol * GameFrame.SCALED, worldY = worldRow * GameFrame.SCALED;
-            
             if (currentMap[worldCol][worldRow] != -1 && canDraw(worldX, worldY))
             g2d.drawImage(baseTiles[currentMap[worldCol][worldRow]], worldX, worldY, GameFrame.SCALED, GameFrame.SCALED, null);
 
@@ -200,12 +204,38 @@ public class MapHandler{
                 }
             }
 
-            if (interactionObj instanceof Ore){
+            else if (interactionObj instanceof Ore){
                 Ore oreObj = (Ore) interactionObj;
                 if(oreObj.getHealth() <=0){
                     interactables.remove(interactionObj);
                 }
             }
+
+            else if (interactionObj instanceof ButtonItem){
+                interactionObj.interact(pFollow);
+            }
+        }
+    }
+
+    public void changeVersion(int verNum){
+        String newVersion;
+        switch (verNum){
+            case 1:
+                newVersion = "default";
+                break;
+            case 2:
+                newVersion = "button_one";
+                break;
+            case 3: 
+                newVersion = "button_two";
+                break;
+            default:
+                newVersion = "default";
+        }
+
+        if (maps[currentMap] instanceof Labyrinth){
+            Labyrinth cm = (Labyrinth) maps[currentMap];
+            cm.loadNewMap(newVersion);
         }
     }
     

@@ -144,7 +144,7 @@ public class Player implements Collidable{
         ArrayList<Interactable> interactable = mapH.getInteractables();
         for (Interactable interactObj : interactable){
             Collidable collisionObj = (Collidable) interactObj;
-            if(hitBox.intersects(collisionObj.getHitBox())){
+            if(hitBox.intersects(collisionObj.getHitBox()) && !(collisionObj instanceof ButtonItem)){
                 return true;
             }
         }

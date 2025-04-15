@@ -2,21 +2,21 @@ import java.io.*;
 import java.util.*;
 
 public class Map{
-    public static final int maxColumn =  300;
-    public static final int maxRow = 300;
+    protected static final int maxColumn =  300;
+    protected static final int maxRow = 300;
 
-    private String mapName;
+    protected String mapName;
 
-    private int[][] baseTileMap;
-    private int[][] decoTileMap;
-    private int[][] collisionMap;
-    private int[][] collidablesMap;
+    protected int[][] baseTileMap;
+    protected int[][] decoTileMap;
+    protected int[][] collisionMap;
+    protected int[][] collidablesMap;
 
-    private int mapWidth;
-    private int mapHeight;
+    protected int mapWidth;
+    protected int mapHeight;
 
-    private ArrayList<Teleporter> teleporters;
-    private ArrayList<Interactable> interacts;
+    protected ArrayList<Teleporter> teleporters;
+    protected ArrayList<Interactable> interacts;
 
     public Map(String n){
         baseTileMap = new int[maxRow][maxColumn];
@@ -31,28 +31,27 @@ public class Map{
 
         loadTeleporters();
 
-        setUpMap();
-        loadMap();
     }
 
     public void loadMap(){
-        loadBaseMap();
-        loadDecoMap();
-        loadColMap();
-        loadColAbleMap();
+        load(decoTileMap, "deco");
+        load(collisionMap, "collisions");
+        load(collidablesMap, "collidables");
+        load(baseTileMap, "base");
+
         loadInteract();
     }
 
-    private void loadBaseMap(){
+    protected void load(int[][] mapArray, String version){
         int row = 0, col = 0;
         try {
-            File map = new File(String.format("./res/maps/%s/base.csv",mapName));
+            File map = new File(String.format("./res/maps/%s/%s.csv", mapName, version));
             Scanner mapReader = new Scanner(map);
             while (mapReader.hasNextLine()) {
                 String mapLine = mapReader.nextLine();
                 String[] mapLineSplit = mapLine.split(",");
                 for (String num : mapLineSplit){
-                    baseTileMap[col][row] = Integer.parseInt(num) ;
+                    mapArray[col][row] = Integer.parseInt(num) ;
                     col ++;
                 }
         
@@ -68,82 +67,39 @@ public class Map{
         }
     }
 
-    private void loadDecoMap(){
-        int row = 0, col = 0;
-        try {
-            File map = new File(String.format("./res/maps/%s/deco.csv",mapName));
-            Scanner mapReader = new Scanner(map);
-            while (mapReader.hasNextLine()) {
-                String mapLine = mapReader.nextLine();
-                String[] mapLineSplit = mapLine.split(",");
-                for (String num : mapLineSplit){
-                    decoTileMap[col][row] = Integer.parseInt(num) ;
-                    col ++;
-                }
-                row++;
-                col = 0;
-                
-            }
-            mapReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
+    // public void setUpMaps(){
+    //     int originalCol = 0, originalRow = 0;
+    //     while (originalCol < maxColumn && originalRow < maxRow){
+    //         baseTileMap[originalCol][originalRow] = -1;
+    //         decoTileMap[originalCol][originalRow] = -1;
+    //         collisionMap[originalCol][originalRow] = -2;
+    //         collidablesMap[originalCol][originalRow] = -1;
+
+    //         originalCol++;
+    //         if (originalCol == maxColumn){
+    //             originalCol = 0;
+    //             originalRow++;
+    //         }
+    //     }
+    // }
+
+    public void setUpMaps(){
+        setUpMap(baseTileMap);
+        setUpMap(decoTileMap);
+        setUpMap(collisionMap);
+        setUpMap(collidablesMap);
     }
 
-    private void loadColMap(){
-        int row = 0, col = 0;
-        try {
-            File map = new File(String.format("./res/maps/%s/collisions.csv",mapName));
-            Scanner mapReader = new Scanner(map);
-            while (mapReader.hasNextLine()) {
-                String mapLine = mapReader.nextLine();
-                String[] mapLineSplit = mapLine.split(",");
-                for (String num : mapLineSplit){
-                    collisionMap[col][row] = Integer.parseInt(num) ;
-                    col ++;
-                }
-                row++;
-                col = 0;
-                
-            }
-            mapReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-    }
-    
-    private void loadColAbleMap(){
-        int row = 0, col = 0;
-        try {
-            File map = new File(String.format("./res/maps/%s/collidables.csv",mapName));
-            Scanner mapReader = new Scanner(map);
-            while (mapReader.hasNextLine()) {
-                String mapLine = mapReader.nextLine();
-                String[] mapLineSplit = mapLine.split(",");
-                for (String num : mapLineSplit){
-                    collidablesMap[col][row] = Integer.parseInt(num) ;
-                    col ++;
-                }
-                row++;
-                col = 0;
-                
-            }
-            mapReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-    }
-
-    public void setUpMap(){
+    public void setUpMap(int[][] specificMap){
         int originalCol = 0, originalRow = 0;
         while (originalCol < maxColumn && originalRow < maxRow){
-            baseTileMap[originalCol][originalRow] = -1;
-            decoTileMap[originalCol][originalRow] = -1;
-            collisionMap[originalCol][originalRow] = -2;
-            collidablesMap[originalCol][originalRow] = -1;
+            int defaultNum = -1;
+
+            if (specificMap == collisionMap){
+                defaultNum = -2;
+            }
+
+            specificMap[originalCol][originalRow] = defaultNum;
 
             originalCol++;
             if (originalCol == maxColumn){
@@ -153,7 +109,7 @@ public class Map{
         }
     }
 
-    private void loadTeleporters() {
+    protected void loadTeleporters() {
         try {
             File map = new File(String.format("./res/maps/%s/teleporters.txt",mapName));
             Scanner mapReader = new Scanner(map);
@@ -179,7 +135,7 @@ public class Map{
         }
     }
 
-    private void loadInteract() {
+    protected void loadInteract() {
         try {
             File map = new File(String.format("./res/maps/%s/interact.txt", this.mapName));
             Scanner mapReader = new Scanner(map);

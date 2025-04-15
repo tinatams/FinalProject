@@ -108,6 +108,7 @@ public class GameServer{
                 }
             } catch (IOException e) {
                 System.out.println("IOException from ClientRunnable's run() method");
+                //clients.remove(this);
             }
         }
 

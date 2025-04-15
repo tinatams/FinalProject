@@ -18,6 +18,7 @@ public class GameFrame{
     private GameCanvas canvas;
     private String serverData;
     private Player selectedPlayer;
+    private MapHandler mapH;
 
     private int gameState;
     
@@ -35,7 +36,8 @@ public class GameFrame{
         int y = (CN % 2 == 0) ? 10 : 11;
  
         selectedPlayer = new Player(skin, x * SCALED, y * SCALED);
-        canvas = new GameCanvas(data, selectedPlayer, CN);
+        mapH = new MapHandler(selectedPlayer);
+        canvas = new GameCanvas(data, selectedPlayer, CN, mapH);
 
         gameState = PLAYING_STATE;
     }
