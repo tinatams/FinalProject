@@ -2,7 +2,6 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.ArrayList;
 
 public class Teleporter implements Collidable{
     private int teleportTo;
@@ -40,22 +39,6 @@ public class Teleporter implements Collidable{
 
     public int teleportPlayerY(){
         return putPlayerY;
-    }
-
-    public boolean isColliding(Collidable c){
-        hitBox = new Rectangle(worldX, worldY, width, height);
-        Rectangle itemHitBox = c.getHitBox();
-
-        return hitBox.intersects(itemHitBox);
-    }
-
-    public Collidable getCollidingWith(ArrayList<Collidable> items) {
-        for (Collidable other: items){
-            if (isColliding(other))
-                return other;
-        }
-
-        return null;
     }
 
     @Override

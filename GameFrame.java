@@ -115,9 +115,8 @@ public class GameFrame{
         AbstractAction Inventory = new AbstractAction(){
             @Override
             public void actionPerformed(ActionEvent ae){
-                // gameState = (gameState == PLAYING_STATE) ? INVENTORY_STATE : PLAYING_STATE;
-                // canvas.setGameState(gameState);
-                mapH.changeVersion();
+                gameState = (gameState == PLAYING_STATE) ? INVENTORY_STATE : PLAYING_STATE;
+                canvas.setGameState(gameState);
             }
         };
 

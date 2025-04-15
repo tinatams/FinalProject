@@ -44,12 +44,19 @@ public abstract class ButtonItem implements Interactable{
 
     //extend this class to see what action to do
     //maybe turn this into literally an empty method, then like anonymous class extend buttonitem (?);
-    public abstract void actionToDo();
+    public abstract void actionToDoPressed();
+
+    public abstract void actionToDoReleased();
 
     @Override
     public void interact(Player player){
-        press = !press;
-        actionToDo();
+        if (player.isColliding(this)){
+            press = true;
+            actionToDoPressed();
+        } else{
+            press = false;
+            actionToDoReleased();
+        }
     }
 
     @Override
@@ -74,6 +81,11 @@ public abstract class ButtonItem implements Interactable{
 
     @Override
     public Rectangle getHitBox() {
+        return hitBox;
+    }
+
+    @Override
+    public Rectangle getInteractionBox() {
         return hitBox;
     }
 }

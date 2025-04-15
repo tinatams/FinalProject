@@ -5,8 +5,6 @@ import java.util.*;
 import javax.imageio.*;
 
 public class MapHandler{
-    int number = 1;
-
     private Map[] maps; 
     private Player pFollow;
 
@@ -52,7 +50,7 @@ public class MapHandler{
         maps[DEMETER] = new Map("demeter");
         maps[DIONYSUS] = new Map("dionysus");
         maps[DHOUSE] = new Map("d_house");  
-        maps[ASSIST1] = new Map("assist1");
+        maps[ASSIST1] = new AssistOne();
         //insert Assist2
         maps[POSEIDON] = new Map("poseidon");
         maps[MINES] = new Map("mine");
@@ -206,20 +204,22 @@ public class MapHandler{
                 }
             }
 
-            if (interactionObj instanceof Ore){
+            else if (interactionObj instanceof Ore){
                 Ore oreObj = (Ore) interactionObj;
                 if(oreObj.getHealth() <=0){
                     interactables.remove(interactionObj);
                 }
             }
+
+            else if (interactionObj instanceof ButtonItem){
+                interactionObj.interact(pFollow);
+            }
         }
     }
 
-    public void changeVersion(){
-        number++;
-        if (number > 3) number = 1;
-        String newVersion = "default";
-        switch (number){
+    public void changeVersion(int verNum){
+        String newVersion;
+        switch (verNum){
             case 1:
                 newVersion = "default";
                 break;
@@ -229,7 +229,10 @@ public class MapHandler{
             case 3: 
                 newVersion = "button_two";
                 break;
+            default:
+                newVersion = "default";
         }
+
         if (maps[currentMap] instanceof Labyrinth){
             Labyrinth cm = (Labyrinth) maps[currentMap];
             cm.loadNewMap(newVersion);

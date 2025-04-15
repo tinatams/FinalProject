@@ -109,7 +109,7 @@ public class Map{
         }
     }
 
-    private void loadTeleporters() {
+    protected void loadTeleporters() {
         try {
             File map = new File(String.format("./res/maps/%s/teleporters.txt",mapName));
             Scanner mapReader = new Scanner(map);
@@ -135,7 +135,7 @@ public class Map{
         }
     }
 
-    private void loadInteract() {
+    protected void loadInteract() {
         try {
             File map = new File(String.format("./res/maps/%s/interact.txt", this.mapName));
             Scanner mapReader = new Scanner(map);
