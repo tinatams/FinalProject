@@ -5,6 +5,8 @@ import java.util.*;
 import javax.imageio.*;
 
 public class MapHandler{
+    private int clientNumber;
+
     private Map[] maps; 
     private Player pFollow;
 
@@ -32,7 +34,9 @@ public class MapHandler{
 
     private int bufferSize = GameFrame.WIDTH;
 
-    public MapHandler(Player pf){
+    public MapHandler(Player pf, int cn){
+        clientNumber = cn;
+
         baseTiles = new BufferedImage[1000];
         decoTiles = new BufferedImage[1000];
         
@@ -217,26 +221,29 @@ public class MapHandler{
         }
     }
 
-    public void changeVersion(int verNum){
-        String newVersion;
-        switch (verNum){
-            case 1:
-                newVersion = "default";
-                break;
-            case 2:
-                newVersion = "button_one";
-                break;
-            case 3: 
-                newVersion = "button_two";
-                break;
-            default:
-                newVersion = "default";
+    public void recieveData(String data){
+        Labyrinth labMap = (Labyrinth) maps[LABYRINTH];
+
+        String[] serverMapData = data.split("\\|");
+        String newVersion = "default";
+
+        for (int i = 0; i < serverMapData.length; i++){
+            String mapData = serverMapData[i];
+            
+            String[] mData = mapData.split(",");
+            if (mData.length == 2){
+                if (Integer.parseInt(mData[0]) != clientNumber){
+                    newVersion = mData[1];
+                }
+            }  
         }
 
-        if (maps[currentMap] instanceof Labyrinth){
-            Labyrinth cm = (Labyrinth) maps[currentMap];
-            cm.loadNewMap(newVersion);
-        }
+        if(newVersion != labMap.getVersion()) labMap.loadNewMap(newVersion);
+    }
+
+    public String getVersion(){
+        AssistOne assistOne = (AssistOne) maps[ASSIST1];
+        return assistOne.getVersion();
     }
     
     public int[][] getColMap(){

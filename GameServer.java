@@ -57,7 +57,7 @@ public class GameServer{
 
     public void compileServerData(){
         String tempString = "";
-        String[] dataTypes = {"Players"};
+        String[] dataTypes = {"Players","Labyrinth"};
 
         for (int i = 0; i < dataTypes.length; i++){
             tempString += dataTypes[i] + "|";
@@ -67,9 +67,7 @@ public class GameServer{
                     tempString += cliData[i]+"|";
                 }
             }
-            System.out.println(tempString);
             tempString += "\n";
-            //System.out.println(tempString);
         }
         serverData = tempString;
     }

@@ -64,8 +64,10 @@ public class GameStarter{
         public void run(){
             while (true) { 
                 try {
-                    Player clientPlayer = frame.getSelectedSq();
-                    clientData = String.format("%d,%d,%d,%s,%d,%d,%s", clientNumber, clientPlayer.getWorldX(), clientPlayer.getWorldY(), clientPlayer.getSkin(), clientPlayer.getDirection(), clientPlayer.getVer(), frame.getMap());
+                    Player clientPlayer = frame.getSelected();
+                    MapHandler mapH = frame.getMapHandler();
+                    clientData = String.format("%d,%d,%d,%s,%d,%d,%s\n", clientNumber, clientPlayer.getWorldX(), clientPlayer.getWorldY(), clientPlayer.getSkin(), clientPlayer.getDirection(), clientPlayer.getVer(), frame.getMap());
+                    clientData += String.format("%d,%s\n",clientNumber, mapH.getVersion());
                     dataOut.writeUTF(clientData);
                     try {
                         Thread.sleep(10);
@@ -78,7 +80,7 @@ public class GameStarter{
     }
 
     public class ReadFromServer extends Thread{
-        private String[] dataTypes = {"Players"};
+        private String[] dataTypes = {"Players","Labyrinth"};
 
         public ReadFromServer(){
 
@@ -94,6 +96,9 @@ public class GameStarter{
                         String[] data = dataType.split("\\|");
                         if (data[0].equals("Players")){
                             frame.recieveData(compile(data));
+                        } else if (data[0].equals("Labyrinth")){
+                            MapHandler mapH = frame.getMapHandler();
+                            mapH.recieveData(compile(data));
                         }
 
                     }
