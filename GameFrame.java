@@ -18,6 +18,7 @@ public class GameFrame{
     private GameCanvas canvas;
     private String serverData;
     private Player selectedPlayer;
+    private MapHandler mapH;
 
     private int gameState;
     
@@ -35,7 +36,8 @@ public class GameFrame{
         int y = (CN % 2 == 0) ? 10 : 11;
  
         selectedPlayer = new Player(skin, x * SCALED, y * SCALED);
-        canvas = new GameCanvas(data, selectedPlayer, CN);
+        mapH = new MapHandler(selectedPlayer);
+        canvas = new GameCanvas(data, selectedPlayer, CN, mapH);
 
         gameState = PLAYING_STATE;
     }
@@ -113,8 +115,9 @@ public class GameFrame{
         AbstractAction Inventory = new AbstractAction(){
             @Override
             public void actionPerformed(ActionEvent ae){
-                gameState = (gameState == PLAYING_STATE) ? INVENTORY_STATE : PLAYING_STATE;
-                canvas.setGameState(gameState);
+                // gameState = (gameState == PLAYING_STATE) ? INVENTORY_STATE : PLAYING_STATE;
+                // canvas.setGameState(gameState);
+                mapH.changeVersion();
             }
         };
 

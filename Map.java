@@ -31,15 +31,13 @@ public class Map{
 
         loadTeleporters();
 
-        setUpMaps();
-        loadMap();
     }
 
     public void loadMap(){
-        load(baseTileMap, "base");
         load(decoTileMap, "deco");
         load(collisionMap, "collisions");
         load(collidablesMap, "collidables");
+        load(baseTileMap, "base");
 
         loadInteract();
     }
@@ -69,33 +67,39 @@ public class Map{
         }
     }
 
-    public void setUpMaps(){
-        int originalCol = 0, originalRow = 0;
-        while (originalCol < maxColumn && originalRow < maxRow){
-            baseTileMap[originalCol][originalRow] = -1;
-            decoTileMap[originalCol][originalRow] = -1;
-            collisionMap[originalCol][originalRow] = -2;
-            collidablesMap[originalCol][originalRow] = -1;
-
-            originalCol++;
-            if (originalCol == maxColumn){
-                originalCol = 0;
-                originalRow++;
-            }
-        }
-    }
-
     // public void setUpMaps(){
-    //     setUpMap(baseTileMap);
-    //     setUpMap(decoTileMap);
-    //     setUpMap(collisionMap);
-    //     setUpMap(collidablesMap);
+    //     int originalCol = 0, originalRow = 0;
+    //     while (originalCol < maxColumn && originalRow < maxRow){
+    //         baseTileMap[originalCol][originalRow] = -1;
+    //         decoTileMap[originalCol][originalRow] = -1;
+    //         collisionMap[originalCol][originalRow] = -2;
+    //         collidablesMap[originalCol][originalRow] = -1;
+
+    //         originalCol++;
+    //         if (originalCol == maxColumn){
+    //             originalCol = 0;
+    //             originalRow++;
+    //         }
+    //     }
     // }
+
+    public void setUpMaps(){
+        setUpMap(baseTileMap);
+        setUpMap(decoTileMap);
+        setUpMap(collisionMap);
+        setUpMap(collidablesMap);
+    }
 
     public void setUpMap(int[][] specificMap){
         int originalCol = 0, originalRow = 0;
         while (originalCol < maxColumn && originalRow < maxRow){
-            specificMap[originalCol][originalRow] = -1;
+            int defaultNum = -1;
+
+            if (specificMap == collisionMap){
+                defaultNum = -2;
+            }
+
+            specificMap[originalCol][originalRow] = defaultNum;
 
             originalCol++;
             if (originalCol == maxColumn){

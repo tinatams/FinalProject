@@ -5,6 +5,8 @@ import java.util.*;
 import javax.imageio.*;
 
 public class MapHandler{
+    int number = 1;
+
     private Map[] maps; 
     private Player pFollow;
 
@@ -58,6 +60,13 @@ public class MapHandler{
         maps[MINOTAUR] = new Map("mino");
         maps[LABYRINTH] = new Labyrinth();
 
+        for (Map mapObj : maps){
+            if (mapObj != null){
+                mapObj.setUpMaps();
+                mapObj.loadMap();
+            }
+        }
+        
     }
 
     public void setUpTiles(){
@@ -96,8 +105,6 @@ public class MapHandler{
 
         } catch (IOException ex) {
         }
-
-        
     }
 
     public void drawBase(Graphics2D g2d){
@@ -108,7 +115,6 @@ public class MapHandler{
 
         while (worldCol < Map.maxColumn && worldRow < Map.maxRow){
             int worldX = worldCol * GameFrame.SCALED, worldY = worldRow * GameFrame.SCALED;
-            
             if (currentMap[worldCol][worldRow] != -1 && canDraw(worldX, worldY))
             g2d.drawImage(baseTiles[currentMap[worldCol][worldRow]], worldX, worldY, GameFrame.SCALED, GameFrame.SCALED, null);
 
@@ -206,6 +212,27 @@ public class MapHandler{
                     interactables.remove(interactionObj);
                 }
             }
+        }
+    }
+
+    public void changeVersion(){
+        number++;
+        if (number > 3) number = 1;
+        String newVersion = "default";
+        switch (number){
+            case 1:
+                newVersion = "default";
+                break;
+            case 2:
+                newVersion = "button_one";
+                break;
+            case 3: 
+                newVersion = "button_two";
+                break;
+        }
+        if (maps[currentMap] instanceof Labyrinth){
+            Labyrinth cm = (Labyrinth) maps[currentMap];
+            cm.loadNewMap(newVersion);
         }
     }
     

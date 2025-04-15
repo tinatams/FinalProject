@@ -40,7 +40,6 @@ public class Ore implements Interactable{
     @Override
     public void draw(Graphics2D g2d){
         g2d.drawImage(treeSprite, worldX, worldY, spriteW, spriteH, null);
-        g2d.draw(interactionBox);
     }
 
     @Override
