@@ -148,7 +148,7 @@ public class GameServer{
                 compileServerData();
                 sendOutData();
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(100);
                 } catch (InterruptedException ex) {
                 }
             }

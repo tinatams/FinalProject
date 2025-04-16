@@ -70,7 +70,7 @@ public class GameStarter{
                     clientData += String.format("%d,%s\n",clientNumber, mapH.getVersion());
                     dataOut.writeUTF(clientData);
                     try {
-                        Thread.sleep(10);
+                        Thread.sleep(100);
                     } catch (InterruptedException ex) {
                     }
                 } catch (IOException ex) {
