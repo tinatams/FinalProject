@@ -46,4 +46,10 @@ public class AssistOne extends Map{
     public boolean buttonTwo(){
         return buttonTwoPress;
     }
+
+    String getVersion() {
+        if(buttonOnePress) return "button_one";
+        else if (buttonTwoPress) return "button_two";
+        else return "default";
+    }
 }

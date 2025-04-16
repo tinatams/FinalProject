@@ -57,10 +57,18 @@ public class GameServer{
 
     public void compileServerData(){
         String tempString = "";
-        for (ClientRunnable c : clients){
-            tempString += c.getClientData() + "|";
-        }
+        String[] dataTypes = {"Players","Labyrinth"};
 
+        for (int i = 0; i < dataTypes.length; i++){
+            tempString += dataTypes[i] + "|";
+            for (ClientRunnable c : clients){
+                String[] cliData = c.getClientDataArray();
+                if (cliData != null && cliData.length > 0){
+                    tempString += cliData[i]+"|";
+                }
+            }
+            tempString += "\n";
+        }
         serverData = tempString;
     }
 
@@ -77,6 +85,7 @@ public class GameServer{
         private int cid;
         private String name; 
         private String clientData;
+        private String[] clientArray;
 
         public ClientRunnable(Socket sck, int n){
             clientSocket = sck;
@@ -104,6 +113,7 @@ public class GameServer{
                 // sending out data
                 while (true) { 
                     clientData = dataIn.readUTF();
+                    clientArray = clientData.split("\n");
                     //sendToClients(messageFromClient, this);
                 }
             } catch (IOException e) {
@@ -122,6 +132,10 @@ public class GameServer{
         public String getClientData(){
             return clientData;
         }
+
+        public String[] getClientDataArray(){
+            return clientArray;
+        }
     }
 
     private class ServerOut extends Thread {
@@ -134,7 +148,7 @@ public class GameServer{
                 compileServerData();
                 sendOutData();
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(100);
                 } catch (InterruptedException ex) {
                 }
             }

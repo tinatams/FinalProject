@@ -19,10 +19,10 @@ public class Map{
     protected ArrayList<Interactable> interacts;
 
     public Map(String n){
-        baseTileMap = new int[maxRow][maxColumn];
-        decoTileMap = new int[maxRow][maxColumn];
-        collisionMap = new int[maxRow][maxColumn];
-        collidablesMap = new int[maxRow][maxColumn];
+        baseTileMap = new int[maxColumn][maxRow];
+        decoTileMap = new int[maxColumn][maxRow];
+        collisionMap = new int[maxColumn][maxRow];
+        collidablesMap = new int[maxColumn][maxRow];
 
         teleporters = new ArrayList<>();
         interacts = new ArrayList<>();
