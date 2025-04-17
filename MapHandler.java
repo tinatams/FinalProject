@@ -179,6 +179,15 @@ public class MapHandler{
         }
     }
 
+    public void drawNPCs(Graphics2D g2d){
+        Map cm = maps[currentMap];
+        ArrayList<NPC> NPCs = cm.getNPCs();
+        for (NPC npc : NPCs){
+            npc.draw(g2d);
+        }
+        
+    }
+
     public void update(){
         Map cm = maps[currentMap];
         ArrayList<Teleporter> teleporters = cm.getTeleporters();
@@ -271,6 +280,10 @@ public class MapHandler{
 
     public ArrayList<Interactable> getInteractables() {
         return maps[currentMap].getInteractables();
+    }
+
+    public ArrayList<NPC> getNPCs() {
+        return maps[currentMap].getNPCs();
     }
 
  }
