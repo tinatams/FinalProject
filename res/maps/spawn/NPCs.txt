@@ -1,0 +1,4 @@
+8,8,Prophet,Hello Traveller!/n LORE DROP/n You need to build a boat.
+16,16,Prophet,I've got wings on my feet.
+9,3,Prophet,BADASS IN THE ARENA!/n Warrior of the mind
+34,15,Prophet,I've got wings on my feet.
