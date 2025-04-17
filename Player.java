@@ -148,6 +148,14 @@ public class Player implements Collidable{
                 return true;
             }
         }
+
+        ArrayList<NPC> NPCs = mapH.getNPCs();
+        for (NPC npc : NPCs){
+            Collidable collisionObj = (Collidable) npc;
+            if(hitBox.intersects(collisionObj.getHitBox())){
+                return true;
+            }
+        }
         
         return false;
     } 
@@ -191,11 +199,21 @@ public class Player implements Collidable{
         return null;
     }
 
+    public NPC getNPC(ArrayList<NPC> interactables) {
+        for (NPC other: interactables){
+            if (isColliding(other))
+                return other;
+        }
+
+        return null;
+    }
+
     public void interact(){
         Interactable interactionObj = getInteractable(mapH.getInteractables());
         if (interactionObj != null) interactionObj.interact(this);
-
-
+        if (GameFrame.gameState==2) {
+            interactionNPC.interact(this);
+        }
         System.out.println("\n\ninventory:");
         for(SuperItem item : inventory){
             System.out.println(item);
@@ -240,5 +258,10 @@ public class Player implements Collidable{
 
     public void setMapHandler(MapHandler mh){
         mapH = mh;
+    }
+
+    public NPC getNPCinteracting(){
+        NPC interactionNPC = getNPC(mapH.getNPCs());
+        return interactionNPC;
     }
 }   
