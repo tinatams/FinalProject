@@ -7,6 +7,7 @@ public class GameCanvas extends JComponent{
     private ArrayList<Player> players;
     private String dataFromServer;
     private Player selectedPlayer;
+    public static String currentDialog="";
 
     private int clientNumber;
     private int gameState;
@@ -60,12 +61,13 @@ public class GameCanvas extends JComponent{
             }  
         }
 
-        if(gameState==GameFrame.PLAYING_STATE){
+        if(gameState==GameFrame.PLAYING_STATE || gameState==GameFrame.DIALOG_STATE){
             checkBounds(); 
             g2d.translate(-cameraX, -cameraY);
             mapH.drawBase(g2d);
             mapH.drawDeco(g2d);
             mapH.drawInteracts(g2d);
+            mapH.drawNPCs(g2d);
             
             if (players != null && players.size()> 0){
                 for(Player player : players){
@@ -74,9 +76,39 @@ public class GameCanvas extends JComponent{
             }
             selectedPlayer.draw(g2d);
             mapH.drawColAbles(g2d);
+            
+
+            
             g2d.setTransform(reset);
+            if(gameState==GameFrame.DIALOG_STATE){
+                drawDialogScreen(g2d);
+            }
         }
     }
+
+    public void drawDialogScreen(Graphics2D g2d){
+        int x=16*2;
+        int y=30;
+        int width= GameFrame.WIDTH-90;
+        int height=GameFrame.HEIGHT/3;
+        Color c=new Color(0,0,0,200);
+        g2d.setColor(c);
+        g2d.fillRoundRect(x,y,width,height,35,35);
+
+        c=new Color(250,250,250);
+        g2d.setColor(c);
+        g2d.setStroke(new BasicStroke(5));
+        g2d.drawRoundRect(x+5,y+5,width-10,height-10,25,25);
+        
+        x+=GameFrame.SCALED;
+        y+=GameFrame.SCALED;
+
+        g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN,24F));
+        for (String line: currentDialog.split("#")){
+            g2d.drawString(line,x,y);
+            y+=40;
+        }
+        
 
     public void setGameState(int gs){
         gameState = gs;
