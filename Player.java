@@ -210,9 +210,12 @@ public class Player implements Collidable{
 
     public void interact(){
         Interactable interactionObj = getInteractable(mapH.getInteractables());
+        NPC interactionNPC = getNPC(mapH.getNPCs());
         if (interactionObj != null) interactionObj.interact(this);
-        if (GameFrame.gameState==2) {
+        if (interactionNPC != null) {
+            GameFrame.gameState=2;
             interactionNPC.interact(this);
+            
         }
         System.out.println("\n\ninventory:");
         for(SuperItem item : inventory){
