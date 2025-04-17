@@ -16,13 +16,13 @@ public class GameCanvas extends JComponent{
 
     private MapHandler mapH;
 
-    public GameCanvas(String data, Player me, int CN, MapHandler mh){
+    public GameCanvas(String data, Player me, int CN){
         dataFromServer = data;
         selectedPlayer = me;
 
         clientNumber = CN;
 
-        mapH = mh;
+        mapH = new MapHandler(selectedPlayer);
         selectedPlayer.setMapHandler(this.mapH);
 
         cameraW = GameFrame.WIDTH;
@@ -36,29 +36,33 @@ public class GameCanvas extends JComponent{
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform reset = g2d.getTransform();
 
-        players = new ArrayList<Player>();
-        String[] serverPlayersData = dataFromServer.split("\\|");
-        for (int i = 0; i < serverPlayersData.length; i++){
-            String playerData = serverPlayersData[i];
-            
-            String[] data = playerData.split(",");
-            if (data.length == 7){
-                if (Integer.parseInt(data[0]) != clientNumber){
-                    int otherMap = Integer.parseInt(data[6]);
-                    //.out.println(otherMap == mapH.getCurrentMap());
-                    if(otherMap == mapH.getCurrentMap()){
-                        int x = Integer.parseInt(data[1]);
-                        int y = Integer.parseInt(data[2]);
-                        String s = data[3];
-                        int direc = Integer.parseInt(data[4]);
-                        int version = Integer.parseInt(data[5]);
-                        Player temp = new Player(s,x,y);
-                        temp.setOther(direc, version);
-                        players.add(temp);
-                        
+        if (!dataFromServer.equals("nothing yet")){
+            players = new ArrayList<Player>();
+            String[] squares = dataFromServer.split("\\|");
+            for (int i = 0; i < squares.length; i++){
+                String sqData = squares[i];
+                
+                String[] sData = sqData.split(",");
+                if (sData.length == 7){
+                    if (Integer.parseInt(sData[0]) != clientNumber){
+                        int otherMap = Integer.parseInt(sData[6]);
+                        //.out.println(otherMap == mapH.getCurrentMap());
+                        if(otherMap == mapH.getCurrentMap()){
+                            int x = Integer.parseInt(sData[1]);
+                            int y = Integer.parseInt(sData[2]);
+                            String s = sData[3];
+                            int direc = Integer.parseInt(sData[4]);
+                            int version = Integer.parseInt(sData[5]);
+                            Player temp = new Player(s,x,y);
+                            temp.setOther(direc, version);
+                            players.add(temp);
+                            
+                        }
                     }
                 }
-            }  
+
+                
+            }
         }
 
         if(gameState==GameFrame.PLAYING_STATE || gameState==GameFrame.DIALOG_STATE){
@@ -84,6 +88,8 @@ public class GameCanvas extends JComponent{
                 drawDialogScreen(g2d);
             }
         }
+
+        
     }
 
     public void drawDialogScreen(Graphics2D g2d){
@@ -109,10 +115,14 @@ public class GameCanvas extends JComponent{
             y+=40;
         }
         
+        
+
+    }
 
     public void setGameState(int gs){
         gameState = gs;
     }
+    
     public void update(){
         selectedPlayer.update();
         mapH.update();

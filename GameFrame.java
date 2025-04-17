@@ -18,12 +18,12 @@ public class GameFrame{
     private GameCanvas canvas;
     private String serverData;
     private Player selectedPlayer;
-    private MapHandler mapH;
 
-    private int gameState;
+    public static int gameState;
     
     public final static int PLAYING_STATE = 0;
     public final static int INVENTORY_STATE = 1;
+    public final static int DIALOG_STATE = 2;
 
     public GameFrame(String data, int CN){
         frame = new JFrame();
@@ -36,8 +36,7 @@ public class GameFrame{
         int y = (CN % 2 == 0) ? 10 : 11;
  
         selectedPlayer = new Player(skin, x * SCALED, y * SCALED);
-        mapH = new MapHandler(selectedPlayer, clientNumber);
-        canvas = new GameCanvas(data, selectedPlayer, CN, mapH);
+        canvas = new GameCanvas(data, selectedPlayer, CN);
 
         gameState = PLAYING_STATE;
     }
@@ -58,16 +57,12 @@ public class GameFrame{
         frame.setVisible(true);
     }   
 
-    public Player getSelected(){
+    public Player getSelectedSq(){
         return selectedPlayer;
     }
 
     public int getMap(){
         return canvas.getCurrentMap();
-    }
-    
-    public MapHandler getMapHandler() {
-        return mapH;
     }
 
     public void addKeyBindings(){
@@ -133,6 +128,7 @@ public class GameFrame{
                 }
             }
         };
+
 
         AbstractAction Inventory = new AbstractAction(){
             @Override
