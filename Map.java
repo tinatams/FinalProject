@@ -17,6 +17,7 @@ public class Map{
 
     protected ArrayList<Teleporter> teleporters;
     protected ArrayList<Interactable> interacts;
+     private ArrayList<NPC> NPCs;
 
     public Map(String n){
         baseTileMap = new int[maxColumn][maxRow];
@@ -26,10 +27,12 @@ public class Map{
 
         teleporters = new ArrayList<>();
         interacts = new ArrayList<>();
+        NPCs= new ArrayList<>();
 
         mapName = n;
 
         loadTeleporters();
+        loadNPCs();
 
     }
 
@@ -167,6 +170,30 @@ public class Map{
         }
     }
 
+    private void loadNPCs() {
+        try {
+            File map = new File(String.format("./res/maps/%s/NPCs.txt",mapName));
+            Scanner mapReader = new Scanner(map);
+            while (mapReader.hasNextLine()) {
+                String mapLine = mapReader.nextLine();
+                String[] mapData = mapLine.split(",");
+                if (mapData.length > 0){
+                    int x = Integer.parseInt(mapData[0]) * GameFrame.SCALED;
+                    int y = Integer.parseInt(mapData[1]) * GameFrame.SCALED;
+                    String skin =mapData[2];
+                    String dialogue=mapData[3];
+                    String[] dialogues=dialogue.split("/n");
+                    NPCs.add(new NPC(skin,x,y,dialogues));
+                }
+            }
+            mapReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
+
     public int[][] getBaseMap(){
         return baseTileMap;
     }
@@ -189,6 +216,10 @@ public class Map{
 
     public ArrayList<Interactable> getInteractables() {
         return interacts;
+    }
+
+    public ArrayList<NPC> getNPCs(){
+        return NPCs;
     }
 
     public int getHeight() {
