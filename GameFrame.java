@@ -112,7 +112,25 @@ public class GameFrame{
         AbstractAction Interact = new AbstractAction(){
             @Override
             public void actionPerformed(ActionEvent ae){
+                NPC currentNPC=selectedPlayer.getNPCinteracting();
+                if(currentNPC!=null){
+                    gameState=DIALOG_STATE;
+                }
                 if(gameState == PLAYING_STATE) selectedPlayer.interact();
+                else if(gameState==DIALOG_STATE){
+                    canvas.setGameState(gameState);
+                    if(currentNPC.getDialogNumber()>currentNPC.getDialogueSize()){
+                        currentNPC.setDialogNumber(0);
+                        gameState=PLAYING_STATE;
+                        canvas.setGameState(gameState);
+                        canvas.update();
+                    }
+                    else{
+                        selectedPlayer.interact();
+                        currentNPC.setDialogNumber(currentNPC.getDialogNumber()+1);
+                        
+                    }
+                }
             }
         };
 
