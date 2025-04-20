@@ -18,6 +18,7 @@ public class GameFrame{
     private GameCanvas canvas;
     private String serverData;
     private Player selectedPlayer;
+    private MapHandler mapH;
 
     public static int gameState;
     
@@ -36,7 +37,8 @@ public class GameFrame{
         int y = (CN % 2 == 0) ? 10 : 11;
  
         selectedPlayer = new Player(skin, x * SCALED, y * SCALED);
-        canvas = new GameCanvas(data, selectedPlayer, CN);
+        mapH = new MapHandler(selectedPlayer, clientNumber);
+        canvas = new GameCanvas(data, selectedPlayer, CN, mapH);
 
         gameState = PLAYING_STATE;
     }
@@ -57,12 +59,16 @@ public class GameFrame{
         frame.setVisible(true);
     }   
 
-    public Player getSelectedSq(){
+    public Player getSelected(){
         return selectedPlayer;
     }
 
     public int getMap(){
         return canvas.getCurrentMap();
+    }
+    
+    public MapHandler getMapHandler() {
+        return mapH;
     }
 
     public void addKeyBindings(){

@@ -87,6 +87,4 @@ public class NPC implements Interactable{ //should extend interactable
         GameCanvas.currentDialog=dialogues[dialognumber];
     }
     
-
-
 }
