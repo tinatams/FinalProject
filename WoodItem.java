@@ -5,8 +5,9 @@ import javax.imageio.*;
 public class WoodItem extends SuperItem{
 
     public WoodItem (int x, int y){
-        super(x, y, 16, 16);
+        super("WOOD",x, y, 16, 16);
         super.hitBox = new Rectangle(worldX ,worldY ,spriteH, spriteW);
+        // make this a set hitbox
     }
 
     @Override

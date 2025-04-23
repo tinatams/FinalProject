@@ -23,11 +23,10 @@ public class Player implements Collidable{
 
     private ArrayList<SuperItem> inventory;
 
-
     public Player(String s, int x, int y){
         worldX = x;
         worldY = y;
-        speed = 3;
+        speed = 4;
 
 
         skin = s;
@@ -175,8 +174,23 @@ public class Player implements Collidable{
     }
 
     public void collect(SuperItem item){
-        inventory.add(item);
-        item.setOwner(this);
+        SuperItem itemCollect = getItem(item.getName());
+        if (itemCollect != null && item.getStackable()){
+            itemCollect.setAmount(itemCollect.getAmount() + 1);
+        } else {
+            inventory.add(item);
+            item.setOwner(this);
+        }
+    }
+
+    public SuperItem getItem(String name){
+        for(SuperItem item : inventory){
+            if ((item.getName()).equals(name)){
+                return item;
+            }
+        }
+
+        return null;
     }
 
     public boolean isColliding(Collidable c){
@@ -216,10 +230,6 @@ public class Player implements Collidable{
             GameFrame.gameState=2;
             interactionNPC.interact(this);
             
-        }
-        System.out.println("\n\ninventory:");
-        for(SuperItem item : inventory){
-            System.out.println(item);
         }
     }
 

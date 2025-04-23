@@ -5,7 +5,7 @@ import javax.imageio.*;
 public class GrapeItem extends SuperItem{
 
     public GrapeItem (int x, int y){
-        super(x, y, 16, 16);
+        super("GRAPE",x, y, 16, 16);
         super.hitBox = new Rectangle(worldX ,worldY ,spriteH, spriteW);
     }
 

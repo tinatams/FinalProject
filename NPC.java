@@ -84,7 +84,7 @@ public class NPC implements Interactable{ //should extend interactable
     }
 
     public void speak(){
-        GameCanvas.currentDialog=dialogues[dialognumber];
+        UIHandler.currentDialog=dialogues[dialognumber];
     }
     
 }

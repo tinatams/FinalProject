@@ -19,6 +19,7 @@ public class GameFrame{
     private String serverData;
     private Player selectedPlayer;
     private MapHandler mapH;
+    private UIHandler ui; 
 
     public static int gameState;
     
@@ -38,7 +39,8 @@ public class GameFrame{
  
         selectedPlayer = new Player(skin, x * SCALED, y * SCALED);
         mapH = new MapHandler(selectedPlayer, clientNumber);
-        canvas = new GameCanvas(data, selectedPlayer, CN, mapH);
+        ui = new UIHandler();
+        canvas = new GameCanvas(data, selectedPlayer, CN, mapH, ui);
 
         gameState = PLAYING_STATE;
     }
@@ -119,11 +121,9 @@ public class GameFrame{
                 }
                 if(gameState == PLAYING_STATE) selectedPlayer.interact();
                 else if(gameState==DIALOG_STATE){
-                    canvas.setGameState(gameState);
                     if(currentNPC.getDialogNumber()>currentNPC.getDialogueSize()){
                         currentNPC.setDialogNumber(0);
                         gameState=PLAYING_STATE;
-                        canvas.setGameState(gameState);
                         canvas.update();
                     }
                     else{
@@ -140,7 +140,6 @@ public class GameFrame{
             @Override
             public void actionPerformed(ActionEvent ae){
                 gameState = (gameState == PLAYING_STATE) ? INVENTORY_STATE : PLAYING_STATE;
-                canvas.setGameState(gameState);
             }
         };
 

@@ -3,13 +3,15 @@ import java.awt.image.*;
 
 public abstract class SuperItem{
     protected int worldX, worldY, spriteW, spriteH;
-    protected String name;
+    private String name;
     protected BufferedImage sprite;
-    protected Player owner;
-    protected boolean owned;
+    private Player owner;
+    protected boolean owned, stackable;
     protected Rectangle hitBox;
+    private int amount; 
 
-    public SuperItem(int x, int y, int w, int h){
+    public SuperItem(String n, int x, int y, int w, int h){
+        name = n;
         spriteW = w * GameFrame.SCALER;
         spriteH = h * GameFrame.SCALER;
         
@@ -18,6 +20,9 @@ public abstract class SuperItem{
 
         owner = null;
         owned = false;
+        stackable = true;
+        
+        amount = 1;
 
         loadImage();
     }
@@ -35,5 +40,25 @@ public abstract class SuperItem{
     protected void setOwner(Player owner){
         this.owner = owner;
         if (owner != null) owned = true;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public int getAmount(){
+        return amount;
+    }
+
+    public void setAmount(int newAmount){
+        amount = newAmount;
+    }
+
+    public void setStackable(boolean stacks){
+        stackable = stacks;
+    }
+
+    public boolean getStackable(){
+        return stackable;
     }
 }
