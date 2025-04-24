@@ -22,6 +22,8 @@ public class UIHandler{
             g2d.fillRect(0,0,GameFrame.WIDTH, GameFrame.HEIGHT);
 
             drawInventory(g2d, selectedPlayer.getInventory());
+            drawQuestPanel(g2d);
+
         }
     }
 
@@ -36,7 +38,11 @@ public class UIHandler{
         }catch (FontFormatException ex) {
         }
     }
-
+    
+    public void drawQuestPanel(Graphics2D g2d){
+        g2d.drawImage(blankHalfPanel, 11 * GameFrame.SCALED, 1 * GameFrame.SCALED, 9 * GameFrame.SCALED, 14 * GameFrame.SCALED, null);
+    }
+    
     public void drawInventory(Graphics2D g2d, ArrayList<SuperItem> inventory){
         g2d.drawImage(inventoryTemplate, GameFrame.SCALED, GameFrame.SCALED, 9 * GameFrame.SCALED, 14 * GameFrame.SCALED, null);
         

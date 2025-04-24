@@ -44,6 +44,8 @@ public class Tree implements Interactable{
 
     @Override
     public void interact(Player player) {
+        SoundHandler sh = new SoundHandler();
+        sh.playEffect();
         health--;
         System.out.println(health);
         if (health == 0){
