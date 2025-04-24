@@ -141,7 +141,7 @@ public class MapHandler{
             if (currentMap[worldCol][worldRow] != -1 && canDraw(worldX, worldY))
             g2d.drawImage(decoTiles[currentMap[worldCol][worldRow]], worldX, worldY, GameFrame.SCALED, GameFrame.SCALED, null);
 
-            worldCol ++;
+            worldCol++;
             if (worldCol == Map.maxColumn){
                 worldCol = 0;
                 worldRow ++;
@@ -177,6 +177,13 @@ public class MapHandler{
         for (Interactable interactObj : interacts){
             interactObj.draw(g2d);
         }
+
+        ArrayList<Teleporter> teleporters = cm.getTeleporters();
+        for (Teleporter tele : teleporters){
+            if (tele instanceof SpikeTrap spikes){
+                    spikes.draw(g2d);
+                }
+        }
     }
 
     public void drawNPCs(Graphics2D g2d){
@@ -194,7 +201,7 @@ public class MapHandler{
         ArrayList<Interactable> interactables = cm.getInteractables();
 
         for (Teleporter tele : teleporters){
-            if (pFollow.isColliding(tele) && !(tele instanceof Lock)){
+            if (pFollow.isColliding(tele) && !(tele instanceof Lock) && !(tele instanceof SpikeTrap)){
                 currentMap = tele.teleportToMap();
                 pFollow.teleportPlayer(tele.teleportPlayerX(), tele.teleportPlayerY());
             } else if (pFollow.isColliding(tele) && (tele instanceof Lock)){
@@ -216,6 +223,14 @@ public class MapHandler{
                     currentMap = tele.teleportToMap();
                     pFollow.teleportPlayer(tele.teleportPlayerX(), tele.teleportPlayerY());
                 }
+            }
+
+            if (tele instanceof SpikeTrap spike){
+                if(pFollow.isColliding(spike) && spike.isActivated()){
+                    currentMap = tele.teleportToMap();
+                    pFollow.teleportPlayer(tele.teleportPlayerX(), tele.teleportPlayerY());
+                }
+                spike.schedule();
             }
         }
 

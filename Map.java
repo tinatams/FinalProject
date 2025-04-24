@@ -131,6 +131,8 @@ public class Map{
                     if (mapData.length >= 8){
                         if (mapData[7].equals("LOCK")){
                             teleporters.add(new Lock(x, y, w, h, mapTo, newX, newY, mapData[8]));
+                        } else if (mapData[7].equals("SPIKE")){
+                            teleporters.add(new SpikeTrap(x, y, mapTo, newX, newY));
                         }
                     } else {
                         teleporters.add(new Teleporter(x, y, w, h, mapTo, newX, newY));
