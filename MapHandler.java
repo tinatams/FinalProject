@@ -199,12 +199,22 @@ public class MapHandler{
                 pFollow.teleportPlayer(tele.teleportPlayerX(), tele.teleportPlayerY());
             } else if (pFollow.isColliding(tele) && (tele instanceof Lock)){
                 Lock lockObj = (Lock) tele;
-                KeyItem keyObj = (KeyItem) pFollow.getItem("KEY");
-                if (keyObj != null){
-                    if((keyObj.getLockName()).equals(lockObj.getlockName())){
-                        currentMap = tele.teleportToMap();
-                        pFollow.teleportPlayer(tele.teleportPlayerX(), tele.teleportPlayerY());
+                ArrayList<SuperItem> keyItems = pFollow.getNotStackableItem("KEY");
+                KeyItem keyObj;
+                if (keyItems.size() > 0){
+                    for (SuperItem k : keyItems){
+                        keyObj = (KeyItem) k;
+                        if((keyObj.getLockName()).equals(lockObj.getlockName())){
+                            lockObj.setLocked(false);
+                            pFollow.discardItem(keyObj);
+                            break;
+                        }
                     }
+                }
+
+                if (!lockObj.isLocked()){
+                    currentMap = tele.teleportToMap();
+                    pFollow.teleportPlayer(tele.teleportPlayerX(), tele.teleportPlayerY());
                 }
             }
         }

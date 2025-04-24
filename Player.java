@@ -175,7 +175,7 @@ public class Player implements Collidable{
 
     public void collect(SuperItem item){
         SuperItem itemCollect = getItem(item.getName());
-        if (itemCollect != null && item.getStackable()){
+        if (itemCollect != null && item.isStackable()){
             itemCollect.setAmount(itemCollect.getAmount() + 1);
         } else {
             inventory.add(item);
@@ -188,6 +188,16 @@ public class Player implements Collidable{
         }
     }
 
+    public void discardItem(SuperItem item){
+        SuperItem discardItem = getItem(item.getName());
+        if (discardItem != null && discardItem.isStackable()){
+            discardItem.setAmount(discardItem.getAmount() + 1);
+        } else {
+            inventory.remove(item);
+            item.setOwner(null);
+        }
+    }
+
     public SuperItem getItem(String name){
         for(SuperItem item : inventory){
             if ((item.getName()).equals(name)){
@@ -196,6 +206,17 @@ public class Player implements Collidable{
         }
 
         return null;
+    }
+
+    public ArrayList<SuperItem> getNotStackableItem(String name){
+        ArrayList<SuperItem> notStackItems = new ArrayList<SuperItem>();
+        for(SuperItem item : inventory){
+            if ((item.getName()).equals(name)){
+                notStackItems.add(item);
+            }
+        }
+
+        return notStackItems;
     }
 
     public boolean isColliding(Collidable c){

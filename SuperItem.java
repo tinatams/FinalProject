@@ -58,7 +58,7 @@ public abstract class SuperItem{
         stackable = stacks;
     }
 
-    public boolean getStackable(){
+    public boolean isStackable(){
         return stackable;
     }
 }

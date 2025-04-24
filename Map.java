@@ -165,6 +165,7 @@ public class Map{
                             break;
                         case "ORE":
                             interacts.add(new Ore(x, y));
+                            break;
                         case "KEY":
                             interacts.add(new KeyItem(x, y, mapData[3]));
                     }
