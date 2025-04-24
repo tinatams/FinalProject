@@ -10,7 +10,7 @@ public class SoundHandler{
     }
 
     public void loadSounds(){
-        clip = getClip("Untitled");
+        clip = getClip("woodChop");
     }
 
     private Clip getClip(String name){

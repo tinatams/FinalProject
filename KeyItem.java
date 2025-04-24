@@ -8,7 +8,7 @@ public class KeyItem extends SuperItem implements Interactable{
 
     public KeyItem(int x, int y, String n){
         super("KEY",x, y, 16, 16);
-        super.hitBox = new Rectangle(worldX + 5 ,worldY +5,spriteH - 10, spriteW - 10);
+        super.hitBox = new Rectangle(worldX,worldY,0,0);
         interactionBox = new Rectangle(worldX,worldY, spriteW, spriteH);
         setStackable(false);
         lockName = n;

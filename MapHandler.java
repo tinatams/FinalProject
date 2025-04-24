@@ -246,6 +246,13 @@ public class MapHandler{
             else if (interactionObj instanceof ButtonItem){
                 interactionObj.interact(pFollow);
             }
+
+            else if (interactionObj instanceof SuperItem){
+                if (pFollow.isColliding(interactionObj)){
+                    interactionObj.interact(pFollow);
+                }
+                
+            }
         }
     }
 
