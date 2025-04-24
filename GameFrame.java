@@ -1,5 +1,6 @@
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -39,7 +40,7 @@ public class GameFrame{
  
         selectedPlayer = new Player(skin, x * SCALED, y * SCALED);
         mapH = new MapHandler(selectedPlayer, clientNumber);
-        ui = new UIHandler();
+        ui = new UIHandler(selectedPlayer);
         canvas = new GameCanvas(data, selectedPlayer, CN, mapH, ui);
 
         gameState = PLAYING_STATE;
@@ -50,7 +51,7 @@ public class GameFrame{
     }
 
     public void setUpGUI(){
-        frame.setSize(WIDTH, HEIGHT);
+        cp.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         frame.setTitle("work please");
 
         cp.setBackground(new Color(20, 28, 22));
@@ -59,6 +60,7 @@ public class GameFrame{
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+        frame.pack();
     }   
 
     public Player getSelected(){

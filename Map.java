@@ -128,7 +128,13 @@ public class Map{
                     int newX = Integer.parseInt(mapData[5]) * GameFrame.SCALED; //player position in new map
                     int newY = Integer.parseInt(mapData[6]) * GameFrame.SCALED; //player position in new map
                     
-                    teleporters.add(new Teleporter(x, y, w, h, mapTo, newX, newY));
+                    if (mapData.length >= 8){
+                        if (mapData[7].equals("LOCK")){
+                            teleporters.add(new Lock(x, y, w, h, mapTo, newX, newY, mapData[8]));
+                        }
+                    } else {
+                        teleporters.add(new Teleporter(x, y, w, h, mapTo, newX, newY));
+                    }  
                 }
             }
             mapReader.close();
@@ -159,6 +165,8 @@ public class Map{
                             break;
                         case "ORE":
                             interacts.add(new Ore(x, y));
+                        case "KEY":
+                            interacts.add(new KeyItem(x, y, mapData[3]));
                     }
                 }
             }

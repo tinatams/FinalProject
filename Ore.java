@@ -21,7 +21,7 @@ public class Ore implements Interactable{
         health = 7;
 
         hitBox = new Rectangle(worldX ,worldY ,spriteH, spriteW);
-         interactionBox = new Rectangle(worldX - GameFrame.SCALED/2,worldY - GameFrame.SCALED/2, spriteW + GameFrame.SCALED, spriteH + GameFrame.SCALED);
+        interactionBox = new Rectangle(worldX - GameFrame.SCALED/2,worldY - GameFrame.SCALED/2, spriteW + GameFrame.SCALED, spriteH + GameFrame.SCALED);
 
         loadImage();
     }

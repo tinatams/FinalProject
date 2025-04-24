@@ -33,8 +33,8 @@ public abstract class SuperItem{
         g2d.drawImage(sprite, worldX, worldY, spriteW, spriteH, null);
     }
 
-    public void drawSpecific(Graphics2D g2d, int x, int y){ //for drawing Inventory
-        g2d.drawImage(sprite, x, y, spriteW, spriteH, null);
+    public void drawSpecific(Graphics2D g2d, int x, int y, int w, int h){ //for drawing Inventory
+        g2d.drawImage(sprite, x, y, w, h, null);
     }
 
     protected void setOwner(Player owner){

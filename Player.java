@@ -181,6 +181,11 @@ public class Player implements Collidable{
             inventory.add(item);
             item.setOwner(this);
         }
+
+        ArrayList<Interactable> interacts = mapH.getInteractables();
+        if (interacts.contains(item)){
+            interacts.remove(item);
+        }
     }
 
     public SuperItem getItem(String name){
@@ -231,6 +236,10 @@ public class Player implements Collidable{
             interactionNPC.interact(this);
             
         }
+    }
+
+    public ArrayList<SuperItem> getInventory(){
+        return inventory;
     }
 
     @Override

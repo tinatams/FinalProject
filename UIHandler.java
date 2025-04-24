@@ -1,10 +1,18 @@
 import java.awt.*;
+import java.awt.image.*;
+import java.io.*;
+import java.util.ArrayList;
+import javax.imageio.*;
 
 public class UIHandler{
+    public static Font regularFont;
     public static String currentDialog = "";
+    private BufferedImage dialogueBox, inventoryTemplate, blankHalfPanel;
+    private Player selectedPlayer;
 
-    public UIHandler(){
-
+    public UIHandler(Player sPlayer){
+        setUpUIComponents();
+        selectedPlayer = sPlayer;
     }
 
     public void draw(Graphics2D g2d){
@@ -13,12 +21,41 @@ public class UIHandler{
             g2d.setColor(new Color(0,0,0,125));
             g2d.fillRect(0,0,GameFrame.WIDTH, GameFrame.HEIGHT);
 
-
+            drawInventory(g2d, selectedPlayer.getInventory());
         }
     }
 
-    public void drawInventory(){
+    public void setUpUIComponents(){
+        try {
+            dialogueBox = ImageIO.read(new File("./res/uiAssets/DialogueBoxSimple.png"));
+            inventoryTemplate = ImageIO.read(new File("./res/uiAssets/InventoryTemplate.png"));
+            blankHalfPanel = ImageIO.read(new File("./res/uiAssets/BlankTemplate.png"));
+            InputStream is = getClass().getResourceAsStream("./res/Fonts/VT323-Regular.ttf");
+            regularFont = Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (IOException ex) {
+        }catch (FontFormatException ex) {
+        }
+    }
+
+    public void drawInventory(Graphics2D g2d, ArrayList<SuperItem> inventory){
+        g2d.drawImage(inventoryTemplate, GameFrame.SCALED, GameFrame.SCALED, 9 * GameFrame.SCALED, 14 * GameFrame.SCALED, null);
         
+        int x = 2;
+        int y = 4;
+        for (SuperItem item : inventory){
+            item.drawSpecific(g2d, x*GameFrame.SCALED + 3, y*GameFrame.SCALED + 3, 14 * GameFrame.SCALER, 14 * GameFrame.SCALER);
+            if (item.getAmount() > 1){
+                g2d.setColor(new Color(255, 255, 255));
+                g2d.setFont(regularFont.deriveFont(24f));
+                g2d.drawString(Integer.toString(item.getAmount()), (x+1)*GameFrame.SCALED - 14, (y+1)*GameFrame.SCALED - 7);
+            }
+            x++;
+            if (x > 8){
+                x = 2;
+                y++;
+            }
+        }
+
     }
 
     public void drawDialogScreen(Graphics2D g2d){
@@ -26,19 +63,25 @@ public class UIHandler{
         int y=30;
         int width= GameFrame.WIDTH-90;
         int height=GameFrame.HEIGHT/3;
-        Color c=new Color(0,0,0,200);
-        g2d.setColor(c);
-        g2d.fillRoundRect(x,y,width,height,35,35);
+        
+        // other way to do it
+        // Color c=new Color(0,0,0,200);
+        // g2d.setColor(c);
+        // g2d.fillRoundRect(x,y,width,height,35,35);
 
-        c=new Color(250,250,250);
-        g2d.setColor(c);
-        g2d.setStroke(new BasicStroke(5));
-        g2d.drawRoundRect(x+5,y+5,width-10,height-10,25,25);
+        // c=new Color(250,250,250);
+        // g2d.setColor(c);
+        // g2d.setStroke(new BasicStroke(5));
+        // g2d.drawRoundRect(x+5,y+5,width-10,height-10,25,25);
+
+        g2d.drawImage(dialogueBox, x, y, width, height, null);
         
         x+=GameFrame.SCALED;
         y+=GameFrame.SCALED;
 
-        g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN,24F));
+        g2d.setFont(regularFont.deriveFont(35f)); // font looks a bit weird
+        //g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN,24F));
+
         for (String line: currentDialog.split("#")){
             g2d.drawString(line,x,y);
             y+=40;
