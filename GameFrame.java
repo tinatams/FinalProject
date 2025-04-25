@@ -1,7 +1,6 @@
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.*;
 import javax.swing.*;
 
 public class GameFrame{
@@ -22,6 +21,8 @@ public class GameFrame{
     private MapHandler mapH;
     private UIHandler ui; 
 
+    private KeyInputs keyInputs;
+
     public static int gameState;
     
     public final static int PLAYING_STATE = 0;
@@ -32,7 +33,7 @@ public class GameFrame{
     public GameFrame(String data, int CN){
         frame = new JFrame();
         cp = (JPanel) frame.getContentPane();
-        cp.setFocusable(true);
+        //cp.setFocusable(true);
 
         clientNumber = CN;
         String skin = (CN % 2 == 0) ? "Hunter" : "Vill4";
@@ -43,6 +44,7 @@ public class GameFrame{
         mapH = new MapHandler(selectedPlayer, clientNumber);
         ui = new UIHandler(selectedPlayer, mapH);
         canvas = new GameCanvas(data, selectedPlayer, CN, mapH, ui);
+        keyInputs = new KeyInputs(selectedPlayer, canvas);
 
         gameState = PLAYING_STATE;
     }
@@ -54,6 +56,7 @@ public class GameFrame{
     public void setUpGUI(){
         cp.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         frame.setTitle("work please");
+        frame.addKeyListener(keyInputs);
 
         cp.setBackground(new Color(20, 28, 22));
         cp.add(canvas);
@@ -74,110 +77,5 @@ public class GameFrame{
     
     public MapHandler getMapHandler() {
         return mapH;
-    }
-
-    public void addKeyBindings(){
-        ActionMap am = cp.getActionMap();
-        InputMap im = cp.getInputMap();
-
-        AbstractAction IDLE = new AbstractAction(){
-            @Override
-            public void actionPerformed(ActionEvent ae){
-                selectedPlayer.setDirection(Player.IDLE);
-            }
-        };
-
-        AbstractAction UP = new AbstractAction(){
-            @Override
-            public void actionPerformed(ActionEvent ae){
-                if(gameState == PLAYING_STATE) selectedPlayer.setDirection(Player.UP);
-            }
-        };
-
-        AbstractAction DOWN = new AbstractAction(){
-            @Override
-            public void actionPerformed(ActionEvent ae){
-                if(gameState == PLAYING_STATE) selectedPlayer.setDirection(Player.DOWN);
-            }
-        };
-
-        AbstractAction RIGHT = new AbstractAction(){
-            @Override
-            public void actionPerformed(ActionEvent ae){
-                if(gameState == PLAYING_STATE) selectedPlayer.setDirection(Player.RIGHT);
-            }
-        };
-
-        AbstractAction LEFT = new AbstractAction(){
-            @Override
-            public void actionPerformed(ActionEvent ae){
-                if(gameState == PLAYING_STATE) selectedPlayer.setDirection(Player.LEFT);
-            }
-        };
-
-        AbstractAction Interact = new AbstractAction(){
-            @Override
-            public void actionPerformed(ActionEvent ae){
-                NPC currentNPC=selectedPlayer.getNPCinteracting();
-                if(currentNPC!=null){
-                    gameState=DIALOG_STATE;
-                }
-                if(gameState == PLAYING_STATE) selectedPlayer.interact();
-                else if(gameState==DIALOG_STATE){
-                    if(currentNPC.getDialogNumber()>currentNPC.getDialogueSize()){
-                        currentNPC.setDialogNumber(0);
-                        gameState=PLAYING_STATE;
-                        canvas.update();
-                    }
-                    else{
-                        selectedPlayer.interact();
-                        currentNPC.setDialogNumber(currentNPC.getDialogNumber()+1);
-                        
-                    }
-                }
-            }
-        };
-
-        AbstractAction resetState = new AbstractAction(){
-            @Override
-            public void actionPerformed(ActionEvent ae){
-                gameState = PLAYING_STATE;
-            }
-
-        };
-
-
-        AbstractAction Inventory = new AbstractAction(){
-            @Override
-            public void actionPerformed(ActionEvent ae){
-                gameState = (gameState == PLAYING_STATE) ? INVENTORY_STATE : PLAYING_STATE;
-            }
-        };
-
-        am.put("UP", UP);
-        am.put("DOWN", DOWN);
-        am.put("RIGHT", RIGHT);
-        am.put("LEFT", LEFT);
-        am.put("IDLE", IDLE);
-
-        am.put("INT", Interact);
-        am.put("INV", Inventory);
-
-        am.put("ESC", resetState);
-
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, false), "UP");
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, false), "LEFT");
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, false), "DOWN");
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, false), "RIGHT");
-
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, 0, false), "INT");
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0, false), "INV");
-
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, true), "IDLE");
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, true), "IDLE");
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, true), "IDLE");
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, true), "IDLE");
-
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, true), "ESC");
     }
 }

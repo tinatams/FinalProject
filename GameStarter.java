@@ -53,7 +53,6 @@ public class GameStarter{
     public void setUpFrame(){
         frame = new GameFrame(serverData, clientNumber);
         frame.setUpGUI();
-        frame.addKeyBindings();
     }
 
     public class WriteToServer extends Thread{
