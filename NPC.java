@@ -7,7 +7,7 @@ public class NPC implements Interactable{ //should extend interactable
     private int worldX, worldY;
     private int spriteW, spriteH;
     private int dialognumber=0;
-    private String skin;
+    private String skin, name;
     private Rectangle hitBox,interactionBox;
     private BufferedImage spriteSheet;
     private BufferedImage sprite;
@@ -19,10 +19,11 @@ public class NPC implements Interactable{ //should extend interactable
         worldY = y;
         this.dialogues=dialogues;
         skin = s;
+        name = s;
         spriteW = GameFrame.SCALED; 
         spriteH = GameFrame.SCALED;
 
-         hitBox = new Rectangle(worldX + 10 ,worldY + 20 ,spriteW , spriteH-5);
+        hitBox = new Rectangle(worldX + 10 ,worldY + 20 ,spriteW , spriteH-5);
         interactionBox = new Rectangle(worldX - GameFrame.SCALED/2 ,worldY - GameFrame.SCALED/2 , spriteW + GameFrame.SCALED, spriteH + GameFrame.SCALED);
 
         setUpSprites();
@@ -85,6 +86,10 @@ public class NPC implements Interactable{ //should extend interactable
 
     public void speak(){
         UIHandler.currentDialog=dialogues[dialognumber];
+    }
+
+    public String getName(){
+        return name;
     }
     
 }

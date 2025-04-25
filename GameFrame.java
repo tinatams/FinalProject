@@ -27,6 +27,7 @@ public class GameFrame{
     public final static int PLAYING_STATE = 0;
     public final static int INVENTORY_STATE = 1;
     public final static int DIALOG_STATE = 2;
+    public final static int HERMES_STATE = 3;
 
     public GameFrame(String data, int CN){
         frame = new JFrame();
@@ -40,7 +41,7 @@ public class GameFrame{
  
         selectedPlayer = new Player(skin, x * SCALED, y * SCALED);
         mapH = new MapHandler(selectedPlayer, clientNumber);
-        ui = new UIHandler(selectedPlayer);
+        ui = new UIHandler(selectedPlayer, mapH);
         canvas = new GameCanvas(data, selectedPlayer, CN, mapH, ui);
 
         gameState = PLAYING_STATE;
@@ -137,6 +138,14 @@ public class GameFrame{
             }
         };
 
+        AbstractAction resetState = new AbstractAction(){
+            @Override
+            public void actionPerformed(ActionEvent ae){
+                gameState = PLAYING_STATE;
+            }
+
+        };
+
 
         AbstractAction Inventory = new AbstractAction(){
             @Override
@@ -154,6 +163,8 @@ public class GameFrame{
         am.put("INT", Interact);
         am.put("INV", Inventory);
 
+        am.put("ESC", resetState);
+
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, false), "UP");
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, false), "LEFT");
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, false), "DOWN");
@@ -166,5 +177,7 @@ public class GameFrame{
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, true), "IDLE");
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, true), "IDLE");
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, true), "IDLE");
+
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, true), "ESC");
     }
 }

@@ -70,22 +70,6 @@ public class Map{
         }
     }
 
-    // public void setUpMaps(){
-    //     int originalCol = 0, originalRow = 0;
-    //     while (originalCol < maxColumn && originalRow < maxRow){
-    //         baseTileMap[originalCol][originalRow] = -1;
-    //         decoTileMap[originalCol][originalRow] = -1;
-    //         collisionMap[originalCol][originalRow] = -2;
-    //         collidablesMap[originalCol][originalRow] = -1;
-
-    //         originalCol++;
-    //         if (originalCol == maxColumn){
-    //             originalCol = 0;
-    //             originalRow++;
-    //         }
-    //     }
-    // }
-
     public void setUpMaps(){
         setUpMap(baseTileMap);
         setUpMap(decoTileMap);
@@ -194,7 +178,13 @@ public class Map{
                     String skin =mapData[2];
                     String dialogue=mapData[3];
                     String[] dialogues=dialogue.split("/n");
-                    NPCs.add(new NPC(skin,x,y,dialogues));
+
+                    if (skin.equals("Hermes")){
+                        NPCs.add(new Hermes("Prophet",x,y,dialogues));
+                    } else{
+                        NPCs.add(new NPC(skin,x,y,dialogues));
+                    }
+                    
                 }
             }
             mapReader.close();
