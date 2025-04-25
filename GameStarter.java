@@ -67,6 +67,7 @@ public class GameStarter{
                     MapHandler mapH = frame.getMapHandler();
                     clientData = String.format("Players|%d,%d,%d,%s,%d,%d,%s\n", clientNumber, clientPlayer.getWorldX(), clientPlayer.getWorldY(), clientPlayer.getSkin(), clientPlayer.getDirection(), clientPlayer.getVer(), frame.getMap());
                     clientData += String.format("Labyrinth|%d,%s\n",clientNumber, mapH.getVersion());
+                    clientData += String.format("Hermes|\n",clientNumber, mapH.getVersion());
                     dataOut.writeUTF(clientData);
                     try {
                         Thread.sleep(10);
@@ -79,8 +80,6 @@ public class GameStarter{
     }
 
     public class ReadFromServer extends Thread{
-        private String[] dataTypes = {"Players","Labyrinth"};
-
         public ReadFromServer(){
 
         }

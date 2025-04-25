@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -108,5 +109,13 @@ public class UIHandler{
             g2d.drawString(line,x,y);
             y+=40;
         }
+    }
+
+    public void mouseClicked(MouseEvent me){
+
+    }
+
+    public void update(){
+        
     }
 }

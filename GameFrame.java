@@ -21,7 +21,8 @@ public class GameFrame{
     private MapHandler mapH;
     private UIHandler ui; 
 
-    private KeyInputs keyInputs;
+    private KeyHandler keyH;
+    private MouseHandler mouseH;
 
     public static int gameState;
     
@@ -44,7 +45,8 @@ public class GameFrame{
         mapH = new MapHandler(selectedPlayer, clientNumber);
         ui = new UIHandler(selectedPlayer, mapH);
         canvas = new GameCanvas(data, selectedPlayer, CN, mapH, ui);
-        keyInputs = new KeyInputs(selectedPlayer, canvas);
+        keyH = new KeyHandler(selectedPlayer, canvas);
+        mouseH = new MouseHandler(ui);
 
         gameState = PLAYING_STATE;
     }
@@ -56,7 +58,9 @@ public class GameFrame{
     public void setUpGUI(){
         cp.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         frame.setTitle("work please");
-        frame.addKeyListener(keyInputs);
+        frame.addKeyListener(keyH);
+        frame.addMouseListener(mouseH);
+        frame.addMouseMotionListener(mouseH);
 
         cp.setBackground(new Color(20, 28, 22));
         cp.add(canvas);

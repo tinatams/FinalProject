@@ -2,11 +2,11 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class KeyInputs implements KeyListener{
+public class KeyHandler implements KeyListener{
     private Player selectedPlayer;
     private GameCanvas canvas;
 
-    public KeyInputs(Player sp, GameCanvas c){
+    public KeyHandler(Player sp, GameCanvas c){
         selectedPlayer = sp;
         canvas = c;
     }
@@ -14,6 +14,8 @@ public class KeyInputs implements KeyListener{
     @Override
     public void keyTyped(KeyEvent e) {
         int code = e.getKeyCode();
+
+        System.out.println("KEKEK");
 
     }
 

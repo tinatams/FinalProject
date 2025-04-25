@@ -84,7 +84,7 @@ public class GameCanvas extends JComponent{
     public void update(){
         selectedPlayer.update();
         mapH.update();
-        
+        ui.update();
     }
 
     public void checkBounds(){

@@ -1,5 +1,5 @@
-import java.net.*;
 import java.io.*;
+import java.net.*;
 import java.util.*;
 
 public class GameServer{
@@ -9,11 +9,14 @@ public class GameServer{
 
     private int clientNum = 0;
     private String serverData;
+    private String hasHermes;
 
     public GameServer(){
         serverData = "nothing yet";
         sockets = new ArrayList<Socket>();
         clients = new ArrayList<ClientRunnable>();
+
+        hasHermes = "ODD";
 
         try {
             ss = new ServerSocket(60003);
@@ -21,6 +24,14 @@ public class GameServer{
             System.out.println("IOException from ChatServer constructor");
         }
         System.out.println("THE CHAT SERVER HAS BEEN CREATED");
+    }
+
+    public void passHermes(){
+        if (hasHermes.equals("ODD")){
+            hasHermes = "EVEN";
+        } else {
+            hasHermes = "ODD";
+        }
     }
 
     public void closeSocketsOnShutdown(){
@@ -103,7 +114,6 @@ public class GameServer{
             for(String pData : labyrinthData){
                 if (pData != null){
                     String[] separatedData = pData.split(",");
-                    System.out.println(separatedData[1]);
                     
                     if (separatedData[1].equals("button_one")){
                         button1++;
@@ -124,8 +134,12 @@ public class GameServer{
             
             tempString += "\n";
         }
+
+        //HERMES DATA
+        tempString += "Hermes|";
+
+
         serverData = tempString;
-        System.out.println(tempString);
     }
 
     public void sendOutData(){
