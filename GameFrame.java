@@ -39,7 +39,7 @@ public class GameFrame{
         int x = (CN % 2 == 0) ? 9 : 37;
         int y = (CN % 2 == 0) ? 10 : 11;
  
-        selectedPlayer = new Player(skin, x * SCALED, y * SCALED);
+        selectedPlayer = new Player(skin, x * SCALED, y * SCALED, CN);
         mapH = new MapHandler(selectedPlayer, clientNumber);
         ui = new UIHandler(selectedPlayer, mapH);
         canvas = new GameCanvas(data, selectedPlayer, CN, mapH, ui);

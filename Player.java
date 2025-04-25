@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javax.imageio.*;
 
 public class Player implements Collidable{
-    private int worldX, worldY, screenX, screenY, speed;
+    private int worldX, worldY, screenX, screenY, speed, clientNumber;
     private int spriteW, spriteH, counter, version, direction;
     private String skin;
 
@@ -23,7 +23,9 @@ public class Player implements Collidable{
 
     private ArrayList<SuperItem> inventory;
 
-    public Player(String s, int x, int y){
+    public Player(String s, int x, int y, int cliNum){
+        clientNumber = cliNum;
+
         worldX = x;
         worldY = y;
         speed = 4;
@@ -306,5 +308,9 @@ public class Player implements Collidable{
     public NPC getNPCinteracting(){
         NPC interactionNPC = getNPC(mapH.getNPCs());
         return interactionNPC;
+    }
+
+    public int getCliNum(){
+        return clientNumber;
     }
 }   

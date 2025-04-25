@@ -1,7 +1,11 @@
+import java.sql.ClientInfoStatus;
 import java.util.ArrayList;
 
 public class Hermes extends NPC{
     private ArrayList<SuperItem> inventory;
+    private int user;
+    
+    public static final int NO_USER = -1;
 
     public Hermes(String s, int x, int y, String[] dialogues) {
         super(s, x, y, dialogues);
@@ -10,11 +14,16 @@ public class Hermes extends NPC{
         collect(new WoodItem(0,0));
         collect(new WoodItem(0,0));
         collect(new IronItem(0,0));
+
+        user = NO_USER;
     }
 
     @Override
     public void interact(Player player){
-        GameFrame.gameState = GameFrame.HERMES_STATE;
+        if (user == NO_USER){
+            GameFrame.gameState = GameFrame.HERMES_STATE;
+            user = player.getCliNum();
+        }
     }
 
     public ArrayList<SuperItem> getInventory(){
@@ -65,6 +74,14 @@ public class Hermes extends NPC{
     @Override 
     public String getName(){
         return "Hermes";
+    }
+
+    public void setUser(int cn){
+        user = cn;
+    }
+
+    public int getUser(){
+        return user;
     }
     
 }

@@ -51,7 +51,8 @@ public class GameCanvas extends JComponent{
                         String s = data[3];
                         int direc = Integer.parseInt(data[4]);
                         int version = Integer.parseInt(data[5]);
-                        Player temp = new Player(s,x,y);
+                        int cliNum = Integer.parseInt(data[0]);
+                        Player temp = new Player(s,x,y,cliNum);
                         temp.setOther(direc, version);
                         players.add(temp);
                         
