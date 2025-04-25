@@ -107,6 +107,10 @@ public class GameCanvas extends JComponent{
         a.start();
     }
 
+    public MapHandler getMapHandler() {
+        return mapH;
+    }
+
     private class Animation extends Thread {
 
         public void Animation(){

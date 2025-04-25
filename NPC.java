@@ -38,6 +38,7 @@ public class NPC implements Interactable{ //should extend interactable
     }
     @Override
     public void draw(Graphics2D g2d){
+        //System.out.println("Drawing" + name);
         g2d.drawImage(sprite, worldX, worldY, GameFrame.SCALED, GameFrame.SCALED, null);
     }
     @Override
@@ -72,11 +73,11 @@ public class NPC implements Interactable{ //should extend interactable
     }
     @Override
     public Rectangle getHitBox() {
-        return hitBox;
+        return new Rectangle(worldX + 10 ,worldY + 20 ,spriteW , spriteH-5);
     }
     @Override
     public Rectangle getInteractionBox() {
-        return interactionBox;
+        return new Rectangle(worldX - GameFrame.SCALED/2 ,worldY - GameFrame.SCALED/2 , spriteW + GameFrame.SCALED, spriteH + GameFrame.SCALED);
     }
 
 
@@ -90,6 +91,14 @@ public class NPC implements Interactable{ //should extend interactable
 
     public String getName(){
         return name;
+    }
+
+    public void setWorldX(int worldX) {
+        this.worldX = worldX;
+    }
+
+    public void setWorldY(int worldY) {
+        this.worldY = worldY;
     }
     
 }

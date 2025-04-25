@@ -4,16 +4,20 @@ import java.util.ArrayList;
 public class Hermes extends NPC{
     private ArrayList<SuperItem> inventory;
     private int user;
+    private String action = "UPDATE";
+    private String playersWith = "ODD";
+
+    private int x1,y1,x2,y2;
     
     public static final int NO_USER = -1;
 
-    public Hermes(String s, int x, int y, String[] dialogues) {
+    public Hermes(String s, int x, int y, int x_2, int y_2, String[] dialogues) {
         super(s, x, y, dialogues);
+        x1 = x;
+        x2 = x_2;
+        y1 = y;
+        y2 = y_2;
         inventory = new ArrayList<SuperItem>();
-        collect(new WoodItem(0,0));
-        collect(new WoodItem(0,0));
-        collect(new WoodItem(0,0));
-        collect(new IronItem(0,0));
 
         user = NO_USER;
     }
@@ -43,7 +47,7 @@ public class Hermes extends NPC{
     public void discardItem(SuperItem item){
         SuperItem discardItem = getItem(item.getName());
         if (discardItem != null && discardItem.isStackable()){
-            discardItem.setAmount(discardItem.getAmount() + 1);
+            discardItem.setAmount(discardItem.getAmount() - 1);
         } else {
             inventory.remove(item);
             item.setOwner(null);
@@ -71,6 +75,14 @@ public class Hermes extends NPC{
         return notStackItems;
     }
 
+    public void send(){
+        action = "SEND";
+    }
+
+    public String getAction(){
+        return action;
+    }
+
     @Override 
     public String getName(){
         return "Hermes";
@@ -82,6 +94,72 @@ public class Hermes extends NPC{
 
     public int getUser(){
         return user;
+    }
+
+    public String getItemString(){
+        String tempString = "";
+
+        if (inventory.size() > 0){
+                for(SuperItem item : inventory){
+                tempString += String.format("%s#%d#", item.getName(), item.getAmount());
+            }
+        } else {
+            tempString += "NULL";
+        }
+        
+        return tempString;
+    }
+
+    public void recieveData(String data) {
+        if (!data.equals("null")){
+            String[] serverData = data.split(",");
+            if(serverData.length >=3){
+                user = Integer.parseInt(serverData[0]);
+                playersWith = serverData[1];
+                setInventory(serverData[2]);
+            }
+        } else{
+            user = NO_USER;
+        }
+        System.out.println(data);
+
+        if (playersWith.equals("EVEN")){
+            setWorldX(x2);
+            setWorldY(y2);
+        } else {
+            setWorldX(x1);
+            setWorldY(y1);
+        }
+    }
+
+    private void setInventory(String inventoryData){
+        if (user != GameFrame.getClientNumber()){
+            inventory.clear();
+            String[] itemData = inventoryData.split("#");
+            for (int i = 0; i < itemData.length-1; i+=2){
+                String itemName = itemData[i];
+                int amount = Integer.parseInt(itemData[i+1]);
+
+                switch (itemName) {
+                    case "GRAPE":
+                        GrapeItem g = new GrapeItem(0,0);
+                        g.setAmount(amount);
+                        inventory.add(g);
+                        break;
+                    case "WOOD":
+                        WoodItem w = new WoodItem(0,0);
+                        w.setAmount(amount);
+                        inventory.add(w);
+                        break;
+                }
+            }
+
+        }
+        
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
     
 }

@@ -15,8 +15,6 @@ public class KeyHandler implements KeyListener{
     public void keyTyped(KeyEvent e) {
         int code = e.getKeyCode();
 
-        System.out.println("KEKEK");
-
     }
 
     @Override
@@ -40,12 +38,47 @@ public class KeyHandler implements KeyListener{
             }
         } 
 
+
+
+
+
+        if(GameFrame.gameState == GameFrame.HERMES_STATE && code == KeyEvent.VK_1){
+            if (selectedPlayer.getItem("WOOD") != null){
+                selectedPlayer.discardItem(new WoodItem(0,0));
+                Hermes hermes = (Hermes) canvas.getMapHandler().getNPC("Hermes");
+                hermes.collect(new WoodItem(0,0));
+            }
+        } else if(GameFrame.gameState == GameFrame.HERMES_STATE && code == KeyEvent.VK_2){
+            selectedPlayer.discardItem(new GrapeItem(0,0));
+            Hermes hermes = (Hermes) canvas.getMapHandler().getNPC("Hermes");
+            hermes.collect(new GrapeItem(0,0));
+        } else if (GameFrame.gameState == GameFrame.HERMES_STATE && code == KeyEvent.VK_3){
+            Hermes hermes = (Hermes) canvas.getMapHandler().getNPC("Hermes");
+            hermes.send();
+            GameFrame.gameState = GameFrame.PLAYING_STATE;
+            hermes.setUser(Hermes.NO_USER);
+        }
+
+
+
+
+
+
+
         if (code ==  KeyEvent.VK_C){
+            if (GameFrame.gameState == GameFrame.HERMES_STATE){
+                Hermes hermes = (Hermes) canvas.getMapHandler().getNPC("Hermes");
+                hermes.setUser(Hermes.NO_USER);
+                GameFrame.gameState = GameFrame.PLAYING_STATE;
+            }
+
             NPC currentNPC = selectedPlayer.getNPCinteracting();
             if(currentNPC != null){
                 GameFrame.gameState = GameFrame.DIALOG_STATE;
             }
+
             if(GameFrame.gameState == GameFrame.PLAYING_STATE) selectedPlayer.interact();
+
             else if(GameFrame.gameState == GameFrame.DIALOG_STATE){
                 if(currentNPC.getDialogNumber() > currentNPC.getDialogueSize()){
                     currentNPC.setDialogNumber(0);
@@ -59,10 +92,15 @@ public class KeyHandler implements KeyListener{
         }
 
         if (code == KeyEvent.VK_E){
+            if (GameFrame.gameState == GameFrame.PLAYING_STATE || GameFrame.gameState == GameFrame.INVENTORY_STATE)
             GameFrame.gameState = (GameFrame.gameState == GameFrame.PLAYING_STATE) ? GameFrame.INVENTORY_STATE : GameFrame.PLAYING_STATE;
         }
 
         if (code == KeyEvent.VK_ESCAPE){
+            if (GameFrame.gameState == GameFrame.HERMES_STATE){
+                Hermes hermes = (Hermes) canvas.getMapHandler().getNPC("Hermes");
+                hermes.setUser(Hermes.NO_USER);
+            }
             GameFrame.gameState = GameFrame.PLAYING_STATE;
         }
 

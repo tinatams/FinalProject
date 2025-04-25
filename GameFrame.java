@@ -11,7 +11,7 @@ public class GameFrame{
     public static final int SCALER = 3;
     public static final int SCALED = PIXELRATIO * SCALER;
     
-    private int clientNumber;
+    private static int clientNumber;
 
     private JFrame frame;
     private JPanel cp;
@@ -81,5 +81,9 @@ public class GameFrame{
     
     public MapHandler getMapHandler() {
         return mapH;
+    }
+
+    public static int getClientNumber(){
+        return clientNumber;
     }
 }

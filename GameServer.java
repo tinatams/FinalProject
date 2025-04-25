@@ -137,9 +137,25 @@ public class GameServer{
 
         //HERMES DATA
         tempString += "Hermes|";
+        boolean isEmpty = true;
+        for (String hData : hermesData){
+            if (hData != null){
+                String[] sepHermData = hData.split(",");
+                if ( sepHermData[1].equals("SEND")){
+                    passHermes();
+                }
 
+                tempString += String.format("%s,%s,%s", sepHermData[0], hasHermes, sepHermData[2]);
+                isEmpty = false;
+            }
+        }
+
+        if (isEmpty){
+            tempString += "null";
+        }
 
         serverData = tempString;
+        System.out.println(serverData);
     }
 
     public void sendOutData(){

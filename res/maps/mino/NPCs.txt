@@ -1,1 +1,1 @@
-10,10,Prophet,ROAR!
+Prophet,10,10,ROAR!
