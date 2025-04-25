@@ -57,19 +57,75 @@ public class GameServer{
 
     public void compileServerData(){
         String tempString = "";
-        String[] dataTypes = {"Players","Labyrinth"};
+        String[] playerData = new String[clients.size()];
+        String[] labyrinthData = new String[clients.size()];
+        String[] hermesData = new String[clients.size()];
 
-        for (int i = 0; i < dataTypes.length; i++){
-            tempString += dataTypes[i] + "|";
-            for (ClientRunnable c : clients){
-                String[] cliData = c.getClientDataArray();
-                if (cliData != null && cliData.length > 0){
-                    tempString += cliData[i]+"|";
+        //separate the data into their types
+        for (ClientRunnable c : clients){
+            String[] cliData = c.getClientDataArray();
+            if (cliData != null){
+                for(String data : cliData){
+                    String[] sepData = data.split("\\|");
+                    if (sepData != null){
+                        String[] indivPlayerData = (sepData[1]).split(",");
+                        switch (sepData[0]){
+                            case "Players":
+                                playerData[Integer.parseInt(indivPlayerData[0])] = sepData[1];
+                                break;
+                            case "Labyrinth":
+                                labyrinthData[Integer.parseInt(indivPlayerData[0])] = sepData[1];
+                                break;
+                            case "Hermes":
+                                hermesData[Integer.parseInt(indivPlayerData[0])] = sepData[1];
+                                break;
+                        }
+                    }
+                        
                 }
             }
+        }
+
+        //compile
+
+        //PLAYER DATA:
+        tempString += "Players|";
+        for (int i = 0; i < playerData.length; i++){
+            tempString += playerData[i] + "|";
+        }
+        tempString += "\n";
+
+        //LABYRINTH DATA
+        int button1 = 0, button2 = 0;
+        String finalVersion;
+        tempString += "Labyrinth|";
+        for (int i = 0; i < labyrinthData.length; i++){
+            for(String pData : labyrinthData){
+                if (pData != null){
+                    String[] separatedData = pData.split(",");
+                    System.out.println(separatedData[1]);
+                    
+                    if (separatedData[1].equals("button_one")){
+                        button1++;
+                    } else if (separatedData[1].equals("button_two")){
+                        button2++;
+                    }
+                }
+            }
+
+            if ( button1 > button2){
+                finalVersion = "button_one"; 
+            } else if ( button1 < button2){
+                finalVersion = "button_two";
+            } else {
+                finalVersion = "default";
+            }
+            tempString += finalVersion;
+            
             tempString += "\n";
         }
         serverData = tempString;
+        System.out.println(tempString);
     }
 
     public void sendOutData(){
@@ -148,7 +204,7 @@ public class GameServer{
                 compileServerData();
                 sendOutData();
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(10);
                 } catch (InterruptedException ex) {
                 }
             }

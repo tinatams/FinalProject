@@ -276,19 +276,11 @@ public class MapHandler{
 
         String[] serverMapData = data.split("\\|");
         String newVersion = "default";
+        if (serverMapData.length == 2){
+            newVersion = serverMapData[1];
+        } 
 
-        for (int i = 0; i < serverMapData.length; i++){
-            String mapData = serverMapData[i];
-            
-            String[] mData = mapData.split(",");
-            if (mData.length == 2){
-                if (Integer.parseInt(mData[0]) != clientNumber){
-                    newVersion = mData[1];
-                }
-            }  
-        }
-
-        if(newVersion != labMap.getVersion()) labMap.loadNewMap(newVersion);
+        if(!newVersion.equals(labMap.getVersion())) labMap.loadNewMap(newVersion);
     }
 
     public String getVersion(){

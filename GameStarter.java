@@ -66,11 +66,11 @@ public class GameStarter{
                 try {
                     Player clientPlayer = frame.getSelected();
                     MapHandler mapH = frame.getMapHandler();
-                    clientData = String.format("%d,%d,%d,%s,%d,%d,%s\n", clientNumber, clientPlayer.getWorldX(), clientPlayer.getWorldY(), clientPlayer.getSkin(), clientPlayer.getDirection(), clientPlayer.getVer(), frame.getMap());
-                    clientData += String.format("%d,%s\n",clientNumber, mapH.getVersion());
+                    clientData = String.format("Players|%d,%d,%d,%s,%d,%d,%s\n", clientNumber, clientPlayer.getWorldX(), clientPlayer.getWorldY(), clientPlayer.getSkin(), clientPlayer.getDirection(), clientPlayer.getVer(), frame.getMap());
+                    clientData += String.format("Labyrinth|%d,%s\n",clientNumber, mapH.getVersion());
                     dataOut.writeUTF(clientData);
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(10);
                     } catch (InterruptedException ex) {
                     }
                 } catch (IOException ex) {
@@ -98,7 +98,7 @@ public class GameStarter{
                             frame.recieveData(compile(data));
                         } else if (data[0].equals("Labyrinth")){
                             MapHandler mapH = frame.getMapHandler();
-                            mapH.recieveData(compile(data));
+                            mapH.recieveData(dataType);
                         }
 
                     }
