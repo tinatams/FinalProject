@@ -6,41 +6,50 @@ import java.util.ArrayList;
 import javax.imageio.*;
 
 public class UIHandler{
+    private static final int PANEL_LEFT_X = 1 ;
+    private static final int  PANEL_LEFT_Y = 1 ;
+    private static final int  PANEL_RIGHT_X = 11 ;
+    private static final int  PANEL_RIGHT_Y = 1 ;
+
     public static Font regularFont;
     public static String currentDialog = "";
     private BufferedImage dialogueBox, inventoryTemplate, blankHalfPanel;
     private Player selectedPlayer;
     private MapHandler mapHandler;
 
+    private InventoryCellUI[] inventoryCellsPlayer, inventoryCellsHermes;
+    
     public UIHandler(Player sPlayer, MapHandler mHandler){
+        inventoryCellsHermes = new InventoryCellUI[70];
+        inventoryCellsPlayer = new InventoryCellUI[70];
         setUpUIComponents();
         selectedPlayer = sPlayer;
         mapHandler = mHandler;
+        setUpCells();
     }
 
     public void draw(Graphics2D g2d){
-        if(GameFrame.gameState == GameFrame.DIALOG_STATE) drawDialogScreen(g2d);
-
-        else if(GameFrame.gameState == GameFrame.INVENTORY_STATE){
-            g2d.setColor(new Color(0,0,0,125));
-            g2d.fillRect(0,0,GameFrame.WIDTH, GameFrame.HEIGHT);
-
-            drawInventory(g2d, selectedPlayer.getInventory(),1,1);
-            drawQuestPanel(g2d,11,1);
-
-        }
-
-        else if (GameFrame.gameState == GameFrame.HERMES_STATE){
-            g2d.setColor(new Color(0,0,0,125));
-            g2d.fillRect(0,0,GameFrame.WIDTH, GameFrame.HEIGHT);
-
-            drawInventory(g2d, selectedPlayer.getInventory(),1,1);
-
-            if (mapHandler.getNPC("Hermes") != null){
-                Hermes hermes = (Hermes) mapHandler.getNPC("Hermes");
-
-                drawInventory(g2d, hermes.getInventory() , 11, 1);
-            }
+        switch (GameFrame.gameState) {
+            case GameFrame.DIALOG_STATE:
+                drawDialogScreen(g2d);
+                break;
+            case GameFrame.INVENTORY_STATE:
+                g2d.setColor(new Color(0,0,0,125));
+                g2d.fillRect(0,0,GameFrame.WIDTH, GameFrame.HEIGHT);
+                drawInventory(g2d, PANEL_LEFT_X, PANEL_LEFT_Y, selectedPlayer.getInventory(), inventoryCellsPlayer);
+                drawQuestPanel(g2d,PANEL_RIGHT_X,PANEL_RIGHT_Y);
+                break;
+            case GameFrame.HERMES_STATE:
+                g2d.setColor(new Color(0,0,0,125));
+                g2d.fillRect(0,0,GameFrame.WIDTH, GameFrame.HEIGHT);
+                drawInventory(g2d, PANEL_LEFT_X, PANEL_LEFT_Y, selectedPlayer.getInventory(), inventoryCellsPlayer);
+                if (mapHandler.getNPC("Hermes") != null){
+                    Hermes hermes = (Hermes) mapHandler.getNPC("Hermes");
+                    
+                    drawInventory(g2d, PANEL_RIGHT_X,PANEL_RIGHT_Y, hermes.getInventory(), inventoryCellsHermes);
+                }   break;
+            default:
+                break;
         }
     }
 
@@ -60,18 +69,33 @@ public class UIHandler{
         g2d.drawImage(blankHalfPanel, panelX * GameFrame.SCALED, panelY * GameFrame.SCALED, 9 * GameFrame.SCALED, 14 * GameFrame.SCALED, null);
     }
     
-    public void drawInventory(Graphics2D g2d, ArrayList<SuperItem> inventory, int panelX, int panelY){
-        g2d.drawImage(inventoryTemplate, panelX* GameFrame.SCALED, panelY*GameFrame.SCALED, 9 * GameFrame.SCALED, 14 * GameFrame.SCALED, null);
-        
+    public void setUpCells(){
         int x = 1;
         int y = 3;
-        for (SuperItem item : inventory){
-            item.drawSpecific(g2d, x*GameFrame.SCALED + 3 + panelX* GameFrame.SCALED, y*GameFrame.SCALED + 3 + panelY* GameFrame.SCALED, 14 * GameFrame.SCALER, 14 * GameFrame.SCALER);
-            if (item.getAmount() > 1){
-                g2d.setColor(new Color(255, 255, 255));
-                g2d.setFont(regularFont.deriveFont(24f));
-                g2d.drawString(Integer.toString(item.getAmount()), (x+1)*GameFrame.SCALED - 14 + panelX* GameFrame.SCALED, (y+1)*GameFrame.SCALED - 7+ panelY* GameFrame.SCALED);
+        for (int i = 0; i < 70; i++){
+            inventoryCellsPlayer[i] = new InventoryCellUI(x*GameFrame.SCALED+PANEL_LEFT_X* GameFrame.SCALED, y*GameFrame.SCALED + PANEL_LEFT_Y* GameFrame.SCALED);
+            inventoryCellsHermes[i] = new InventoryCellUI(x*GameFrame.SCALED+PANEL_RIGHT_X* GameFrame.SCALED, y*GameFrame.SCALED + PANEL_RIGHT_Y* GameFrame.SCALED);
+            
+            x++;
+            if (x >= 8){
+                x = 1;
+                y++;
             }
+        }
+    }
+    public void drawInventory(Graphics2D g2d, int panelX, int panelY, ArrayList<SuperItem> inventory, InventoryCellUI[] cells){
+        g2d.drawImage(blankHalfPanel, panelX * GameFrame.SCALED, panelY * GameFrame.SCALED, 9 * GameFrame.SCALED, 14 * GameFrame.SCALED, null);
+
+        int x = 1;
+        int y = 3;
+        for (int i = 0; i < 70; i++){
+            InventoryCellUI ice = cells[i];
+            if(!inventory.isEmpty() && inventory.size() > i){
+                SuperItem item = inventory.get(i);
+                ice.setContents(item);
+            }
+            
+            ice.draw(g2d);
             x++;
             if (x >= 8){
                 x = 1;
