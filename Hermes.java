@@ -36,6 +36,8 @@ public class Hermes extends NPC{
 
         if (originalx != getWorldX()){
             action = "UPDATE";
+            GameFrame.gameState = GameFrame.PLAYING_STATE;
+            user = NO_USER;
         }
 
         super.draw(g2d);
@@ -140,10 +142,8 @@ public class Hermes extends NPC{
             }
         } else{
             user = NO_USER;
-            System.out.println(user);
             playersWith = serverData[1];
         }
-        System.out.println(data);
     }
 
     private void setInventory(String inventoryData){

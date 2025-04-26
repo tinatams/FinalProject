@@ -8,8 +8,8 @@ public class GameServer{
     private ArrayList<ClientRunnable> clients;
 
     private int clientNum = 0;
-    private String serverData;
-    private String hasHermes;
+    private String serverData,hasHermes, hermesLastInv;
+    private boolean canSwitch, newInteraction;
 
     public GameServer(){
         serverData = "nothing yet";
@@ -17,6 +17,7 @@ public class GameServer{
         clients = new ArrayList<ClientRunnable>();
 
         hasHermes = "ODD";
+        newInteraction = true;
 
         try {
             ss = new ServerSocket(60003);
@@ -27,10 +28,12 @@ public class GameServer{
     }
 
     public void passHermes(){
-        if (hasHermes.equals("ODD")){
-            hasHermes = "EVEN";
-        } else if (hasHermes.equals("EVEN")){
-            hasHermes = "ODD";
+        if (canSwitch){
+            if (hasHermes.equals("ODD")){
+                hasHermes = "EVEN";
+            } else if (hasHermes.equals("EVEN")){
+                hasHermes = "ODD";
+            }
         }
     }
 
@@ -142,17 +145,34 @@ public class GameServer{
             if (hData != null){
                 String[] sepHermData = hData.split(",");
                 if ( sepHermData[1].equals("SEND")){
-                    System.out.println("bro");
+                    System.out.println(hasHermes);
                     passHermes();
+                    canSwitch = false;
+                } else {
+                    canSwitch = true;
                 }
 
-                tempString += String.format("%s,%s,%s", sepHermData[0], hasHermes, sepHermData[2]);
+                String finalHermInventory = sepHermData[2];
+
+                if (newInteraction){
+                    newInteraction = false;
+                    if ( !sepHermData[2].equals(hermesLastInv)){
+                        finalHermInventory = hermesLastInv;
+                    }
+                }
+
+                tempString += String.format("%s,%s,%s", sepHermData[0], hasHermes, finalHermInventory);
+                hermesLastInv = finalHermInventory;
+                System.out.println(hermesLastInv);
+                System.out.println("tralaleo"+ finalHermInventory);
+
                 isEmpty = false;
             }
         }
 
         if (isEmpty){
             tempString += "null,"+ hasHermes;
+            newInteraction = true;
         }
 
         serverData = tempString;
