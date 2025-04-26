@@ -178,7 +178,7 @@ public class Player implements Collidable{
     public void collect(SuperItem item){
         boolean itemCollected = false;
         SuperItem itemCollect = getItem(item.getName());
-        if (itemCollect != null && item.isStackable()){
+        if (itemCollect != null && itemCollect.isStackable()){
             itemCollect.setAmount(itemCollect.getAmount() + 1);
             itemCollected = true;
         } else {

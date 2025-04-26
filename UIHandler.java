@@ -73,8 +73,8 @@ public class UIHandler{
         int x = 1;
         int y = 3;
         for (int i = 0; i < 70; i++){
-            inventoryCellsPlayer[i] = new InventoryCellUI(x*GameFrame.SCALED+PANEL_LEFT_X* GameFrame.SCALED, y*GameFrame.SCALED + PANEL_LEFT_Y* GameFrame.SCALED);
-            inventoryCellsHermes[i] = new InventoryCellUI(x*GameFrame.SCALED+PANEL_RIGHT_X* GameFrame.SCALED, y*GameFrame.SCALED + PANEL_RIGHT_Y* GameFrame.SCALED);
+            inventoryCellsPlayer[i] = new InventoryCellUI(x*GameFrame.SCALED+PANEL_LEFT_X* GameFrame.SCALED, y*GameFrame.SCALED + PANEL_LEFT_Y* GameFrame.SCALED, this, "Player");
+            inventoryCellsHermes[i] = new InventoryCellUI(x*GameFrame.SCALED+PANEL_RIGHT_X* GameFrame.SCALED, y*GameFrame.SCALED + PANEL_RIGHT_Y* GameFrame.SCALED, this, "Hermes");
             
             x++;
             if (x >= 8){
@@ -135,11 +135,99 @@ public class UIHandler{
         }
     }
 
-    public void mouseClicked(MouseEvent me){
-
-    }
-
     public void update(){
-        
+        if (GameFrame.gameState == GameFrame.HERMES_STATE){
+            for (int i = 0; i < inventoryCellsHermes.length ; i++){
+                inventoryCellsHermes[i].update();
+                inventoryCellsPlayer[i].update();
+            }
+        }
     }
+
+    public Player getSelectedPlayer() {
+        return selectedPlayer;
+    }
+
+    public MapHandler getMapHandler() {
+        return mapHandler;
+    }
+
+    public void mouseClicked(MouseEvent e){
+
+    }
+
+    public void mousePressed(MouseEvent e){
+        if (GameFrame.gameState == GameFrame.HERMES_STATE){
+            for (int i = 0; i < 70; i++){
+                if ( isIn(e, inventoryCellsHermes[i])){
+                    inventoryCellsHermes[i].setMousePressed(true);
+                    break;
+                } 
+
+                if ( isIn(e, inventoryCellsHermes[i])){
+                    inventoryCellsPlayer[i].setMousePressed(true);
+                    break;
+                }
+            }
+        }
+
+    }
+
+    public void mouseReleased(MouseEvent e){
+        if (GameFrame.gameState == GameFrame.HERMES_STATE){
+            for (int i = 0; i < 70; i++){
+                if ( isIn(e, inventoryCellsHermes[i])){
+                    if(inventoryCellsHermes[i].isMousePressed()){
+                        inventoryCellsHermes[i].clicked();
+                    }
+                    break;
+                } 
+
+                if ( isIn(e, inventoryCellsHermes[i])){
+                    if(inventoryCellsPlayer[i].isMousePressed()){
+                        inventoryCellsPlayer[i].clicked();
+                    }
+                    break;
+                }
+            }
+
+            resetButtons();
+        }
+
+    }
+
+    public void mouseMoved(MouseEvent e){
+        if (GameFrame.gameState == GameFrame.HERMES_STATE){
+            for (int i = 0; i < 70; i++){
+                inventoryCellsPlayer[i].setMouseOver(false);
+                inventoryCellsHermes[i].setMouseOver(false);
+            }
+
+            for (int i = 0; i < 70; i++){
+                if ( isIn(e, inventoryCellsHermes[i])){
+                    inventoryCellsHermes[i].setMouseOver(true);
+                    break;
+                } 
+
+                if ( isIn(e, inventoryCellsHermes[i])){
+                    inventoryCellsPlayer[i].setMouseOver(true);
+                    break;
+                }
+            }
+        }
+    }
+
+    public boolean isIn(MouseEvent e, InventoryCellUI ic){
+        return ic.getBounds().contains(e.getX(), e.getY());
+    }
+
+    private void resetButtons() {
+        if (GameFrame.gameState == GameFrame.HERMES_STATE){
+            for (int i = 0; i < 70; i++){
+                inventoryCellsPlayer[i].resetBools();
+                inventoryCellsHermes[i].resetBools();
+            }
+        }
+    }
+
 }

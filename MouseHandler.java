@@ -9,16 +9,18 @@ public class MouseHandler implements MouseListener, MouseMotionListener{
     
     @Override
     public void mouseClicked(MouseEvent e) {
+        UI.mouseClicked(e);
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
+        UI.mousePressed(e);
 
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        UI.mouseReleased(e);
     }
 
     @Override
@@ -38,6 +40,7 @@ public class MouseHandler implements MouseListener, MouseMotionListener{
 
     @Override
     public void mouseMoved(MouseEvent e) {
+        UI.mouseMoved(e);
     }
 
 } 

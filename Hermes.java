@@ -59,8 +59,9 @@ public class Hermes extends NPC{
 
     public void collect(SuperItem item){
         SuperItem itemCollect = getItem(item.getName());
-        if (itemCollect != null && item.isStackable()){
+        if (itemCollect != null && itemCollect.isStackable()){
             itemCollect.setAmount(itemCollect.getAmount() + 1);
+            System.out.println("collected "+ itemCollect.getName());
         } else {
             if (inventory.size() < 70){
                 inventory.add(item);
@@ -73,6 +74,9 @@ public class Hermes extends NPC{
         SuperItem discardItem = getItem(item.getName());
         if (discardItem != null && discardItem.isStackable()){
             discardItem.setAmount(discardItem.getAmount() - 1);
+            if (discardItem.getAmount() <= 0){
+                inventory.remove(discardItem);
+            }
         } else {
             inventory.remove(item);
             item.setOwner(null);
