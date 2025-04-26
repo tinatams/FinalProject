@@ -1,3 +1,4 @@
+import java.awt.Graphics2D;
 import java.sql.ClientInfoStatus;
 import java.util.ArrayList;
 
@@ -20,6 +21,24 @@ public class Hermes extends NPC{
         inventory = new ArrayList<SuperItem>();
 
         user = NO_USER;
+    }
+
+    @Override 
+    public void draw(Graphics2D g2d){
+        int originalx = getWorldX();
+        if (playersWith.equals("EVEN")){
+            setWorldX(x2);
+            setWorldY(y2);
+        } else if (playersWith.equals("ODD")){
+            setWorldX(x1);
+            setWorldY(y1);
+        }
+
+        if (originalx != getWorldX()){
+            action = "UPDATE";
+        }
+
+        super.draw(g2d);
     }
 
     @Override
@@ -111,8 +130,9 @@ public class Hermes extends NPC{
     }
 
     public void recieveData(String data) {
-        if (!data.equals("null")){
-            String[] serverData = data.split(",");
+        String[] serverData = data.split(",");
+
+        if (!serverData[0].equals("null")){
             if(serverData.length >=3){
                 user = Integer.parseInt(serverData[0]);
                 playersWith = serverData[1];
@@ -120,16 +140,10 @@ public class Hermes extends NPC{
             }
         } else{
             user = NO_USER;
+            System.out.println(user);
+            playersWith = serverData[1];
         }
         System.out.println(data);
-
-        if (playersWith.equals("EVEN")){
-            setWorldX(x2);
-            setWorldY(y2);
-        } else {
-            setWorldX(x1);
-            setWorldY(y1);
-        }
     }
 
     private void setInventory(String inventoryData){

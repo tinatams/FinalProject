@@ -70,7 +70,6 @@ public class GameStarter{
                     if (GameFrame.gameState == GameFrame.HERMES_STATE){
                         Hermes hermes = (Hermes) mapH.getNPC("Hermes");
                         clientData += String.format("Hermes|%d,%s,%s\n",clientNumber, hermes.getAction(), hermes.getItemString());
-                        hermes.setAction("UPDATE");
                     }
                     //System.out.println(clientData);
                     dataOut.writeUTF(clientData);

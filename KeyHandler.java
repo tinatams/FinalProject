@@ -55,8 +55,6 @@ public class KeyHandler implements KeyListener{
         } else if (GameFrame.gameState == GameFrame.HERMES_STATE && code == KeyEvent.VK_3){
             Hermes hermes = (Hermes) canvas.getMapHandler().getNPC("Hermes");
             hermes.send();
-            GameFrame.gameState = GameFrame.PLAYING_STATE;
-            hermes.setUser(Hermes.NO_USER);
         }
 
 

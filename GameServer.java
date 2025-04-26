@@ -29,7 +29,7 @@ public class GameServer{
     public void passHermes(){
         if (hasHermes.equals("ODD")){
             hasHermes = "EVEN";
-        } else {
+        } else if (hasHermes.equals("EVEN")){
             hasHermes = "ODD";
         }
     }
@@ -142,6 +142,7 @@ public class GameServer{
             if (hData != null){
                 String[] sepHermData = hData.split(",");
                 if ( sepHermData[1].equals("SEND")){
+                    System.out.println("bro");
                     passHermes();
                 }
 
@@ -151,11 +152,11 @@ public class GameServer{
         }
 
         if (isEmpty){
-            tempString += "null";
+            tempString += "null,"+ hasHermes;
         }
 
         serverData = tempString;
-        System.out.println(serverData);
+        //System.out.println(serverData);
     }
 
     public void sendOutData(){
