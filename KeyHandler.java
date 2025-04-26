@@ -55,7 +55,21 @@ public class KeyHandler implements KeyListener{
         } else if (GameFrame.gameState == GameFrame.HERMES_STATE && code == KeyEvent.VK_3){
             Hermes hermes = (Hermes) canvas.getMapHandler().getNPC("Hermes");
             hermes.send();
-        }
+        } else if (GameFrame.gameState == GameFrame.HERMES_STATE && code == KeyEvent.VK_4){
+            KeyItem key = (KeyItem) (selectedPlayer.getNotStackableItem("KEY")).get(0);
+            if (key != null){
+                selectedPlayer.discardItem(key);
+                Hermes hermes = (Hermes) canvas.getMapHandler().getNPC("Hermes");
+                hermes.collect(key);
+            }
+        } else if (GameFrame.gameState == GameFrame.HERMES_STATE && code == KeyEvent.VK_5){
+            Hermes hermes = (Hermes) canvas.getMapHandler().getNPC("Hermes");
+            KeyItem key = (KeyItem) (hermes.getNotStackableItem("KEY")).get(0);
+            if (key != null){
+                selectedPlayer.collect(key);
+                hermes.discardItem(key);
+            }
+        } 
 
 
 

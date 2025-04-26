@@ -57,13 +57,15 @@ public class Hermes extends NPC{
         return inventory;
     }
 
-        public void collect(SuperItem item){
+    public void collect(SuperItem item){
         SuperItem itemCollect = getItem(item.getName());
         if (itemCollect != null && item.isStackable()){
             itemCollect.setAmount(itemCollect.getAmount() + 1);
         } else {
-            inventory.add(item);
-            item.setOwner(null);
+            if (inventory.size() < 70){
+                inventory.add(item);
+                item.setOwner(null);
+            }
         }
     }
 
@@ -123,8 +125,13 @@ public class Hermes extends NPC{
         String tempString = "";
 
         if (inventory.size() > 0){
-                for(SuperItem item : inventory){
-                tempString += String.format("%s#%d#", item.getName(), item.getAmount());
+            for(SuperItem item : inventory){
+                if (!(item instanceof KeyItem)){
+                    tempString += String.format("%s#%d#", item.getName(), item.getAmount());
+                } else {
+                    tempString += String.format("%s#%d#%s#%s#", item.getName(), item.getAmount(),((KeyItem) item).getLockName(), "NULL");
+                }
+                    
             }
         } else {
             tempString += "NULL";
@@ -169,11 +176,20 @@ public class Hermes extends NPC{
                         w.setAmount(amount);
                         inventory.add(w);
                         break;
+                    case "IRON":
+                        IronItem iron = new IronItem(0,0);
+                        iron.setAmount(amount);
+                        inventory.add(iron);
+                        break;
+                    case "KEY":
+                        KeyItem k = new KeyItem(0,0,itemData[i+2]);
+                        k.setAmount(amount);
+                        inventory.add(k);
+                        i +=2;
+                        break;
                 }
             }
-
-        }
-        
+        }   
     }
 
     public void setAction(String action) {

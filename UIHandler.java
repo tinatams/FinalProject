@@ -73,8 +73,8 @@ public class UIHandler{
                 g2d.drawString(Integer.toString(item.getAmount()), (x+1)*GameFrame.SCALED - 14 + panelX* GameFrame.SCALED, (y+1)*GameFrame.SCALED - 7+ panelY* GameFrame.SCALED);
             }
             x++;
-            if (x > 8){
-                x = 2;
+            if (x >= 8){
+                x = 1;
                 y++;
             }
         }

@@ -176,18 +176,26 @@ public class Player implements Collidable{
     }
 
     public void collect(SuperItem item){
+        boolean itemCollected = false;
         SuperItem itemCollect = getItem(item.getName());
         if (itemCollect != null && item.isStackable()){
             itemCollect.setAmount(itemCollect.getAmount() + 1);
+            itemCollected = true;
         } else {
-            inventory.add(item);
-            item.setOwner(this);
+            if (inventory.size() < 70){
+                inventory.add(item);
+                item.setOwner(this);
+                itemCollected = true;
+            }
         }
 
         ArrayList<Interactable> interacts = mapH.getInteractables();
-        if (interacts.contains(item)){
-            interacts.remove(item);
+        if (item instanceof Interactable interactItem){
+            if (interacts.contains((Interactable) interactItem) && itemCollected){
+                interacts.remove((Interactable) interactItem);
+            }
         }
+        
     }
 
     public void discardItem(SuperItem item){
