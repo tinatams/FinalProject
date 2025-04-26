@@ -13,6 +13,7 @@ public class GameServer{
 
     public GameServer(){
         serverData = "nothing yet";
+        hermesLastInv = "NULL";
         sockets = new ArrayList<Socket>();
         clients = new ArrayList<ClientRunnable>();
 
@@ -156,15 +157,16 @@ public class GameServer{
 
                 if (newInteraction){
                     newInteraction = false;
-                    if ( !sepHermData[2].equals(hermesLastInv)){
+
+                    if (!(hermesLastInv).equals(finalHermInventory)){
                         finalHermInventory = hermesLastInv;
                     }
-                }
 
+                    
+                }
+                    
                 tempString += String.format("%s,%s,%s", sepHermData[0], hasHermes, finalHermInventory);
                 hermesLastInv = finalHermInventory;
-                System.out.println(hermesLastInv);
-                System.out.println("tralaleo"+ finalHermInventory);
 
                 isEmpty = false;
             }
@@ -176,6 +178,7 @@ public class GameServer{
         }
 
         serverData = tempString;
+        //System.out.println(newInteraction);
         //System.out.println(serverData);
     }
 

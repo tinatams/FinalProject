@@ -8,6 +8,8 @@ public class Hermes extends NPC{
     private String action = "UPDATE";
     private String playersWith = "ODD";
 
+    private boolean firstInteraction = true;
+
     private int x1,y1,x2,y2;
     
     public static final int NO_USER = -1;
@@ -132,6 +134,7 @@ public class Hermes extends NPC{
     }
 
     public void recieveData(String data) {
+        //System.out.println(data);
         String[] serverData = data.split(",");
 
         if (!serverData[0].equals("null")){
@@ -147,7 +150,8 @@ public class Hermes extends NPC{
     }
 
     private void setInventory(String inventoryData){
-        if (user != GameFrame.getClientNumber()){
+        if (user != GameFrame.getClientNumber() || firstInteraction){
+            firstInteraction = false;
             inventory.clear();
             String[] itemData = inventoryData.split("#");
             for (int i = 0; i < itemData.length-1; i+=2){

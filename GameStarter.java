@@ -103,8 +103,7 @@ public class GameStarter{
                             mapH.recieveData(dataType);
                         } else if (data[0].equals("Hermes")){
                             Hermes hermes = (Hermes) frame.getMapHandler().getNPC("Hermes");
-                            if (hermes != null)
-                            hermes.recieveData(compile(data));
+                            if (hermes != null) hermes.recieveData(compile(data));
                         }
                     }
                 } catch (IOException ex) {
