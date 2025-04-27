@@ -70,22 +70,6 @@ public class Map{
         }
     }
 
-    // public void setUpMaps(){
-    //     int originalCol = 0, originalRow = 0;
-    //     while (originalCol < maxColumn && originalRow < maxRow){
-    //         baseTileMap[originalCol][originalRow] = -1;
-    //         decoTileMap[originalCol][originalRow] = -1;
-    //         collisionMap[originalCol][originalRow] = -2;
-    //         collidablesMap[originalCol][originalRow] = -1;
-
-    //         originalCol++;
-    //         if (originalCol == maxColumn){
-    //             originalCol = 0;
-    //             originalRow++;
-    //         }
-    //     }
-    // }
-
     public void setUpMaps(){
         setUpMap(baseTileMap);
         setUpMap(decoTileMap);
@@ -189,12 +173,18 @@ public class Map{
                 String mapLine = mapReader.nextLine();
                 String[] mapData = mapLine.split(",");
                 if (mapData.length > 0){
-                    int x = Integer.parseInt(mapData[0]) * GameFrame.SCALED;
-                    int y = Integer.parseInt(mapData[1]) * GameFrame.SCALED;
-                    String skin =mapData[2];
+                    String skin =mapData[0];
+                    int x = Integer.parseInt(mapData[1]) * GameFrame.SCALED;
+                    int y = Integer.parseInt(mapData[2]) * GameFrame.SCALED;
                     String dialogue=mapData[3];
                     String[] dialogues=dialogue.split("/n");
-                    NPCs.add(new NPC(skin,x,y,dialogues));
+
+                    if (skin.equals("Hermes")){
+                        NPCs.add(new Hermes("Prophet",x,y,Integer.parseInt(mapData[3]) * GameFrame.SCALED, Integer.parseInt(mapData[4]) * GameFrame.SCALED, mapData[5].split("/n")));
+                    } else{
+                        NPCs.add(new NPC(skin,x,y,dialogues));
+                    }
+                    
                 }
             }
             mapReader.close();

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javax.imageio.*;
 
 public class Player implements Collidable{
-    private int worldX, worldY, screenX, screenY, speed;
+    private int worldX, worldY, screenX, screenY, speed, clientNumber;
     private int spriteW, spriteH, counter, version, direction;
     private String skin;
 
@@ -23,7 +23,9 @@ public class Player implements Collidable{
 
     private ArrayList<SuperItem> inventory;
 
-    public Player(String s, int x, int y){
+    public Player(String s, int x, int y, int cliNum){
+        clientNumber = cliNum;
+
         worldX = x;
         worldY = y;
         speed = 4;
@@ -174,24 +176,35 @@ public class Player implements Collidable{
     }
 
     public void collect(SuperItem item){
+        boolean itemCollected = false;
         SuperItem itemCollect = getItem(item.getName());
-        if (itemCollect != null && item.isStackable()){
+        if (itemCollect != null && itemCollect.isStackable()){
             itemCollect.setAmount(itemCollect.getAmount() + 1);
+            itemCollected = true;
         } else {
-            inventory.add(item);
-            item.setOwner(this);
+            if (inventory.size() < 70){
+                inventory.add(item);
+                item.setOwner(this);
+                itemCollected = true;
+            }
         }
 
         ArrayList<Interactable> interacts = mapH.getInteractables();
-        if (interacts.contains(item)){
-            interacts.remove(item);
+        if (item instanceof Interactable interactItem){
+            if (interacts.contains((Interactable) interactItem) && itemCollected){
+                interacts.remove((Interactable) interactItem);
+            }
         }
+        
     }
 
     public void discardItem(SuperItem item){
         SuperItem discardItem = getItem(item.getName());
         if (discardItem != null && discardItem.isStackable()){
-            discardItem.setAmount(discardItem.getAmount() + 1);
+            discardItem.setAmount(discardItem.getAmount() - 1);
+            if (discardItem.getAmount() <= 0){
+                inventory.remove(discardItem);
+            }
         } else {
             inventory.remove(item);
             item.setOwner(null);
@@ -306,5 +319,9 @@ public class Player implements Collidable{
     public NPC getNPCinteracting(){
         NPC interactionNPC = getNPC(mapH.getNPCs());
         return interactionNPC;
+    }
+
+    public int getCliNum(){
+        return clientNumber;
     }
 }   

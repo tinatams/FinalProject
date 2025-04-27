@@ -53,7 +53,6 @@ public class GameStarter{
     public void setUpFrame(){
         frame = new GameFrame(serverData, clientNumber);
         frame.setUpGUI();
-        frame.addKeyBindings();
     }
 
     public class WriteToServer extends Thread{
@@ -68,6 +67,11 @@ public class GameStarter{
                     MapHandler mapH = frame.getMapHandler();
                     clientData = String.format("Players|%d,%d,%d,%s,%d,%d,%s\n", clientNumber, clientPlayer.getWorldX(), clientPlayer.getWorldY(), clientPlayer.getSkin(), clientPlayer.getDirection(), clientPlayer.getVer(), frame.getMap());
                     clientData += String.format("Labyrinth|%d,%s\n",clientNumber, mapH.getVersion());
+                    if (GameFrame.gameState == GameFrame.HERMES_STATE){
+                        Hermes hermes = (Hermes) mapH.getNPC("Hermes");
+                        clientData += String.format("Hermes|%d,%s,%s\n",clientNumber, hermes.getAction(), hermes.getItemString());
+                    }
+                    //System.out.println(clientData);
                     dataOut.writeUTF(clientData);
                     try {
                         Thread.sleep(10);
@@ -80,8 +84,6 @@ public class GameStarter{
     }
 
     public class ReadFromServer extends Thread{
-        private String[] dataTypes = {"Players","Labyrinth"};
-
         public ReadFromServer(){
 
         }
@@ -90,19 +92,21 @@ public class GameStarter{
             while (true) { 
                try {
                     serverData = dataIn.readUTF();
-
                     String[] sData = serverData.split("\n");
-                    for(String dataType : sData){
-                        String[] data = dataType.split("\\|");
-                        if (data[0].equals("Players")){
-                            frame.recieveData(compile(data));
-                        } else if (data[0].equals("Labyrinth")){
-                            MapHandler mapH = frame.getMapHandler();
-                            mapH.recieveData(dataType);
+                    if (sData.length > 0){
+                        for(String dataType : sData){
+                            String[] data = dataType.split("\\|");
+                            if (data[0].equals("Players")){
+                                frame.recieveData(compile(data));
+                            } else if (data[0].equals("Labyrinth")){
+                                MapHandler mapH = frame.getMapHandler();
+                                mapH.recieveData(dataType);
+                            } else if (data[0].equals("Hermes")){
+                                Hermes hermes = (Hermes) frame.getMapHandler().getNPC("Hermes");
+                                if (hermes != null) hermes.recieveData(compile(data));
+                            }
                         }
-
                     }
-
                     
                 } catch (IOException ex) {
                 } 
@@ -112,7 +116,11 @@ public class GameStarter{
         private String compile(String[] data){
             String tempString = "";
             for (int i = 1; i < data.length ; i++){
-                tempString += data[i] + "|";
+                tempString += data[i];
+                if (i + 1 < data.length){
+                    tempString += "|";
+                }
+                
             }
 
             return tempString;

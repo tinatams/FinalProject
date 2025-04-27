@@ -319,4 +319,14 @@ public class MapHandler{
         return maps[currentMap].getNPCs();
     }
 
+    public NPC getNPC(String name){
+        for (NPC npc : maps[currentMap].getNPCs()){
+            if (name.equals(npc.getName())){
+                return npc;
+            }
+        }
+
+        return null;
+    }
+
  }

@@ -1,5 +1,5 @@
-import java.net.*;
 import java.io.*;
+import java.net.*;
 import java.util.*;
 
 public class GameServer{
@@ -8,12 +8,17 @@ public class GameServer{
     private ArrayList<ClientRunnable> clients;
 
     private int clientNum = 0;
-    private String serverData;
+    private String serverData,hasHermes, hermesLastInv;
+    private boolean canSwitch, newInteraction;
 
     public GameServer(){
         serverData = "nothing yet";
+        hermesLastInv = "NULL";
         sockets = new ArrayList<Socket>();
         clients = new ArrayList<ClientRunnable>();
+
+        hasHermes = "ODD";
+        newInteraction = true;
 
         try {
             ss = new ServerSocket(60003);
@@ -21,6 +26,16 @@ public class GameServer{
             System.out.println("IOException from ChatServer constructor");
         }
         System.out.println("THE CHAT SERVER HAS BEEN CREATED");
+    }
+
+    public void passHermes(){
+        if (canSwitch){
+            if (hasHermes.equals("ODD")){
+                hasHermes = "EVEN";
+            } else if (hasHermes.equals("EVEN")){
+                hasHermes = "ODD";
+            }
+        }
     }
 
     public void closeSocketsOnShutdown(){
@@ -103,7 +118,6 @@ public class GameServer{
             for(String pData : labyrinthData){
                 if (pData != null){
                     String[] separatedData = pData.split(",");
-                    System.out.println(separatedData[1]);
                     
                     if (separatedData[1].equals("button_one")){
                         button1++;
@@ -124,8 +138,48 @@ public class GameServer{
             
             tempString += "\n";
         }
+
+        //HERMES DATA
+        tempString += "Hermes|";
+        boolean isEmpty = true;
+        for (String hData : hermesData){
+            if (hData != null){
+                String[] sepHermData = hData.split(",");
+                if ( sepHermData[1].equals("SEND")){
+                    System.out.println(hasHermes);
+                    passHermes();
+                    canSwitch = false;
+                } else {
+                    canSwitch = true;
+                }
+
+                String finalHermInventory = sepHermData[2];
+
+                if (newInteraction){
+                    newInteraction = false;
+
+                    if (!(hermesLastInv).equals(finalHermInventory)){
+                        finalHermInventory = hermesLastInv;
+                    }
+
+                    
+                }
+                    
+                tempString += String.format("%s,%s,%s", sepHermData[0], hasHermes, finalHermInventory);
+                hermesLastInv = finalHermInventory;
+
+                isEmpty = false;
+            }
+        }
+
+        if (isEmpty){
+            tempString += "null,"+ hasHermes;
+            newInteraction = true;
+        }
+
         serverData = tempString;
-        System.out.println(tempString);
+        //System.out.println(newInteraction);
+        //System.out.println(serverData);
     }
 
     public void sendOutData(){

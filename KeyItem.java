@@ -3,11 +3,13 @@ import java.io.*;
 import javax.imageio.*;
 
 public class KeyItem extends SuperItem implements Interactable{
+    public static final String ITEMNAME = "KEY";
+
     private Rectangle interactionBox;
     private String lockName;
 
     public KeyItem(int x, int y, String n){
-        super("KEY",x, y, 16, 16);
+        super(ITEMNAME,x, y, 16, 16);
         super.hitBox = new Rectangle(worldX,worldY,0,0);
         interactionBox = new Rectangle(worldX,worldY, spriteW, spriteH);
         setStackable(false);
@@ -27,7 +29,6 @@ public class KeyItem extends SuperItem implements Interactable{
     @Override
     public void interact(Player player) {
         player.collect(this);
-        System.out.println("i own u");
     }
 
     @Override

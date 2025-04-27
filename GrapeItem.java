@@ -3,9 +3,10 @@ import java.io.*;
 import javax.imageio.*;
 
 public class GrapeItem extends SuperItem{
+    public static final String ITEMNAME = "GRAPE";
 
     public GrapeItem (int x, int y){
-        super("GRAPE",x, y, 16, 16);
+        super(ITEMNAME,x, y, 16, 16);
         super.hitBox = new Rectangle(worldX ,worldY ,spriteH, spriteW);
     }
 
