@@ -17,15 +17,18 @@ public class UIHandler{
     private Player selectedPlayer;
     private MapHandler mapHandler;
 
+    //UI COMPONENTS;
     private InventoryCellUI[] inventoryCellsPlayer, inventoryCellsHermes;
+    private UISendHermes hermesSendButton;
     
     public UIHandler(Player sPlayer, MapHandler mHandler){
         inventoryCellsHermes = new InventoryCellUI[70];
         inventoryCellsPlayer = new InventoryCellUI[70];
-        setUpUIComponents();
+        
         selectedPlayer = sPlayer;
         mapHandler = mHandler;
-        setUpCells();
+
+        setUpUIComponents();
     }
 
     public void draw(Graphics2D g2d){
@@ -38,6 +41,7 @@ public class UIHandler{
                 g2d.fillRect(0,0,GameFrame.WIDTH, GameFrame.HEIGHT);
                 drawInventory(g2d, PANEL_LEFT_X, PANEL_LEFT_Y, selectedPlayer.getInventory(), inventoryCellsPlayer);
                 drawQuestPanel(g2d,PANEL_RIGHT_X,PANEL_RIGHT_Y);
+                resetCells();
                 break;
             case GameFrame.HERMES_STATE:
                 g2d.setColor(new Color(0,0,0,125));
@@ -47,7 +51,10 @@ public class UIHandler{
                     Hermes hermes = (Hermes) mapHandler.getNPC("Hermes");
                     
                     drawInventory(g2d, PANEL_RIGHT_X,PANEL_RIGHT_Y, hermes.getInventory(), inventoryCellsHermes);
-                }   break;
+                }
+
+                hermesSendButton.draw(g2d);
+                break;
             default:
                 break;
         }
@@ -63,6 +70,10 @@ public class UIHandler{
         } catch (IOException ex) {
         }catch (FontFormatException ex) {
         }
+
+        setUpCells();
+
+        hermesSendButton = new UISendHermes((PANEL_RIGHT_X+6)* GameFrame.SCALED, (PANEL_RIGHT_Y+1)*GameFrame.SCALED, this);
     }
     
     public void drawQuestPanel(Graphics2D g2d,int panelX, int panelY){
@@ -83,6 +94,7 @@ public class UIHandler{
             }
         }
     }
+    
     public void drawInventory(Graphics2D g2d, int panelX, int panelY, ArrayList<SuperItem> inventory, InventoryCellUI[] cells){
         g2d.drawImage(blankHalfPanel, panelX * GameFrame.SCALED, panelY * GameFrame.SCALED, 9 * GameFrame.SCALED, 14 * GameFrame.SCALED, null);
 
@@ -102,7 +114,6 @@ public class UIHandler{
                 y++;
             }
         }
-
     }
 
     public void drawDialogScreen(Graphics2D g2d){
@@ -141,6 +152,7 @@ public class UIHandler{
                 inventoryCellsHermes[i].update();
                 inventoryCellsPlayer[i].update();
             }
+            hermesSendButton.update();
         }
     }
 
@@ -164,10 +176,14 @@ public class UIHandler{
                     break;
                 } 
 
-                if ( isIn(e, inventoryCellsHermes[i])){
+                if ( isIn(e, inventoryCellsPlayer[i])){
                     inventoryCellsPlayer[i].setMousePressed(true);
                     break;
                 }
+            }
+
+            if (isIn(e, hermesSendButton)){
+                hermesSendButton.setMousePressed(true);
             }
         }
 
@@ -183,7 +199,7 @@ public class UIHandler{
                     break;
                 } 
 
-                if ( isIn(e, inventoryCellsHermes[i])){
+                if ( isIn(e, inventoryCellsPlayer[i])){
                     if(inventoryCellsPlayer[i].isMousePressed()){
                         inventoryCellsPlayer[i].clicked();
                     }
@@ -191,12 +207,19 @@ public class UIHandler{
                 }
             }
 
+            if (isIn(e, hermesSendButton)){
+                if(hermesSendButton.isMousePressed()){
+                    hermesSendButton.clicked();
+                }
+                
+            }
             resetButtons();
         }
 
     }
 
     public void mouseMoved(MouseEvent e){
+        resetButtons();
         if (GameFrame.gameState == GameFrame.HERMES_STATE){
             for (int i = 0; i < 70; i++){
                 inventoryCellsPlayer[i].setMouseOver(false);
@@ -209,16 +232,20 @@ public class UIHandler{
                     break;
                 } 
 
-                if ( isIn(e, inventoryCellsHermes[i])){
+                if ( isIn(e, inventoryCellsPlayer[i])){
                     inventoryCellsPlayer[i].setMouseOver(true);
                     break;
                 }
             }
+
+            if (isIn(e, hermesSendButton)){
+                hermesSendButton.setMouseOver(true);
+            }
         }
     }
 
-    public boolean isIn(MouseEvent e, InventoryCellUI ic){
-        return ic.getBounds().contains(e.getX(), e.getY());
+    public boolean isIn(MouseEvent e, UIButton button){
+        return button.getBounds().contains(e.getX(), e.getY());
     }
 
     private void resetButtons() {
@@ -227,6 +254,16 @@ public class UIHandler{
                 inventoryCellsPlayer[i].resetBools();
                 inventoryCellsHermes[i].resetBools();
             }
+
+            resetCells();
+            hermesSendButton.resetBools();
+        }
+    }
+
+    private void resetCells(){
+        for (int i = 0; i < 70; i++){
+            inventoryCellsPlayer[i].setContents(null);
+            inventoryCellsHermes[i].setContents(null);
         }
     }
 

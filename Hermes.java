@@ -169,23 +169,24 @@ public class Hermes extends NPC{
                 String itemName = itemData[i];
                 int amount = Integer.parseInt(itemData[i+1]);
 
+                // switch this to an entity generator item
                 switch (itemName) {
-                    case "GRAPE":
+                    case GrapeItem.ITEMNAME:
                         GrapeItem g = new GrapeItem(0,0);
                         g.setAmount(amount);
                         inventory.add(g);
                         break;
-                    case "WOOD":
+                    case WoodItem.ITEMNAME:
                         WoodItem w = new WoodItem(0,0);
                         w.setAmount(amount);
                         inventory.add(w);
                         break;
-                    case "IRON":
+                    case IronItem.ITEMNAME:
                         IronItem iron = new IronItem(0,0);
                         iron.setAmount(amount);
                         inventory.add(iron);
                         break;
-                    case "KEY":
+                    case KeyItem.ITEMNAME:
                         KeyItem k = new KeyItem(0,0,itemData[i+2]);
                         k.setAmount(amount);
                         inventory.add(k);

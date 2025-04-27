@@ -3,9 +3,10 @@ import java.awt.image.*;
 import java.io.*;
 import javax.imageio.*;
 
-public class InventoryCellUI {
+public class InventoryCellUI implements UIButton{
     private int x, y;
     private UIHandler ui;
+    private EntityGenerator eg;
 
     private String owner;
 
@@ -25,6 +26,8 @@ public class InventoryCellUI {
         mousePressed = false;
         mouseOver = false;
 
+        eg = new EntityGenerator();
+
         try {
             containerIMG = ImageIO.read(new File(String.format("./res/uiAssets/InventoryCell.png")));
             highlightedIMG = ImageIO.read(new File(String.format("./res/uiAssets/InventoryCellHighlight.png")));
@@ -38,6 +41,7 @@ public class InventoryCellUI {
         contents = item;
     }
 
+    @Override
     public void draw(Graphics2D g2d){
         BufferedImage toDraw = containerIMG;
         if (highlighted){
@@ -56,6 +60,7 @@ public class InventoryCellUI {
         } 
     }
 
+    @Override
     public void update(){
         if (mouseOver || mousePressed){
             highlighted = true;
@@ -64,38 +69,55 @@ public class InventoryCellUI {
         }
     }
 
+    @Override
     public boolean isMousePressed() {
         return mousePressed;
     }
 
+    @Override
     public void setMousePressed(boolean mousePressed) {
         this.mousePressed = mousePressed;
     }
 
+    @Override
     public boolean isMouseOver() {
         return mouseOver;
     }
 
+    @Override
     public void setMouseOver(boolean mouseOver) {
         this.mouseOver = mouseOver;
     }
 
+    @Override
     public Rectangle getBounds(){
         return bounds;
     }
 
+    @Override
     public void clicked(){
         if (GameFrame.gameState == GameFrame.HERMES_STATE){
             if(contents != null){
-                if (owner.equals("Player")){
-                    ui.getSelectedPlayer().discardItem(contents);
-                    ((Hermes) ui.getMapHandler().getNPC("Hermes")).collect(contents);
-                    System.out.println("swapped P TO H");
-                } else if (owner.equals("Hermes")){
-                    ((Hermes) ui.getMapHandler().getNPC("Hermes")).discardItem(contents);
-                    System.out.println("swapped H TO P");
-                    ui.getSelectedPlayer().collect(contents);
+                SuperItem itemToTransfer = null;
+                if (contents instanceof KeyItem){
+                    itemToTransfer = contents;
+                    // there might be more code i need to put here lol
+                } else {
+                    itemToTransfer = eg.newItem(contents.getName());
                 }
+
+                if (itemToTransfer != null){
+                    if (owner.equals("Player")){
+                        ui.getSelectedPlayer().discardItem(itemToTransfer);
+                        ((Hermes) ui.getMapHandler().getNPC("Hermes")).collect(itemToTransfer);
+                        System.out.println("swapped P TO H");
+                    } else if (owner.equals("Hermes")){
+                        ((Hermes) ui.getMapHandler().getNPC("Hermes")).discardItem(itemToTransfer);
+                        System.out.println("swapped H TO P");
+                        ui.getSelectedPlayer().collect(itemToTransfer);
+                    }
+                }
+                
 
                 System.out.println("userInv:");
                 for (SuperItem item : ui.getSelectedPlayer().getInventory()){
@@ -117,6 +139,7 @@ public class InventoryCellUI {
 
     }
 
+    @Override
     public void resetBools(){
         mousePressed = false;
         mouseOver = false;
