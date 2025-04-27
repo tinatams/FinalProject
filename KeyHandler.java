@@ -21,6 +21,7 @@ public class KeyHandler implements KeyListener{
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
+        //PLAYER MOVEMENT
         if (GameFrame.gameState == GameFrame.PLAYING_STATE){
             switch (code){
                 case KeyEvent.VK_W:
@@ -38,45 +39,7 @@ public class KeyHandler implements KeyListener{
             }
         } 
 
-
-
-
-
-        if(GameFrame.gameState == GameFrame.HERMES_STATE && code == KeyEvent.VK_1){
-            if (selectedPlayer.getItem("WOOD") != null){
-                selectedPlayer.discardItem(new WoodItem(0,0));
-                Hermes hermes = (Hermes) canvas.getMapHandler().getNPC("Hermes");
-                hermes.collect(new WoodItem(0,0));
-            }
-        } else if(GameFrame.gameState == GameFrame.HERMES_STATE && code == KeyEvent.VK_2){
-            selectedPlayer.discardItem(new GrapeItem(0,0));
-            Hermes hermes = (Hermes) canvas.getMapHandler().getNPC("Hermes");
-            hermes.collect(new GrapeItem(0,0));
-        } else if (GameFrame.gameState == GameFrame.HERMES_STATE && code == KeyEvent.VK_3){
-            Hermes hermes = (Hermes) canvas.getMapHandler().getNPC("Hermes");
-            hermes.send();
-        } else if (GameFrame.gameState == GameFrame.HERMES_STATE && code == KeyEvent.VK_4){
-            KeyItem key = (KeyItem) (selectedPlayer.getNotStackableItem("KEY")).get(0);
-            if (key != null){
-                selectedPlayer.discardItem(key);
-                Hermes hermes = (Hermes) canvas.getMapHandler().getNPC("Hermes");
-                hermes.collect(key);
-            }
-        } else if (GameFrame.gameState == GameFrame.HERMES_STATE && code == KeyEvent.VK_5){
-            Hermes hermes = (Hermes) canvas.getMapHandler().getNPC("Hermes");
-            KeyItem key = (KeyItem) (hermes.getNotStackableItem("KEY")).get(0);
-            if (key != null){
-                selectedPlayer.collect(key);
-                hermes.discardItem(key);
-            }
-        } 
-
-
-
-
-
-
-
+        //INTERACTION KEY
         if (code ==  KeyEvent.VK_C){
             if (GameFrame.gameState == GameFrame.HERMES_STATE){
                 Hermes hermes = (Hermes) canvas.getMapHandler().getNPC("Hermes");
@@ -89,7 +52,7 @@ public class KeyHandler implements KeyListener{
                 GameFrame.gameState = GameFrame.DIALOG_STATE;
             }
 
-            if(GameFrame.gameState == GameFrame.PLAYING_STATE) selectedPlayer.interact();
+            if(GameFrame.gameState == GameFrame.PLAYING_STATE)selectedPlayer.interact();
 
             else if(GameFrame.gameState == GameFrame.DIALOG_STATE){
                 if(currentNPC.getDialogNumber() > currentNPC.getDialogueSize()){
@@ -103,11 +66,13 @@ public class KeyHandler implements KeyListener{
             }
         }
 
+        //INVENTORY KEY
         if (code == KeyEvent.VK_E){
             if (GameFrame.gameState == GameFrame.PLAYING_STATE || GameFrame.gameState == GameFrame.INVENTORY_STATE)
             GameFrame.gameState = (GameFrame.gameState == GameFrame.PLAYING_STATE) ? GameFrame.INVENTORY_STATE : GameFrame.PLAYING_STATE;
         }
 
+        //RESET / ESCAPE FROM OTHER STATES
         if (code == KeyEvent.VK_ESCAPE){
             if (GameFrame.gameState == GameFrame.HERMES_STATE){
                 Hermes hermes = (Hermes) canvas.getMapHandler().getNPC("Hermes");

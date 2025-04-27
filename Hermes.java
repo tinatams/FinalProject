@@ -50,6 +50,8 @@ public class Hermes extends NPC{
         if (user == NO_USER){
             GameFrame.gameState = GameFrame.HERMES_STATE;
             user = player.getCliNum();
+        } else {
+            super.speak();
         }
     }
 

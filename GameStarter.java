@@ -92,20 +92,22 @@ public class GameStarter{
             while (true) { 
                try {
                     serverData = dataIn.readUTF();
-
                     String[] sData = serverData.split("\n");
-                    for(String dataType : sData){
-                        String[] data = dataType.split("\\|");
-                        if (data[0].equals("Players")){
-                            frame.recieveData(compile(data));
-                        } else if (data[0].equals("Labyrinth")){
-                            MapHandler mapH = frame.getMapHandler();
-                            mapH.recieveData(dataType);
-                        } else if (data[0].equals("Hermes")){
-                            Hermes hermes = (Hermes) frame.getMapHandler().getNPC("Hermes");
-                            if (hermes != null) hermes.recieveData(compile(data));
+                    if (sData.length > 0){
+                        for(String dataType : sData){
+                            String[] data = dataType.split("\\|");
+                            if (data[0].equals("Players")){
+                                frame.recieveData(compile(data));
+                            } else if (data[0].equals("Labyrinth")){
+                                MapHandler mapH = frame.getMapHandler();
+                                mapH.recieveData(dataType);
+                            } else if (data[0].equals("Hermes")){
+                                Hermes hermes = (Hermes) frame.getMapHandler().getNPC("Hermes");
+                                if (hermes != null) hermes.recieveData(compile(data));
+                            }
                         }
                     }
+                    
                 } catch (IOException ex) {
                 } 
             }

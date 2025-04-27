@@ -31,6 +31,9 @@ public class GameFrame{
     public final static int DIALOG_STATE = 2;
     public final static int HERMES_STATE = 3;
 
+    public final static int START_STATE = 4;
+    public final static int CHOOSING_STATE = 5;
+
     public GameFrame(String data, int CN){
         frame = new JFrame();
         cp = (JPanel) frame.getContentPane();
