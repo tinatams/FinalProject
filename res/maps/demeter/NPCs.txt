@@ -1,2 +1,2 @@
-Prophet,8,1, It's a statue.
-Prophet,34,16,I would love to help you but....I can't seem to find my hunting dogs/n Get them and I'll help you!
+Demeter,8,1, It's a statue.
+Artemis,34,16,I would love to help you but....I can't seem to find my hunting dogs/n Get them and I'll help you!
