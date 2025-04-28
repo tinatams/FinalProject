@@ -17,7 +17,7 @@ public class GameStarter{
         clientData = "nothing yet";
     }
 
-     public void closeSocketOnShutdown(){
+    public void closeSocketOnShutdown(){
         Runtime.getRuntime().addShutdownHook(new Thread( ()-> {
             try {
                 theSocket.close();
