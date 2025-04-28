@@ -80,7 +80,7 @@ public class UISendHermes implements UIButton{
 
     @Override
     public void clicked() {
-        Hermes hermes = (Hermes) ui.getMapHandler().getNPC("Hermes");
+        Hermes hermes = (Hermes) ui.getMapHandler().getNPC(Hermes.name);
         if (hermes != null){
             hermes.send();
         }

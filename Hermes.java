@@ -3,6 +3,7 @@ import java.sql.ClientInfoStatus;
 import java.util.ArrayList;
 
 public class Hermes extends NPC{
+    public static final String name = "Hermes";
     private ArrayList<SuperItem> inventory;
     private int user;
     private String action = "UPDATE";

@@ -109,10 +109,10 @@ public class InventoryCellUI implements UIButton{
                 if (itemToTransfer != null){
                     if (owner.equals("Player")){
                         ui.getSelectedPlayer().discardItem(itemToTransfer);
-                        ((Hermes) ui.getMapHandler().getNPC("Hermes")).collect(itemToTransfer);
+                        ((Hermes) ui.getMapHandler().getNPC(Hermes.name)).collect(itemToTransfer);
                         System.out.println("swapped P TO H");
-                    } else if (owner.equals("Hermes")){
-                        ((Hermes) ui.getMapHandler().getNPC("Hermes")).discardItem(itemToTransfer);
+                    } else if (owner.equals(Hermes.name)){
+                        ((Hermes) ui.getMapHandler().getNPC(Hermes.name)).discardItem(itemToTransfer);
                         System.out.println("swapped H TO P");
                         ui.getSelectedPlayer().collect(itemToTransfer);
                     }
@@ -129,7 +129,7 @@ public class InventoryCellUI implements UIButton{
                 }
 
                 System.out.println("hermesInv:");
-                for (SuperItem item : ((Hermes) ui.getMapHandler().getNPC("Hermes")).getInventory()){
+                for (SuperItem item : ((Hermes) ui.getMapHandler().getNPC(Hermes.name)).getInventory()){
                     
                     System.out.println(item.getName() + " : " + item.getAmount());
                 }

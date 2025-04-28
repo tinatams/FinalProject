@@ -68,7 +68,7 @@ public class GameStarter{
                     clientData = String.format("Players|%d,%d,%d,%s,%d,%d,%s\n", clientNumber, clientPlayer.getWorldX(), clientPlayer.getWorldY(), clientPlayer.getSkin(), clientPlayer.getDirection(), clientPlayer.getVer(), frame.getMap());
                     clientData += String.format("Labyrinth|%d,%s\n",clientNumber, mapH.getVersion());
                     if (GameFrame.gameState == GameFrame.HERMES_STATE){
-                        Hermes hermes = (Hermes) mapH.getNPC("Hermes");
+                        Hermes hermes = (Hermes) mapH.getNPC(Hermes.name);
                         clientData += String.format("Hermes|%d,%s,%s\n",clientNumber, hermes.getAction(), hermes.getItemString());
                     }
                     //System.out.println(clientData);
@@ -102,7 +102,7 @@ public class GameStarter{
                                 MapHandler mapH = frame.getMapHandler();
                                 mapH.recieveData(dataType);
                             } else if (data[0].equals("Hermes")){
-                                Hermes hermes = (Hermes) frame.getMapHandler().getNPC("Hermes");
+                                Hermes hermes = (Hermes) frame.getMapHandler().getNPC(Hermes.name);
                                 if (hermes != null) hermes.recieveData(compile(data));
                             }
                         }

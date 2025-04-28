@@ -7,13 +7,12 @@ import javax.imageio.*;
 
 public class UIHandler{
     private static final int PANEL_LEFT_X = 1 ;
-    private static final int  PANEL_LEFT_Y = 1 ;
-    private static final int  PANEL_RIGHT_X = 11 ;
-    private static final int  PANEL_RIGHT_Y = 1 ;
+    private static final int PANEL_Y = 1 ;
+    private static final int PANEL_RIGHT_X = 11 ;
 
     public static Font regularFont;
     public static String currentDialog = "";
-    private BufferedImage dialogueBox, inventoryTemplate, blankHalfPanel;
+    private BufferedImage dialogueBox, blankHalfPanel, backgroundImage;
     private Player selectedPlayer;
     private MapHandler mapHandler;
 
@@ -39,24 +38,25 @@ public class UIHandler{
             case GameFrame.INVENTORY_STATE:
                 g2d.setColor(new Color(0,0,0,125));
                 g2d.fillRect(0,0,GameFrame.WIDTH, GameFrame.HEIGHT);
-                drawInventory(g2d, PANEL_LEFT_X, PANEL_LEFT_Y, selectedPlayer.getInventory(), inventoryCellsPlayer);
-                drawQuestPanel(g2d,PANEL_RIGHT_X,PANEL_RIGHT_Y);
+                drawInventory(g2d, PANEL_LEFT_X, PANEL_Y, selectedPlayer.getInventory(), inventoryCellsPlayer);
+                drawQuestPanel(g2d,PANEL_RIGHT_X, PANEL_Y);
                 resetCells();
                 break;
             case GameFrame.HERMES_STATE:
                 g2d.setColor(new Color(0,0,0,125));
                 g2d.fillRect(0,0,GameFrame.WIDTH, GameFrame.HEIGHT);
-                drawInventory(g2d, PANEL_LEFT_X, PANEL_LEFT_Y, selectedPlayer.getInventory(), inventoryCellsPlayer);
-                if (mapHandler.getNPC("Hermes") != null){
-                    Hermes hermes = (Hermes) mapHandler.getNPC("Hermes");
+                drawInventory(g2d, PANEL_LEFT_X, PANEL_Y, selectedPlayer.getInventory(), inventoryCellsPlayer);
+                if (mapHandler.getNPC(Hermes.name) != null){
+                    Hermes hermes = (Hermes) mapHandler.getNPC(Hermes.name);
                     
-                    drawInventory(g2d, PANEL_RIGHT_X,PANEL_RIGHT_Y, hermes.getInventory(), inventoryCellsHermes);
+                    drawInventory(g2d, PANEL_RIGHT_X, PANEL_Y, hermes.getInventory(), inventoryCellsHermes);
                 }
 
                 hermesSendButton.draw(g2d);
                 break;
             case GameFrame.START_STATE:
-                    g2d.setColor(new Color(0,0,0,125));
+                    g2d.drawImage(backgroundImage,(int) -9*GameFrame.SCALED + GameFrame.SCALED/4, -GameFrame.SCALED, 36 * GameFrame.SCALED, (int) 20.25 * GameFrame.SCALED, null);
+                    g2d.setColor(new Color(0,0,0,90));
                     g2d.fillRect(0,0,GameFrame.WIDTH, GameFrame.HEIGHT);
                 break;
             default:
@@ -66,9 +66,9 @@ public class UIHandler{
 
     public void setUpUIComponents(){
         try {
-            dialogueBox = ImageIO.read(new File("./res/uiAssets/DialogueBoxSimple.png"));
-            inventoryTemplate = ImageIO.read(new File("./res/uiAssets/InventoryTemplate.png"));
-            blankHalfPanel = ImageIO.read(new File("./res/uiAssets/BlankTemplate.png"));
+            dialogueBox = ImageIO.read(new File("./res/uiAssets/BasicComponents/DialogueBoxSimple.png"));
+            blankHalfPanel = ImageIO.read(new File("./res/uiAssets/BasicComponents/BlankTemplate.png"));
+            backgroundImage = ImageIO.read(new File("./res/uiAssets/Background.png"));
             InputStream is = getClass().getResourceAsStream("./res/Fonts/dogicabold.ttf");
             regularFont = Font.createFont(Font.TRUETYPE_FONT, is);
         } catch (IOException ex) {
@@ -77,7 +77,7 @@ public class UIHandler{
 
         setUpCells();
 
-        hermesSendButton = new UISendHermes((PANEL_RIGHT_X+6)* GameFrame.SCALED, (PANEL_RIGHT_Y+1)*GameFrame.SCALED, this);
+        hermesSendButton = new UISendHermes((PANEL_RIGHT_X+6)* GameFrame.SCALED, (PANEL_Y+1)*GameFrame.SCALED, this);
     }
     
     public void drawQuestPanel(Graphics2D g2d,int panelX, int panelY){
@@ -88,8 +88,8 @@ public class UIHandler{
         int x = 1;
         int y = 3;
         for (int i = 0; i < 70; i++){
-            inventoryCellsPlayer[i] = new InventoryCellUI(x*GameFrame.SCALED+PANEL_LEFT_X* GameFrame.SCALED, y*GameFrame.SCALED + PANEL_LEFT_Y* GameFrame.SCALED, this, "Player");
-            inventoryCellsHermes[i] = new InventoryCellUI(x*GameFrame.SCALED+PANEL_RIGHT_X* GameFrame.SCALED, y*GameFrame.SCALED + PANEL_RIGHT_Y* GameFrame.SCALED, this, "Hermes");
+            inventoryCellsPlayer[i] = new InventoryCellUI(x*GameFrame.SCALED+PANEL_LEFT_X* GameFrame.SCALED, y*GameFrame.SCALED + PANEL_Y* GameFrame.SCALED, this, "Player");
+            inventoryCellsHermes[i] = new InventoryCellUI(x*GameFrame.SCALED+PANEL_RIGHT_X* GameFrame.SCALED, y*GameFrame.SCALED + PANEL_Y* GameFrame.SCALED, this, "Hermes");
             
             x++;
             if (x >= 8){
