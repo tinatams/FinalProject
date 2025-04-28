@@ -81,7 +81,9 @@ public class KeyHandler implements KeyListener{
             GameFrame.gameState = GameFrame.PLAYING_STATE;
         }
 
-
+        if (code == KeyEvent.VK_M){
+            GameFrame.gameState = GameFrame.START_STATE;
+        }
     }
     @Override
     public void keyReleased(KeyEvent e) {

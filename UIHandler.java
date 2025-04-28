@@ -55,6 +55,10 @@ public class UIHandler{
 
                 hermesSendButton.draw(g2d);
                 break;
+            case GameFrame.START_STATE:
+                    g2d.setColor(new Color(0,0,0,125));
+                    g2d.fillRect(0,0,GameFrame.WIDTH, GameFrame.HEIGHT);
+                break;
             default:
                 break;
         }
@@ -65,7 +69,7 @@ public class UIHandler{
             dialogueBox = ImageIO.read(new File("./res/uiAssets/DialogueBoxSimple.png"));
             inventoryTemplate = ImageIO.read(new File("./res/uiAssets/InventoryTemplate.png"));
             blankHalfPanel = ImageIO.read(new File("./res/uiAssets/BlankTemplate.png"));
-            InputStream is = getClass().getResourceAsStream("./res/Fonts/VT323-Regular.ttf");
+            InputStream is = getClass().getResourceAsStream("./res/Fonts/dogicabold.ttf");
             regularFont = Font.createFont(Font.TRUETYPE_FONT, is);
         } catch (IOException ex) {
         }catch (FontFormatException ex) {
@@ -137,7 +141,7 @@ public class UIHandler{
         x+=GameFrame.SCALED;
         y+=GameFrame.SCALED;
 
-        g2d.setFont(regularFont.deriveFont(35f)); // font looks a bit weird
+        g2d.setFont(regularFont.deriveFont(20f));
         //g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN,24F));
 
         for (String line: currentDialog.split("#")){
