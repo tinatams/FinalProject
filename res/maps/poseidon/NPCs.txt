@@ -1,1 +1,1 @@
-Prophet,50,0, It's a statue.
+Poseidon,50,0, It's a statue.
