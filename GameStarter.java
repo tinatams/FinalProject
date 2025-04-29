@@ -89,6 +89,19 @@ public class GameStarter{
         rfs.start();
     }
 
+    public void setUpFrame(String skin){
+        System.out.println("starting game up");
+        menuFrame.closeMenu();
+        frame = new GameFrame(serverData, clientNumber, skin);
+        frame.setUpGUI();
+
+        WriteToServer wts = new WriteToServer();
+        ReadFromServer rfs = new ReadFromServer();
+            
+        wts.start();
+        rfs.start();
+    }
+
     public void startMenu(){
         menuFrame = new GameMenu(this);
         menuFrame.setUpGUI();

@@ -91,7 +91,7 @@ public class UIStartButton implements UIButton {
             }
             
             if (gameStarter.isConnected()){
-                gameStarter.setUpFrame();
+                gameStarter.setUpFrame(menuHandler.getSkin());
             } else {
                 menuHandler.setValidInputs(false);
             }

@@ -36,7 +36,25 @@ public class GameFrame{
         cp = (JPanel) frame.getContentPane();  
 
         clientNumber = CN;
-        String skin = (CN % 2 == 0) ? "Hunter" : "Vill4";
+        String skin = (CN % 2 == 0) ? "Hunter" : "Villager4";
+        int x = (CN % 2 == 0) ? 9 : 37;
+        int y = (CN % 2 == 0) ? 10 : 11;
+ 
+        selectedPlayer = new Player(skin, x * SCALED, y * SCALED, CN);
+        mapH = new MapHandler(selectedPlayer, clientNumber);
+        ui = new UIHandler(selectedPlayer, mapH);
+        canvas = new GameCanvas(data, selectedPlayer, CN, mapH, ui);
+        keyH = new KeyHandler(selectedPlayer, canvas);
+        mouseH = new MouseHandler(ui);
+
+        gameState = PLAYING_STATE;
+    }
+
+    public GameFrame(String data, int CN, String skin){
+        frame = new JFrame();
+        cp = (JPanel) frame.getContentPane();  
+
+        clientNumber = CN;
         int x = (CN % 2 == 0) ? 9 : 37;
         int y = (CN % 2 == 0) ? 10 : 11;
  

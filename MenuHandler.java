@@ -7,12 +7,14 @@ import javax.swing.*;
 
 public class MenuHandler extends JComponent{
     public GameStarter gameStarter;
-    private BufferedImage fullPanel, fullPanelInterior, gameTitle, connectHeader, skinHeader, portText, ipText, invalidMessage, backgroundImage;
+    private BufferedImage fullPanel, fullPanelInterior, gameTitle, connectHeader, skinHeader, portText, ipText, invalidMessage, backgroundImage, playerBkg;
 
     private boolean validInputs;
 
     private UIStartButton startButton, startGameButton;
     private UITextBox portBox, ipBox;
+    private UIArrowButton arrowRight, arrowLeft;
+    private UIPickSkin skinPicker;
 
     private UIButton[] chooseStateButtons;
 
@@ -36,8 +38,14 @@ public class MenuHandler extends JComponent{
             g2d.drawImage(ipText, 12*GameFrame.SCALED, 5*GameFrame.SCALED, 1*GameFrame.SCALED, 1*GameFrame.SCALED, null);
             g2d.drawImage(portText, 12*GameFrame.SCALED, 8*GameFrame.SCALED, 2*GameFrame.SCALED, 1*GameFrame.SCALED, null);
 
-            ipBox.draw(g2d);
-            portBox.draw(g2d);
+            //CHOOSE SKIN SIDE
+            g2d.drawImage(skinHeader, 1*GameFrame.SCALED + 10*GameFrame.SCALER, 2*GameFrame.SCALED - 3*GameFrame.SCALER, 8 * GameFrame.SCALED, 3 * GameFrame.SCALED, null);
+            g2d.drawImage(playerBkg, 2*GameFrame.SCALED, 6*GameFrame.SCALED, 7 * GameFrame.SCALED, 7 * GameFrame.SCALED, null);
+            skinPicker.draw(g2d);
+
+            for(UIButton button : chooseStateButtons){
+                button.draw(g2d);
+            }
 
             if (!validInputs){
                 g2d.drawImage(invalidMessage, 12*GameFrame.SCALED, 11*GameFrame.SCALED, 8*GameFrame.SCALED, 1*GameFrame.SCALED, null);
@@ -57,17 +65,19 @@ public class MenuHandler extends JComponent{
 
     public void update(){
         startButton.update();
-        startGameButton.update();
-        portBox.update();
-        ipBox.update();
+        for(UIButton button :chooseStateButtons){
+            button.update();
+        }
     }
 
     public void setUpAssets(){
-        chooseStateButtons = new UIButton[3];
+        chooseStateButtons = new UIButton[5];
         try {
             backgroundImage = ImageIO.read(new File("./res/uiAssets/Background.png"));
             fullPanel = ImageIO.read(new File("./res/uiAssets/BasicComponents/FullPanel.png"));
             fullPanelInterior = ImageIO.read(new File("./res/uiAssets/BasicComponents/FullPanelInterior.png"));
+            playerBkg = ImageIO.read(new File("./res/uiAssets/SelectSkinBkg.png"));
+
             int tileSize = GameFrame.PIXELRATIO;
             BufferedImage temp = ImageIO.read(new File("./res/uiAssets/UITextAtlas.png"));
 
@@ -86,10 +96,15 @@ public class MenuHandler extends JComponent{
         startGameButton = new UIStartButton(13*GameFrame.SCALED, 12*GameFrame.SCALED, gameStarter, this);
         portBox = new UITextBox(12*GameFrame.SCALED, 9*GameFrame.SCALED);
         ipBox = new UITextBox(12*GameFrame.SCALED, 6*GameFrame.SCALED);
+        skinPicker = new UIPickSkin(3*GameFrame.SCALED, 7*GameFrame.SCALED);
+        arrowRight = new UIArrowButton(1*GameFrame.SCALED, 9*GameFrame.SCALED, "RIGHT", skinPicker);
+        arrowLeft = new UIArrowButton(9*GameFrame.SCALED, 9*GameFrame.SCALED, "LEFT", skinPicker);
 
         chooseStateButtons[0] = startGameButton;
         chooseStateButtons[1] = portBox;
         chooseStateButtons[2] = ipBox;
+        chooseStateButtons[3] = arrowRight;
+        chooseStateButtons[4] = arrowLeft;
     }
 
     //to accept listener things
@@ -165,9 +180,10 @@ public class MenuHandler extends JComponent{
 
     private void resetButtons(){
         startButton.resetBools();
-        startGameButton.resetBools();
-        portBox.resetBools();
-        ipBox.resetBools();
+
+        for(UIButton button : chooseStateButtons){
+            button.resetBools();
+        }
     }
 
     public String getPortNumber(){
@@ -185,6 +201,10 @@ public class MenuHandler extends JComponent{
 
     public void setValidInputs(boolean validInputs) {
         this.validInputs = validInputs;
+    }
+
+    public String getSkin() {
+        return skinPicker.getCurrentSkin();
     }
 
     private class Animation extends Thread {
