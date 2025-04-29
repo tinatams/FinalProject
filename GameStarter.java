@@ -3,6 +3,7 @@ import java.net.*;
 
 public class GameStarter{
     private GameFrame frame;
+    private GameMenu menuFrame;
     private Socket theSocket;
 
     private DataInputStream dataIn;
@@ -12,7 +13,11 @@ public class GameStarter{
     private String clientData; // data to send out to the server
     private String serverData; // data recieved from server
 
+    private boolean connected;
+
     public GameStarter(){
+        connected = false;
+        startMenu();
         serverData = "nothing yet";
         clientData = "nothing yet";
     }
@@ -28,6 +33,25 @@ public class GameStarter{
     }
 
     public void connectToServer(){
+        try {
+            theSocket = new Socket("localhost", 60003);
+            System.out.println("CONNECTION SUCCESSFUL");
+            connected = true;
+
+            dataIn = new DataInputStream(theSocket.getInputStream());
+            dataOut = new DataOutputStream(theSocket.getOutputStream());
+
+            //GETS CLIENT NUMBER
+            //FIRST THING THAT THE SERVER SENDS
+            clientNumber = Integer.parseInt(dataIn.readUTF()); 
+            //setUpFrame();
+        } catch (IOException e) {
+            connected = false;
+            System.out.println("IOException from connectToServer() method");
+        }
+    }
+
+    public void connectToServer2(){
         try {
             theSocket = new Socket("localhost", 60003);
             System.out.println("CONNECTION SUCCESSFUL");
@@ -51,8 +75,25 @@ public class GameStarter{
     }
 
     public void setUpFrame(){
+        System.out.println("starting game up");
+        menuFrame.closeMenu();
         frame = new GameFrame(serverData, clientNumber);
         frame.setUpGUI();
+
+        WriteToServer wts = new WriteToServer();
+        ReadFromServer rfs = new ReadFromServer();
+            
+        wts.start();
+        rfs.start();
+    }
+
+    public void startMenu(){
+        menuFrame = new GameMenu(this);
+        menuFrame.setUpGUI();
+    }
+
+    public boolean isConnected() {
+        return connected;
     }
 
     public class WriteToServer extends Thread{

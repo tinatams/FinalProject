@@ -9,7 +9,6 @@ public class MouseHandler implements MouseListener, MouseMotionListener{
     
     @Override
     public void mouseClicked(MouseEvent e) {
-        UI.mouseClicked(e);
     }
 
     @Override

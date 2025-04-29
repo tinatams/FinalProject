@@ -12,7 +12,8 @@ public class UIHandler{
 
     public static Font regularFont;
     public static String currentDialog = "";
-    private BufferedImage dialogueBox, blankHalfPanel, backgroundImage;
+    private BufferedImage dialogueBox, blankHalfPanel;
+    private BufferedImage gameTitle, inventoryHeader, questHeader, hermesHeader;
     private Player selectedPlayer;
     private MapHandler mapHandler;
 
@@ -40,24 +41,27 @@ public class UIHandler{
                 g2d.fillRect(0,0,GameFrame.WIDTH, GameFrame.HEIGHT);
                 drawInventory(g2d, PANEL_LEFT_X, PANEL_Y, selectedPlayer.getInventory(), inventoryCellsPlayer);
                 drawQuestPanel(g2d,PANEL_RIGHT_X, PANEL_Y);
+                
+                g2d.drawImage(inventoryHeader, 2*GameFrame.SCALED - 6*GameFrame.SCALER, 2*GameFrame.SCALED -3*GameFrame.SCALER, 8*GameFrame.SCALED, 2*GameFrame.SCALED,null);
+                g2d.drawImage(questHeader, 13*GameFrame.SCALED - GameFrame.SCALER, 2*GameFrame.SCALED -3*GameFrame.SCALER, 6*GameFrame.SCALED, 2*GameFrame.SCALED, null);   
+                
                 resetCells();
                 break;
             case GameFrame.HERMES_STATE:
                 g2d.setColor(new Color(0,0,0,125));
                 g2d.fillRect(0,0,GameFrame.WIDTH, GameFrame.HEIGHT);
                 drawInventory(g2d, PANEL_LEFT_X, PANEL_Y, selectedPlayer.getInventory(), inventoryCellsPlayer);
+
                 if (mapHandler.getNPC(Hermes.name) != null){
                     Hermes hermes = (Hermes) mapHandler.getNPC(Hermes.name);
                     
                     drawInventory(g2d, PANEL_RIGHT_X, PANEL_Y, hermes.getInventory(), inventoryCellsHermes);
                 }
 
+                g2d.drawImage(inventoryHeader, 2*GameFrame.SCALED - 6*GameFrame.SCALER, 2*GameFrame.SCALED -3*GameFrame.SCALER, 8*GameFrame.SCALED, 2*GameFrame.SCALED,null);
+                //g2d.drawImage(hermesHeader, 13*GameFrame.SCALED - GameFrame.SCALER, 2*GameFrame.SCALED -3*GameFrame.SCALER, 6*GameFrame.SCALED, 2*GameFrame.SCALED, null);   
+
                 hermesSendButton.draw(g2d);
-                break;
-            case GameFrame.START_STATE:
-                    g2d.drawImage(backgroundImage,(int) -9*GameFrame.SCALED + GameFrame.SCALED/4, -GameFrame.SCALED, 36 * GameFrame.SCALED, (int) 20.25 * GameFrame.SCALED, null);
-                    g2d.setColor(new Color(0,0,0,90));
-                    g2d.fillRect(0,0,GameFrame.WIDTH, GameFrame.HEIGHT);
                 break;
             default:
                 break;
@@ -66,9 +70,19 @@ public class UIHandler{
 
     public void setUpUIComponents(){
         try {
+            //Basic Components
             dialogueBox = ImageIO.read(new File("./res/uiAssets/BasicComponents/DialogueBoxSimple.png"));
             blankHalfPanel = ImageIO.read(new File("./res/uiAssets/BasicComponents/BlankTemplate.png"));
-            backgroundImage = ImageIO.read(new File("./res/uiAssets/Background.png"));
+
+            //Text Components
+            int tileSize = GameFrame.PIXELRATIO;
+            BufferedImage temp = ImageIO.read(new File("./res/uiAssets/UITextAtlas.png"));
+            gameTitle = temp.getSubimage(0, 0, 12*tileSize, 5*tileSize);
+            inventoryHeader = temp.getSubimage(0, 5*tileSize, 8*tileSize, 2*tileSize); 
+            questHeader = temp.getSubimage(0, 7*tileSize, 6*tileSize, 2*tileSize); 
+            hermesHeader = temp.getSubimage(6*tileSize, 7*tileSize, 6*tileSize, 2*tileSize); 
+
+
             InputStream is = getClass().getResourceAsStream("./res/Fonts/dogicabold.ttf");
             regularFont = Font.createFont(Font.TRUETYPE_FONT, is);
         } catch (IOException ex) {
@@ -76,8 +90,7 @@ public class UIHandler{
         }
 
         setUpCells();
-
-        hermesSendButton = new UISendHermes((PANEL_RIGHT_X+6)* GameFrame.SCALED, (PANEL_Y+1)*GameFrame.SCALED, this);
+        hermesSendButton = new UISendHermes((PANEL_RIGHT_X+5)* GameFrame.SCALED, (PANEL_Y+1)*GameFrame.SCALED, this);
     }
     
     public void drawQuestPanel(Graphics2D g2d,int panelX, int panelY){
@@ -168,10 +181,6 @@ public class UIHandler{
         return mapHandler;
     }
 
-    public void mouseClicked(MouseEvent e){
-
-    }
-
     public void mousePressed(MouseEvent e){
         if (GameFrame.gameState == GameFrame.HERMES_STATE){
             for (int i = 0; i < 70; i++){
@@ -248,7 +257,7 @@ public class UIHandler{
         }
     }
 
-    public boolean isIn(MouseEvent e, UIButton button){
+    private boolean isIn(MouseEvent e, UIButton button){
         return button.getBounds().contains(e.getX(), e.getY());
     }
 

@@ -29,8 +29,10 @@ public class InventoryCellUI implements UIButton{
         eg = new EntityGenerator();
 
         try {
-            containerIMG = ImageIO.read(new File(String.format("./res/uiAssets/InventoryCell.png")));
-            highlightedIMG = ImageIO.read(new File(String.format("./res/uiAssets/InventoryCellHighlight.png")));
+            int tileSize = GameFrame.PIXELRATIO;
+            BufferedImage temp = ImageIO.read(new File(String.format("./res/uiAssets/ButtonAtlas.png")));
+            containerIMG = temp.getSubimage(0, 3 * tileSize, tileSize, tileSize);
+            highlightedIMG = temp.getSubimage(1 * tileSize, 3 * tileSize, tileSize, tileSize);
         } catch (IOException ex) {
         }
 
@@ -54,7 +56,7 @@ public class InventoryCellUI implements UIButton{
 
             if (contents.getAmount() > 1){
                 g2d.setColor(new Color(255, 255, 255));
-                g2d.setFont(UIHandler.regularFont.deriveFont(22f));
+                g2d.setFont(UIHandler.regularFont.deriveFont(20f));
                 g2d.drawString(Integer.toString(contents.getAmount()), x + 9*GameFrame.SCALER, y + 10*GameFrame.SCALER + 10);
             }
         } 
