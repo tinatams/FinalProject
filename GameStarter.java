@@ -32,9 +32,9 @@ public class GameStarter{
         }));
     }
 
-    public void connectToServer(){
+    public void connectToServer(String ip, String port){
         try {
-            theSocket = new Socket("localhost", 60003);
+            theSocket = new Socket(ip, Integer.parseInt(port));
             System.out.println("CONNECTION SUCCESSFUL");
             connected = true;
 
@@ -49,6 +49,8 @@ public class GameStarter{
             connected = false;
             System.out.println("IOException from connectToServer() method");
         }
+
+        closeSocketOnShutdown();
     }
 
     public void connectToServer2(){
@@ -170,8 +172,6 @@ public class GameStarter{
 
     public static void main(String[] args) {
         GameStarter c = new GameStarter();
-        c.connectToServer();
-        c.closeSocketOnShutdown();
     }
 
 }

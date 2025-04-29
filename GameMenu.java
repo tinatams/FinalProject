@@ -77,11 +77,12 @@ public class GameMenu{
 
         @Override
         public void keyTyped(KeyEvent e) {
-            mh.keyTyped(e);
         }
 
         @Override
-        public void keyPressed(KeyEvent e) {}
+        public void keyPressed(KeyEvent e) {
+            mh.keyTyped(e);
+        }
 
         @Override
         public void keyReleased(KeyEvent e) {}

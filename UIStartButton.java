@@ -86,7 +86,10 @@ public class UIStartButton implements UIButton {
     @Override
     public void clicked() {
         if (GameMenu.STATE == GameMenu.CHOOSING){
-            gameStarter.connectToServer();
+            if (!menuHandler.getPortNumber().isBlank() && !menuHandler.getIpAddress().isBlank()){
+                gameStarter.connectToServer(menuHandler.getIpAddress(), menuHandler.getPortNumber());
+            }
+            
             if (gameStarter.isConnected()){
                 gameStarter.setUpFrame();
             } else {

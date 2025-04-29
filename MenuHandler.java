@@ -170,6 +170,14 @@ public class MenuHandler extends JComponent{
         ipBox.resetBools();
     }
 
+    public String getPortNumber(){
+        return portBox.getContents();
+    }
+
+    public String getIpAddress(){
+        return ipBox.getContents();
+    }
+
     public void startAnimation(){
         Animation a = new Animation();
         a.start();

@@ -112,44 +112,19 @@ public class UITextBox implements UIButton {
     public void type(KeyEvent e) {
         int code = e.getKeyCode();
 
-        switch (code){
-            case KeyEvent.VK_1:
-                contents += "1";
-                break;
-            case KeyEvent.VK_2:
-                contents += "2";
-                break;
-            case KeyEvent.VK_3:
-                contents += "3";
-                break;
-            case KeyEvent.VK_4:
-                contents += "4";
-                break;
-            case KeyEvent.VK_5:
-                contents += "5";
-                break;
-            case KeyEvent.VK_6:
-                contents += "6";
-                break;
-            case KeyEvent.VK_7:
-                contents += "7";
-                break;
-            case KeyEvent.VK_8:
-                contents += "8";
-                break;
-            case KeyEvent.VK_9:
-                contents += "9";
-                break;
-            case KeyEvent.VK_0:
-                contents += "0";
-                break;
-            case KeyEvent.VK_PERIOD:
-                contents += ".";
-                break;
-            case KeyEvent.VK_BACK_SPACE:
-                contents = contents.substring(0, contents.length()-2);
-                break;
+        if (code == KeyEvent.VK_BACK_SPACE){
+            if (!contents.isBlank() && !contents.isEmpty()){
+                contents = contents.substring(0, contents.length()-1);
+            }
+        } else if (Character.isLetter(e.getKeyChar()) || Character.isDigit(e.getKeyChar()) || Character.isWhitespace(e.getKeyChar()) || code == KeyEvent.VK_PERIOD){
+            contents += String.valueOf(e.getKeyChar());
         }
     }
+
+    public String getContents() {
+        return contents;
+    }
+
+
 
 }
