@@ -5,12 +5,15 @@ import javax.sound.sampled.*;
 public class SoundHandler{
     private Clip clip;
 
+    private Clip[] effects, music;
+    private String[] effectName, musicName;
+
     public SoundHandler(){
         loadSounds();
     }
 
     public void loadSounds(){
-        clip = getClip("woodChop");
+        clip = getClip("BushShake");
     }
 
     private Clip getClip(String name){

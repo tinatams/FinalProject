@@ -52,7 +52,7 @@ public class UITextBox implements UIButton {
         g2d.drawImage(toDraw, x, y, 7*GameFrame.SCALED, GameFrame.SCALED, null);
 
         g2d.setColor(new Color(255, 208, 158));
-        g2d.setFont(regularFont.deriveFont(20f));
+        g2d.setFont(regularFont.deriveFont(23f));
         g2d.drawString(contents, x + 4 * GameFrame.SCALER, y + 1 * GameFrame.SCALED - 4 * GameFrame.SCALER);
     }
 
