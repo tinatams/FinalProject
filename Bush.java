@@ -52,6 +52,9 @@ public class Bush implements Interactable{
         if (hasBerries){
             player.collect(new GrapeItem(0,0));
             hasBerries = false;
+
+            SoundHandler sh = player.getFrame().getSoundHandler();
+            sh.playEffect(SoundHandler.SHAKE_BUSH);
             Timer berryTimer = new Timer();
             TimerTask berryBack = new TimerTask(){
                 @Override 

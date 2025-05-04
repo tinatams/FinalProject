@@ -7,6 +7,7 @@ public class GameMenu{
     private JFrame menuFrame;
     private JPanel cp;
     private MenuHandler mh;
+    private SoundHandler sh;
     
     public static int STATE;
     public static final int MENU = 0;
@@ -16,7 +17,8 @@ public class GameMenu{
         menuFrame = new JFrame();
         cp = (JPanel) menuFrame.getContentPane();
 
-        mh = new MenuHandler(gs);
+        sh = new SoundHandler();
+        mh = new MenuHandler(gs, sh);
     }
 
 

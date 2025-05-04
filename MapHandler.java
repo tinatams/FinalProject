@@ -34,14 +34,14 @@ public class MapHandler{
 
     private int bufferSize = GameFrame.WIDTH;
 
-    public MapHandler(Player pf, int cn){
-        clientNumber = cn;
+    public MapHandler(GameFrame frame){
+        clientNumber = frame.getClientNumber();
 
         baseTiles = new BufferedImage[1000];
         decoTiles = new BufferedImage[1000];
         
         maps = new Map[11];
-        pFollow = pf;
+        pFollow = frame.getSelected();
 
         currentMap = SPAWN;
 
@@ -202,7 +202,15 @@ public class MapHandler{
 
         for (Teleporter tele : teleporters){
             if (pFollow.isColliding(tele) && !(tele instanceof Lock) && !(tele instanceof SpikeTrap)){
+                if (currentMap == WORKSHOP){
+                    SoundHandler sh = pFollow.getFrame().getSoundHandler();
+                    sh.playEffect(SoundHandler.STAIRS);
+                }
                 currentMap = tele.teleportToMap();
+                if (currentMap == WORKSHOP){
+                    SoundHandler sh = pFollow.getFrame().getSoundHandler();
+                    sh.playEffect(SoundHandler.STAIRS);
+                }
                 pFollow.teleportPlayer(tele.teleportPlayerX(), tele.teleportPlayerY());
             } else if (pFollow.isColliding(tele) && (tele instanceof Lock)){
                 Lock lockObj = (Lock) tele;

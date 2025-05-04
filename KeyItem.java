@@ -29,6 +29,8 @@ public class KeyItem extends SuperItem implements Interactable{
     @Override
     public void interact(Player player) {
         player.collect(this);
+        SoundHandler sh = player.getFrame().getSoundHandler();
+        sh.playEffect(SoundHandler.QUEST_DONE);
     }
 
     @Override

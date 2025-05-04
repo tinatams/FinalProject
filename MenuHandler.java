@@ -17,9 +17,11 @@ public class MenuHandler extends JComponent{
     private UIPickSkin skinPicker;
 
     private UIButton[] chooseStateButtons;
+    private SoundHandler soundHandler;
 
-    public MenuHandler(GameStarter gs){
+    public MenuHandler(GameStarter gs, SoundHandler s){
         gameStarter = gs;
+        soundHandler = s;
         setUpAssets();
 
         validInputs = true;
@@ -132,12 +134,18 @@ public class MenuHandler extends JComponent{
             for (UIButton button : chooseStateButtons){
                 if (isIn(e, button) && button.isMousePressed()){
                     button.clicked();
+                    if (!(button instanceof UIStartButton)){
+                        soundHandler.playEffect(SoundHandler.BUTTON);
+                    } else{
+                        soundHandler.playEffect(SoundHandler.START_GAME);
+                    }
                     break;
                 }
             }
         } else {
             if (isIn(e, startButton) && startButton.isMousePressed()){
                 startButton.clicked();
+                soundHandler.playEffect(SoundHandler.BUTTON);
             }
 
         }

@@ -21,12 +21,12 @@ public class UIHandler{
     private InventoryCellUI[] inventoryCellsPlayer, inventoryCellsHermes;
     private UISendHermes hermesSendButton;
     
-    public UIHandler(Player sPlayer, MapHandler mHandler){
+    public UIHandler(GameFrame frame){
         inventoryCellsHermes = new InventoryCellUI[70];
         inventoryCellsPlayer = new InventoryCellUI[70];
         
-        selectedPlayer = sPlayer;
-        mapHandler = mHandler;
+        selectedPlayer = frame.getSelected();
+        mapHandler = frame.getMapHandler();
 
         setUpUIComponents();
     }
@@ -208,6 +208,7 @@ public class UIHandler{
                 if ( isIn(e, inventoryCellsHermes[i])){
                     if(inventoryCellsHermes[i].isMousePressed()){
                         inventoryCellsHermes[i].clicked();
+                        selectedPlayer.getFrame().getSoundHandler().playEffect(SoundHandler.BUTTON);
                     }
                     break;
                 } 
@@ -215,6 +216,7 @@ public class UIHandler{
                 if ( isIn(e, inventoryCellsPlayer[i])){
                     if(inventoryCellsPlayer[i].isMousePressed()){
                         inventoryCellsPlayer[i].clicked();
+                        selectedPlayer.getFrame().getSoundHandler().playEffect(SoundHandler.BUTTON);
                     }
                     break;
                 }
@@ -223,6 +225,7 @@ public class UIHandler{
             if (isIn(e, hermesSendButton)){
                 if(hermesSendButton.isMousePressed()){
                     hermesSendButton.clicked();
+                    selectedPlayer.getFrame().getSoundHandler().playEffect(SoundHandler.START_GAME);
                 }
                 
             }

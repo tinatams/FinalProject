@@ -5,10 +5,12 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener{
     private Player selectedPlayer;
     private GameCanvas canvas;
+    private GameFrame frame;
 
-    public KeyHandler(Player sp, GameCanvas c){
-        selectedPlayer = sp;
-        canvas = c;
+    public KeyHandler(GameFrame f){
+        frame = f;
+        selectedPlayer = frame.getSelected();
+        canvas = frame.getCanvas();
     }
 
     @Override
@@ -45,6 +47,7 @@ public class KeyHandler implements KeyListener{
                 Hermes hermes = (Hermes) canvas.getMapHandler().getNPC(Hermes.name);
                 hermes.setUser(Hermes.NO_USER);
                 GameFrame.gameState = GameFrame.PLAYING_STATE;
+                frame.getSoundHandler().playEffect(SoundHandler.INV_OUT);
             }
 
             NPC currentNPC = selectedPlayer.getNPCinteracting();
@@ -68,8 +71,17 @@ public class KeyHandler implements KeyListener{
 
         //INVENTORY KEY
         if (code == KeyEvent.VK_E){
-            if (GameFrame.gameState == GameFrame.PLAYING_STATE || GameFrame.gameState == GameFrame.INVENTORY_STATE)
-            GameFrame.gameState = (GameFrame.gameState == GameFrame.PLAYING_STATE) ? GameFrame.INVENTORY_STATE : GameFrame.PLAYING_STATE;
+            if (GameFrame.gameState == GameFrame.PLAYING_STATE || GameFrame.gameState == GameFrame.INVENTORY_STATE){
+
+                if (GameFrame.gameState == GameFrame.PLAYING_STATE){
+                    GameFrame.gameState = GameFrame.INVENTORY_STATE;
+                    frame.getSoundHandler().playEffect(SoundHandler.INV_IN);
+                } else {
+                    GameFrame.gameState = GameFrame.PLAYING_STATE;
+                    frame.getSoundHandler().playEffect(SoundHandler.INV_OUT);
+                }
+            }
+            
         }
 
         //RESET / ESCAPE FROM OTHER STATES
@@ -79,6 +91,7 @@ public class KeyHandler implements KeyListener{
                 hermes.setUser(Hermes.NO_USER);
             }
             GameFrame.gameState = GameFrame.PLAYING_STATE;
+            frame.getSoundHandler().playEffect(SoundHandler.INV_OUT);
         }
     }
     @Override

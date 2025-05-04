@@ -34,7 +34,7 @@ public class GameStarter{
 
     public void connectToServer(String ip, String port){
         try {
-            theSocket = new Socket(ip, Integer.parseInt(port));
+            theSocket = new Socket(ip.trim(), Integer.parseInt(port.trim()));
             System.out.println("CONNECTION SUCCESSFUL");
             connected = true;
 

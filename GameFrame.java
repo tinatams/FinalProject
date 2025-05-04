@@ -20,7 +20,8 @@ public class GameFrame{
     private Player selectedPlayer;
     private MapHandler mapH;
     private UIHandler ui; 
-
+    private SoundHandler soundHandler;
+    
     private KeyHandler keyH;
     private MouseHandler mouseH;
 
@@ -40,12 +41,13 @@ public class GameFrame{
         int x = (CN % 2 == 0) ? 9 : 37;
         int y = (CN % 2 == 0) ? 10 : 11;
  
-        selectedPlayer = new Player(skin, x * SCALED, y * SCALED, CN);
-        mapH = new MapHandler(selectedPlayer, clientNumber);
-        ui = new UIHandler(selectedPlayer, mapH);
-        canvas = new GameCanvas(data, selectedPlayer, CN, mapH, ui);
-        keyH = new KeyHandler(selectedPlayer, canvas);
-        mouseH = new MouseHandler(ui);
+        selectedPlayer = new Player(skin, x * SCALED, y * SCALED, this);
+        mapH = new MapHandler(this);
+        ui = new UIHandler(this);
+        canvas = new GameCanvas(data, this);
+        keyH = new KeyHandler(this);
+        mouseH = new MouseHandler(this);
+        soundHandler = new SoundHandler();
 
         gameState = PLAYING_STATE;
     }
@@ -58,12 +60,13 @@ public class GameFrame{
         int x = (CN % 2 == 0) ? 9 : 37;
         int y = (CN % 2 == 0) ? 10 : 11;
  
-        selectedPlayer = new Player(skin, x * SCALED, y * SCALED, CN);
-        mapH = new MapHandler(selectedPlayer, clientNumber);
-        ui = new UIHandler(selectedPlayer, mapH);
-        canvas = new GameCanvas(data, selectedPlayer, CN, mapH, ui);
-        keyH = new KeyHandler(selectedPlayer, canvas);
-        mouseH = new MouseHandler(ui);
+        selectedPlayer = new Player(skin, x * SCALED, y * SCALED, this);
+        mapH = new MapHandler(this);
+        ui = new UIHandler(this);
+        canvas = new GameCanvas(data, this);
+        keyH = new KeyHandler(this);
+        mouseH = new MouseHandler(this);
+        soundHandler = new SoundHandler();
 
         gameState = PLAYING_STATE;
     }
@@ -104,5 +107,25 @@ public class GameFrame{
 
     public static int getClientNumber(){
         return clientNumber;
+    }
+
+    public GameCanvas getCanvas() {
+        return canvas;
+    }
+
+    public UIHandler getUi() {
+        return ui;
+    }
+
+    public KeyHandler getKeyH() {
+        return keyH;
+    }
+
+    public MouseHandler getMouseH() {
+        return mouseH;
+    }
+
+    public SoundHandler getSoundHandler() {
+        return soundHandler;
     }
 }
