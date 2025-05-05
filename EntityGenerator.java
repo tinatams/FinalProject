@@ -7,6 +7,7 @@ public class EntityGenerator{
             case WoodItem.ITEMNAME: return new WoodItem(0,0);
             case AxeItem.ITEMNAME: return new AxeItem();
             case PickaxeItem.ITEMNAME: return new PickaxeItem();
+            case BoneItem.ITEMNAME: return new BoneItem();
         }
 
         return null;
