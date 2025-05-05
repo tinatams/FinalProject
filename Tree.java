@@ -44,13 +44,15 @@ public class Tree implements Interactable{
 
     @Override
     public void interact(Player player) {
-        health--;
-        SoundHandler sh = player.getFrame().getSoundHandler();
-        if (health == 0){
-            player.collect(new WoodItem(0,0));
-            sh.playEffect(SoundHandler.TREE_BREAK);
-        } else {
-            sh.playEffect(SoundHandler.WOOD_CHOP);
+        if (player.getItem(AxeItem.ITEMNAME) != null){
+            health--;
+            SoundHandler sh = player.getFrame().getSoundHandler();
+            if (health == 0){
+                player.collect(new WoodItem(0,0));
+                sh.playEffect(SoundHandler.TREE_BREAK);
+            } else {
+                sh.playEffect(SoundHandler.WOOD_CHOP);
+            }
         }
     }
 
