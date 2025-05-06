@@ -236,17 +236,19 @@ public class Player implements Collidable{
 
     public void discardItem(SuperItem item){
         SuperItem discardItem = getItem(item.getName());
-        if (discardItem != null && discardItem.isStackable()){
-            discardItem.setAmount(discardItem.getAmount() - 1);
-            if (discardItem.getAmount() <= 0){
+        if (discardItem != null){
+            if (discardItem.isStackable()){
+                discardItem.setAmount(discardItem.getAmount() - 1);
+                if (discardItem.getAmount() <= 0){
+                    inventory.remove(discardItem);
+                }
+                System.out.println("removed stackable item" + item.getName());
+            } else {
                 inventory.remove(discardItem);
+                System.out.println("removed non-stackable item" + item.getName());
+                item.setOwner(null);
             }
-            System.out.println("removed stackable item" + item.getName());
-        } else {
-            inventory.remove(discardItem);
-            System.out.println("removed non-stackable item" + item.getName());
-            item.setOwner(null);
-        }
+        } 
     }
 
     public SuperItem getItem(String name){

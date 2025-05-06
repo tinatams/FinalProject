@@ -12,4 +12,12 @@ public class EntityGenerator{
 
         return null;
     }
+
+    public Interactable newInteractable(String entityName){
+        case 
+    }
+    
+    public NPC newNPC(String npcName){
+        
+    }
 }

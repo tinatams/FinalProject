@@ -291,6 +291,10 @@ public class MapHandler{
         if(!newVersion.equals(labMap.getVersion())) labMap.loadNewMap(newVersion);
     }
 
+    public Labyrinth getLabyrinth(){
+        return (Labyrinth) maps[LABYRINTH];
+    }
+
     public String getVersion(){
         AssistOne assistOne = (AssistOne) maps[ASSIST1];
         return assistOne.getVersion();

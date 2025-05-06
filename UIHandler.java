@@ -17,6 +17,8 @@ public class UIHandler{
     private Player selectedPlayer;
     private MapHandler mapHandler;
 
+    private UIMiniMap minMap;
+
     //UI COMPONENTS;
     private InventoryCellUI[] inventoryCellsPlayer, inventoryCellsHermes;
     private UISendHermes hermesSendButton;
@@ -27,6 +29,8 @@ public class UIHandler{
         
         selectedPlayer = frame.getSelected();
         mapHandler = frame.getMapHandler();
+
+        minMap = new UIMiniMap(0, 0, frame);
 
         setUpUIComponents();
     }

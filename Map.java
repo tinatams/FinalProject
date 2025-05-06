@@ -194,7 +194,6 @@ public class Map{
         }
     }
 
-
     public int[][] getBaseMap(){
         return baseTileMap;
     }
