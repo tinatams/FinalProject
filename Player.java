@@ -10,6 +10,8 @@ public class Player implements Collidable{
     private String skin;
 
     private MapHandler mapH;
+    private GameFrame frame;
+    private boolean walkSound = true;
 
     public static final int IDLE = 0;
     public static final int UP = 1;
@@ -23,8 +25,37 @@ public class Player implements Collidable{
 
     private ArrayList<SuperItem> inventory;
 
-    public Player(String s, int x, int y, int cliNum){
-        clientNumber = cliNum;
+    public Player(String s, int x, int y, GameFrame f){
+        frame = f;
+        clientNumber = frame.getClientNumber();
+
+        worldX = x;
+        worldY = y;
+        speed = 4;
+
+
+        skin = s;
+        spriteW = GameFrame.SCALED; 
+        spriteH = GameFrame.SCALED;
+
+        screenX = GameFrame.WIDTH/2 - spriteW/2; 
+        screenY = GameFrame.HEIGHT/2 - spriteH;
+
+        direction = IDLE;
+        counter = 0;
+        version = 0;
+
+        sprites = new BufferedImage[5][2];
+        inventory = new ArrayList<>();
+        inventory.add(new AxeItem());
+
+
+        setUpSprites();
+        hitBox = new Rectangle(worldX + 10, worldY + 30, spriteW-20, spriteH-30);
+    }
+
+    public Player(String s, int x, int y, int cn){
+        clientNumber = cn;
 
         worldX = x;
         worldY = y;
@@ -105,6 +136,11 @@ public class Player implements Collidable{
             case LEFT:
                 worldX -= speed;
                 break;
+        }
+
+        if (direction != IDLE && version == 0 && counter == 0){
+            frame.getSoundHandler().playEffect(SoundHandler.WALK);
+            walkSound = false;
         }
         hitBox = new Rectangle(worldX + 10, worldY + 30, spriteW-20, spriteH-30);
 
@@ -200,15 +236,19 @@ public class Player implements Collidable{
 
     public void discardItem(SuperItem item){
         SuperItem discardItem = getItem(item.getName());
-        if (discardItem != null && discardItem.isStackable()){
-            discardItem.setAmount(discardItem.getAmount() - 1);
-            if (discardItem.getAmount() <= 0){
+        if (discardItem != null){
+            if (discardItem.isStackable()){
+                discardItem.setAmount(discardItem.getAmount() - 1);
+                if (discardItem.getAmount() <= 0){
+                    inventory.remove(discardItem);
+                }
+                System.out.println("removed stackable item" + item.getName());
+            } else {
                 inventory.remove(discardItem);
+                System.out.println("removed non-stackable item" + item.getName());
+                item.setOwner(null);
             }
-        } else {
-            inventory.remove(item);
-            item.setOwner(null);
-        }
+        } 
     }
 
     public SuperItem getItem(String name){
@@ -323,5 +363,9 @@ public class Player implements Collidable{
 
     public int getCliNum(){
         return clientNumber;
+    }
+
+    public GameFrame getFrame(){
+        return frame;
     }
 }   

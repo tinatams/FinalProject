@@ -3,55 +3,60 @@ import java.awt.image.*;
 import java.io.*;
 import javax.imageio.*;
 
-public class UISendHermes implements UIButton{
+public class UIArrowButton implements UIButton{
     private int x, y;
-    private UIHandler ui;
+    private String direction;
+
     private int indexNum;
 
     private BufferedImage[] sprites;
-    private SuperItem contents;
     private boolean mousePressed,mouseOver;
+
+    private UIPickSkin skinPicker;
     private Rectangle bounds;
 
-    public UISendHermes(int xPos, int yPos, UIHandler u){
-        ui = u;
-
+    public UIArrowButton(int xPos, int yPos, String d, UIPickSkin ups){
         x = xPos;
         y = yPos;
+
+        skinPicker = ups;
+
+        direction = d.toUpperCase();
         
         mousePressed = false;
         mouseOver = false;
         
-        sprites = new BufferedImage[3];
-        indexNum = 0; // 0 = default, 1 = hover, 2 = pressed;
+        sprites = new BufferedImage[2];
+        indexNum = 0; // 0 = default, 1 = hover;
 
         try {
             int tileSize = GameFrame.PIXELRATIO;
             BufferedImage temp = ImageIO.read(new File(String.format("./res/uiAssets/ButtonAtlas.png")));
-            sprites[0] = temp.getSubimage(0*tileSize, 0*tileSize, 3*tileSize, tileSize);
-            sprites[1] = temp.getSubimage(3*tileSize, 0*tileSize, 3*tileSize, tileSize);
-            sprites[2] = temp.getSubimage(6*tileSize, 0*tileSize, 3*tileSize, tileSize);
+            if (direction.equals("LEFT")){
+                sprites[0] = temp.getSubimage(1*tileSize, 4*tileSize, 1*tileSize, 1*tileSize);
+                sprites[1] = temp.getSubimage(1*tileSize, 5*tileSize, 1*tileSize, 1*tileSize);
+            } else if (direction.equals("RIGHT")){
+                sprites[0] = temp.getSubimage(0*tileSize, 4*tileSize, 1*tileSize, 1*tileSize);
+                sprites[1] = temp.getSubimage(0*tileSize, 5*tileSize, 1*tileSize, 1*tileSize);
+            }
+            
         } catch (IOException ex) {
         }
 
-        bounds = new Rectangle(x, y, 2 * GameFrame.SCALED, GameFrame.SCALED);
+        bounds = new Rectangle(x, y, 1 * GameFrame.SCALED, 1*GameFrame.SCALED);
     }
 
     @Override
     public void draw(Graphics2D g2d) {
-        g2d.drawImage(sprites[indexNum], x, y, 3 * GameFrame.SCALED, GameFrame.SCALED, null);
+        g2d.drawImage(sprites[indexNum], x, y, 1 * GameFrame.SCALED, 1*GameFrame.SCALED, null);
     }
 
     @Override
     public void update() {
         indexNum = 0;
 
-        if (mouseOver){
+        if (mouseOver || mousePressed){
             indexNum = 1;
-        }
-        
-        if (mousePressed){
-            indexNum = 2;
         }
     }
 
@@ -82,9 +87,10 @@ public class UISendHermes implements UIButton{
 
     @Override
     public void clicked() {
-        Hermes hermes = (Hermes) ui.getMapHandler().getNPC(Hermes.name);
-        if (hermes != null){
-            hermes.send();
+        if (direction.equals("RIGHT")){
+            skinPicker.up();
+        } else if (direction.equals("LEFT")){
+            skinPicker.down();
         }
     }
 
@@ -93,5 +99,5 @@ public class UISendHermes implements UIButton{
         mouseOver = false;
         mousePressed = false;
     }
-    
+
 }

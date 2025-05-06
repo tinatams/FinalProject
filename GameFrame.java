@@ -20,7 +20,8 @@ public class GameFrame{
     private Player selectedPlayer;
     private MapHandler mapH;
     private UIHandler ui; 
-
+    private SoundHandler soundHandler;
+    
     private KeyHandler keyH;
     private MouseHandler mouseH;
 
@@ -31,25 +32,41 @@ public class GameFrame{
     public final static int DIALOG_STATE = 2;
     public final static int HERMES_STATE = 3;
 
-    public final static int START_STATE = 4;
-    public final static int CHOOSING_STATE = 5;
-
     public GameFrame(String data, int CN){
         frame = new JFrame();
-        cp = (JPanel) frame.getContentPane();
-        //cp.setFocusable(true);
+        cp = (JPanel) frame.getContentPane();  
 
         clientNumber = CN;
-        String skin = (CN % 2 == 0) ? "Hunter" : "Vill4";
+        String skin = (CN % 2 == 0) ? "Hunter" : "Villager4";
         int x = (CN % 2 == 0) ? 9 : 37;
         int y = (CN % 2 == 0) ? 10 : 11;
  
-        selectedPlayer = new Player(skin, x * SCALED, y * SCALED, CN);
-        mapH = new MapHandler(selectedPlayer, clientNumber);
-        ui = new UIHandler(selectedPlayer, mapH);
-        canvas = new GameCanvas(data, selectedPlayer, CN, mapH, ui);
-        keyH = new KeyHandler(selectedPlayer, canvas);
-        mouseH = new MouseHandler(ui);
+        selectedPlayer = new Player(skin, x * SCALED, y * SCALED, this);
+        mapH = new MapHandler(this);
+        ui = new UIHandler(this);
+        canvas = new GameCanvas(data, this);
+        keyH = new KeyHandler(this);
+        mouseH = new MouseHandler(this);
+        soundHandler = new SoundHandler();
+
+        gameState = PLAYING_STATE;
+    }
+
+    public GameFrame(String data, int CN, String skin){
+        frame = new JFrame();
+        cp = (JPanel) frame.getContentPane();  
+
+        clientNumber = CN;
+        int x = (CN % 2 == 0) ? 9 : 37;
+        int y = (CN % 2 == 0) ? 10 : 11;
+ 
+        selectedPlayer = new Player(skin, x * SCALED, y * SCALED, this);
+        mapH = new MapHandler(this);
+        ui = new UIHandler(this);
+        canvas = new GameCanvas(data, this);
+        keyH = new KeyHandler(this);
+        mouseH = new MouseHandler(this);
+        soundHandler = new SoundHandler();
 
         gameState = PLAYING_STATE;
     }
@@ -60,7 +77,7 @@ public class GameFrame{
 
     public void setUpGUI(){
         cp.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        frame.setTitle("work please");
+        frame.setTitle("Axios: Path of the Worthy");
 
         cp.setFocusable(true);
         cp.addKeyListener(keyH);
@@ -90,5 +107,25 @@ public class GameFrame{
 
     public static int getClientNumber(){
         return clientNumber;
+    }
+
+    public GameCanvas getCanvas() {
+        return canvas;
+    }
+
+    public UIHandler getUi() {
+        return ui;
+    }
+
+    public KeyHandler getKeyH() {
+        return keyH;
+    }
+
+    public MouseHandler getMouseH() {
+        return mouseH;
+    }
+
+    public SoundHandler getSoundHandler() {
+        return soundHandler;
     }
 }

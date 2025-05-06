@@ -3,13 +3,12 @@ import java.awt.event.*;
 public class MouseHandler implements MouseListener, MouseMotionListener{
     private UIHandler UI;
 
-    public MouseHandler(UIHandler u){
-        UI = u;
+    public MouseHandler(GameFrame frame){
+        UI = frame.getUi();
     }
     
     @Override
     public void mouseClicked(MouseEvent e) {
-        UI.mouseClicked(e);
     }
 
     @Override

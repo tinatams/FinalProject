@@ -44,11 +44,17 @@ public class Ore implements Interactable{
 
     @Override
     public void interact(Player player) {
-        health--;
-        System.out.println(health);
-        if (health == 0){
-            player.collect(new IronItem(0,0));
+        if (player.getItem(PickaxeItem.ITEMNAME) != null){
+            health--;
+            SoundHandler sh = player.getFrame().getSoundHandler();
+            if (health == 0){
+                player.collect(new IronItem(0,0));
+                sh.playEffect(SoundHandler.STONE_CRACK);
+            } else {
+                sh.playEffect(SoundHandler.HIT_ROCK);
+            }
         }
+        
     }
 
     @Override

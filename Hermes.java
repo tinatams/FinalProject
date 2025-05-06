@@ -1,12 +1,16 @@
 import java.awt.Graphics2D;
 import java.sql.ClientInfoStatus;
 import java.util.ArrayList;
+import javax.imageio.plugins.tiff.ExifGPSTagSet;
 
 public class Hermes extends NPC{
+    public static final String name = "Hermes";
     private ArrayList<SuperItem> inventory;
     private int user;
     private String action = "UPDATE";
     private String playersWith = "ODD";
+
+    private EntityGenerator eg;
 
     private boolean firstInteraction = true;
 
@@ -23,6 +27,7 @@ public class Hermes extends NPC{
         inventory = new ArrayList<SuperItem>();
 
         user = NO_USER;
+        eg = new EntityGenerator();
     }
 
     @Override 
@@ -49,6 +54,7 @@ public class Hermes extends NPC{
     public void interact(Player player){
         if (user == NO_USER){
             GameFrame.gameState = GameFrame.HERMES_STATE;
+            player.getFrame().getSoundHandler().playEffect(SoundHandler.INV_IN);
             user = player.getCliNum();
         } else {
             super.speak();
@@ -80,7 +86,7 @@ public class Hermes extends NPC{
                 inventory.remove(discardItem);
             }
         } else {
-            inventory.remove(item);
+            inventory.remove(discardItem);
             item.setOwner(null);
         }
     }
@@ -171,29 +177,16 @@ public class Hermes extends NPC{
                 String itemName = itemData[i];
                 int amount = Integer.parseInt(itemData[i+1]);
 
-                // switch this to an entity generator item
-                switch (itemName) {
-                    case GrapeItem.ITEMNAME:
-                        GrapeItem g = new GrapeItem(0,0);
-                        g.setAmount(amount);
-                        inventory.add(g);
-                        break;
-                    case WoodItem.ITEMNAME:
-                        WoodItem w = new WoodItem(0,0);
-                        w.setAmount(amount);
-                        inventory.add(w);
-                        break;
-                    case IronItem.ITEMNAME:
-                        IronItem iron = new IronItem(0,0);
-                        iron.setAmount(amount);
-                        inventory.add(iron);
-                        break;
-                    case KeyItem.ITEMNAME:
-                        KeyItem k = new KeyItem(0,0,itemData[i+2]);
-                        k.setAmount(amount);
-                        inventory.add(k);
-                        i +=2;
-                        break;
+                if (!itemName.equals(KeyItem.ITEMNAME)){
+                    inventory.add(eg.newItem(itemName));
+                    if(eg.newItem(itemName).isStackable()){
+                        inventory.get(inventory.size() - 1).setAmount(amount);
+                    }
+                } else {
+                    KeyItem k = new KeyItem(0,0,itemData[i+2]);
+                    k.setAmount(amount);
+                    inventory.add(k);
+                    i +=2;
                 }
             }
         }   

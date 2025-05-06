@@ -15,15 +15,15 @@ public class GameCanvas extends JComponent{
     private MapHandler mapH;
     private UIHandler ui;
 
-    public GameCanvas(String data, Player me, int CN, MapHandler mh, UIHandler ui){
+    public GameCanvas(String data, GameFrame frame){
         dataFromServer = data;
-        selectedPlayer = me;
+        selectedPlayer = frame.getSelected();
 
-        clientNumber = CN;
+        clientNumber = frame.getClientNumber();
 
-        mapH = mh;
-        this.ui = ui;
-        selectedPlayer.setMapHandler(this.mapH);
+        mapH = frame.getMapHandler();
+        ui = frame.getUi();
+        selectedPlayer.setMapHandler(mapH);
 
         cameraW = GameFrame.WIDTH;
         cameraH = GameFrame.HEIGHT;
