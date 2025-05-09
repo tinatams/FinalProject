@@ -133,4 +133,7 @@ public class GameCanvas extends JComponent{
         return mapH.getCurrentMap();
     }
 
+    public String getData(){
+        return dataFromServer;
+    }
 }

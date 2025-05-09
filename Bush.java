@@ -5,6 +5,8 @@ import java.util.*;
 import javax.imageio.*;
 
 public class Bush implements Interactable{
+    public static String ITEMNAME = "BUSH";
+    
     private int worldX, worldY, spriteW, spriteH;
     private String name;
     private BufferedImage berries, noBerries;

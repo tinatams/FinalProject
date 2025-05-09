@@ -4,6 +4,8 @@ import java.io.*;
 import javax.imageio.*;
 
 public class Tree implements Interactable{
+    public static String ITEMNAME = "TREE";
+
     private int worldX, worldY, spriteW, spriteH;
     private String name;
     private BufferedImage treeSprite;

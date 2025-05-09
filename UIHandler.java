@@ -68,6 +68,7 @@ public class UIHandler{
                 hermesSendButton.draw(g2d);
                 break;
             default:
+                if (selectedPlayer.getFrame().getMapHandler().getCurrentMap() == MapHandler.ASSIST1) minMap.draw(g2d);
                 break;
         }
     }

@@ -120,6 +120,10 @@ public class Player implements Collidable{
         }
     }
 
+    public void drawSpecific(Graphics2D g2d, int x, int y, int w, int h){
+        g2d.drawImage(sprites[direction][version], x, y, w, h, null);
+    }
+
     public void update(){
         int origX = worldX, origY = worldY;
         //System.out.println(String.format("%d, %d", worldX, worldY));
