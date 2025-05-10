@@ -1,46 +1,51 @@
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
+import java.util.ArrayList;
 import javax.imageio.*;
 
-public class NPC implements Interactable{ //should extend interactable
+public abstract class NPC implements Interactable{ //should extend interactable
     private int worldX, worldY;
     private int spriteW, spriteH;
-    private int dialognumber=0;
+    
     private String skin, name;
     private Rectangle hitBox,interactionBox;
     private BufferedImage spriteSheet;
     private BufferedImage sprite;
-    private String[] dialogues;
+
+    private String[] dialogues= new String[20];
+    private int dialognumber=0;
+
+    public ArrayList<Integer> quests= new ArrayList<Integer>();
+
+    public ArrayList<String> before= new ArrayList<String>();
+    public ArrayList<String> during= new ArrayList<String>();
+    public ArrayList<String> after= new ArrayList<String>();
+    
 
    
-    public NPC(String s, int x, int y, String[] dialogues){
+    public NPC(String name,int x, int y){
+        this.name=name;
         worldX = x;
         worldY = y;
-        this.dialogues=dialogues;
-        skin = s;
-        name = s;
         spriteW = GameFrame.SCALED; 
         spriteH = GameFrame.SCALED;
 
         hitBox = new Rectangle(worldX + 10 ,worldY + 20 ,spriteW , spriteH-5);
         interactionBox = new Rectangle(worldX - GameFrame.SCALED/2 ,worldY - GameFrame.SCALED/2 , spriteW + GameFrame.SCALED, spriteH + GameFrame.SCALED);
-
-        setUpSprites();
     }
 
-    public void setUpSprites(){
+
+    public void draw(Graphics2D g2d, String skin){
+        //System.out.println("Drawing" + name);
         try{
             sprite = ImageIO.read(new File(String.format("./res/NPCs/%s.png",skin)));
 
         } catch (IOException e){
         }
-    }
-    @Override
-    public void draw(Graphics2D g2d){
-        //System.out.println("Drawing" + name);
         g2d.drawImage(sprite, worldX, worldY, GameFrame.SCALED, GameFrame.SCALED, null);
     }
+
     @Override
     public void interact(Player player) {
         speak();
@@ -100,5 +105,15 @@ public class NPC implements Interactable{ //should extend interactable
     public void setWorldY(int worldY) {
         this.worldY = worldY;
     }
+
+    public void setDialogues(String[] dialogues) {
+        this.dialogues = dialogues;
+        dialognumber=0;
+        for (String s:dialogues){
+            System.out.println(s);
+        }
+    }
+
+
     
 }

@@ -21,9 +21,11 @@ public class GameFrame{
     private MapHandler mapH;
     private UIHandler ui; 
     private SoundHandler soundHandler;
+    private QuestHandler questH;
     
     private KeyHandler keyH;
     private MouseHandler mouseH;
+
 
     public static int gameState;
     
@@ -48,6 +50,7 @@ public class GameFrame{
         keyH = new KeyHandler(this);
         mouseH = new MouseHandler(this);
         soundHandler = new SoundHandler();
+        questH=new QuestHandler();
 
         gameState = PLAYING_STATE;
     }
@@ -67,6 +70,7 @@ public class GameFrame{
         keyH = new KeyHandler(this);
         mouseH = new MouseHandler(this);
         soundHandler = new SoundHandler();
+        questH=new QuestHandler();
 
         gameState = PLAYING_STATE;
     }

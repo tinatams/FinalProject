@@ -308,7 +308,6 @@ public class Player implements Collidable{
         if (interactionNPC != null) {
             GameFrame.gameState=2;
             interactionNPC.interact(this);
-            
         }
     }
 

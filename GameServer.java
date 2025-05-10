@@ -6,7 +6,8 @@ public class GameServer{
     private ServerSocket ss;
     private ArrayList<Socket> sockets;
     private ArrayList<ClientRunnable> clients;
-
+    private int mostrecentcomp=0;
+    private int mostrecentact=1;
     private int clientNum = 0;
     private String serverData,hasHermes, hermesLastInv;
     private boolean canSwitch, newInteraction;
@@ -75,6 +76,7 @@ public class GameServer{
         String[] playerData = new String[clients.size()];
         String[] labyrinthData = new String[clients.size()];
         String[] hermesData = new String[clients.size()];
+        String[] questData = new String[clients.size()];
 
         //separate the data into their types
         for (ClientRunnable c : clients){
@@ -93,6 +95,12 @@ public class GameServer{
                                 break;
                             case "Hermes":
                                 hermesData[Integer.parseInt(indivPlayerData[0])] = sepData[1];
+                                break;
+                            case "Quest":
+                            if(sepData[1]!=null){
+                                questData[Integer.parseInt(indivPlayerData[0])]=sepData[1];
+                                System.out.println(questData[Integer.parseInt(indivPlayerData[0])]);
+                            }
                                 break;
                         }
                     }
@@ -177,9 +185,36 @@ public class GameServer{
             newInteraction = true;
         }
 
+        tempString += "\n";
+
+        //Quest Data
+        
+        tempString+="Quest|";
+        String finalQuest="-1,";
+        
+        
+        for(String qData: questData){
+            System.out.println(qData);
+            if(qData!=null){
+                String[] sep = qData.split(",");
+                int comp = Integer.parseInt(sep[1]);
+                int act = Integer.parseInt(sep[2]);
+                System.out.println("WAHH");
+                if (comp > mostrecentcomp || (comp == mostrecentcomp && act > mostrecentact)) {
+                    System.out.println(comp);
+                    mostrecentcomp = comp;
+                    mostrecentact = act;
+                }
+        
+            }
+        }
+
+        finalQuest=finalQuest+mostrecentcomp+","+mostrecentact;
+        tempString += finalQuest;
+
         serverData = tempString;
         //System.out.println(newInteraction);
-        //System.out.println(serverData);
+        // System.out.println(serverData);
     }
 
     public void sendOutData(){

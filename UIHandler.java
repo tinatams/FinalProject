@@ -161,7 +161,7 @@ public class UIHandler{
         g2d.setFont(regularFont.deriveFont(20f));
         //g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN,24F));
 
-        for (String line: currentDialog.split("#")){
+        for (String line: currentDialog.split("~")){
             g2d.drawString(line,x,y);
             y+=40;
         }

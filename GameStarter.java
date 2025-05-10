@@ -15,6 +15,11 @@ public class GameStarter{
 
     private boolean connected;
 
+    private int lastSentComp = -1;
+    private int lastSentAct = -1;
+
+    
+
     public GameStarter(){
         connected = false;
         startMenu();
@@ -127,7 +132,8 @@ public class GameStarter{
                         Hermes hermes = (Hermes) mapH.getNPC(Hermes.name);
                         clientData += String.format("Hermes|%d,%s,%s\n",clientNumber, hermes.getAction(), hermes.getItemString());
                     }
-                    //System.out.println(clientData);
+                        clientData += String.format("Quest|%d,%d,%d\n", clientNumber, QuestHandler.comp, QuestHandler.act);
+                    System.out.println(clientData);
                     dataOut.writeUTF(clientData);
                     try {
                         Thread.sleep(10);
@@ -160,6 +166,20 @@ public class GameStarter{
                             } else if (data[0].equals("Hermes")){
                                 Hermes hermes = (Hermes) frame.getMapHandler().getNPC(Hermes.name);
                                 if (hermes != null) hermes.recieveData(compile(data));
+                            }
+                            else if(data[0].equals("Quest")){
+                                String[] quest= data[1].split(",");
+                                if (quest!=null) {
+                                    try {
+                                        QuestHandler.comp = Integer.parseInt(quest[1]);
+                                        QuestHandler.act = Integer.parseInt(quest[2]);
+                                        QuestHandler.update();
+                                    } catch (NumberFormatException e) {
+                                        System.out.println("Bad quest data from server: " + data[1]);
+                                    }
+                                } else {
+                                    System.out.println("Skipping invalid quest data: " + data[1]);
+                                }
                             }
                         }
                     }

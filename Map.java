@@ -180,9 +180,16 @@ public class Map{
                     String[] dialogues=dialogue.split("/n");
 
                     if (skin.equals("Hermes")){
-                        NPCs.add(new Hermes("Prophet",x,y,Integer.parseInt(mapData[3]) * GameFrame.SCALED, Integer.parseInt(mapData[4]) * GameFrame.SCALED, mapData[5].split("/n")));
-                    } else{
-                        NPCs.add(new NPC(skin,x,y,dialogues));
+                        NPCs.add(new Hermes(x,y,Integer.parseInt(mapData[3]) * GameFrame.SCALED, Integer.parseInt(mapData[4]) * GameFrame.SCALED));
+                    } 
+                    else if(skin.equals("Athena")){
+                        NPCs.add(new Athena(x,y));
+                    }
+                    else if(skin.equals("Apollo")){
+                        NPCs.add(new Apollo(x,y));
+                    }
+                    else{
+                        NPCs.add(new Athena(x,y));
                     }
                     
                 }

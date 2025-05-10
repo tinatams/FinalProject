@@ -14,6 +14,7 @@ public class GameCanvas extends JComponent{
 
     private MapHandler mapH;
     private UIHandler ui;
+    
 
     public GameCanvas(String data, GameFrame frame){
         dataFromServer = data;
