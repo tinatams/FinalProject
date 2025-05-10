@@ -4,6 +4,8 @@ import java.io.*;
 import javax.imageio.*;
 
 public class Ore implements Interactable{
+    public static String ITEMNAME = "ORE";
+    
     private int worldX, worldY, spriteW, spriteH;
     private String name;
     private BufferedImage treeSprite;

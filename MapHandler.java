@@ -341,4 +341,8 @@ public class MapHandler{
         return null;
     }
 
+    public BufferedImage[] getBaseTileset(){
+        return baseTiles;
+    }
+
  }

@@ -48,6 +48,14 @@ public class Player implements Collidable{
         sprites = new BufferedImage[5][2];
         inventory = new ArrayList<>();
         inventory.add(new AxeItem());
+        inventory.add(new PickaxeItem());
+        inventory.add(new WingItem());
+        inventory.add(new StringItem());
+        inventory.add(new FishItem());
+        inventory.add(new MeatItem());
+        inventory.add(new BoneItem());
+        inventory.add(new WineItem());
+
 
 
         setUpSprites();
@@ -118,6 +126,10 @@ public class Player implements Collidable{
 
             counter = 0;
         }
+    }
+
+    public void drawSpecific(Graphics2D g2d, int x, int y, int w, int h){
+        g2d.drawImage(sprites[direction][version], x, y, w, h, null);
     }
 
     public void update(){

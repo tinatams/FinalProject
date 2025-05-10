@@ -17,7 +17,9 @@ public class Map{
 
     protected ArrayList<Teleporter> teleporters;
     protected ArrayList<Interactable> interacts;
-     private ArrayList<NPC> NPCs;
+    private ArrayList<NPC> NPCs;
+
+    private EntityGenerator eg;
 
     public Map(String n){
         baseTileMap = new int[maxColumn][maxRow];
@@ -34,6 +36,7 @@ public class Map{
         loadTeleporters();
         loadNPCs();
 
+        eg = new EntityGenerator();
     }
 
     public void loadMap(){
@@ -142,18 +145,11 @@ public class Map{
                     String type = mapData[0];
                     int x = Integer.parseInt(mapData[1]);
                     int y = Integer.parseInt(mapData[2]);
-                    switch (type) {
-                        case "TREE":
-                            interacts.add(new Tree(x, y));
-                            break;
-                        case "BUSH":
-                            interacts.add(new Bush(x, y));
-                            break;
-                        case "ORE":
-                            interacts.add(new Ore(x, y));
-                            break;
-                        case "KEY":
-                            interacts.add(new KeyItem(x, y, mapData[3]));
+
+                    if (!type.equals("KEY")){
+                        interacts.add(eg.newInteractable(type, x, y));
+                    } else {
+                        interacts.add(new KeyItem(x, y, mapData[3]));
                     }
                 }
             }
