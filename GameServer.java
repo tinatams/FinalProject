@@ -10,6 +10,7 @@ public class GameServer{
     private String serverData,hasHermes, hermesLastInv;
     private String latestQuest="1,0,0,0,0,0";
     private boolean canSwitch, newInteraction;
+    private ArrayList<Integer> activeQuests;
 
     public GameServer(){
         serverData = "nothing yet";
@@ -19,6 +20,7 @@ public class GameServer{
 
         hasHermes = "ODD";
         newInteraction = true;
+        activeQuests = new ArrayList<Integer>();
 
         try {
             ss = new ServerSocket(60003);
@@ -107,7 +109,6 @@ public class GameServer{
                 }
             }
         }
-
         //compile
 
         //PLAYER DATA:
@@ -186,6 +187,7 @@ public class GameServer{
 
         tempString += "\n";
 
+<<<<<<< HEAD
         //Quest Data
         
         tempString+="Quest|null,";
@@ -222,6 +224,11 @@ public class GameServer{
                 }
             }
         }
+=======
+        //Quest Data 
+        tempString+="Quest|";    
+        tempString += questData[0];
+>>>>>>> 01c352dcd64ff30b31684cfba8545b82abd4fc55
 
         
         
