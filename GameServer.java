@@ -10,6 +10,7 @@ public class GameServer{
     private String serverData,hasHermes, hermesLastInv;
     private String questLast;
     private boolean canSwitch, newInteraction;
+    private ArrayList<Integer> activeQuests;
 
     public GameServer(){
         serverData = "nothing yet";
@@ -19,6 +20,7 @@ public class GameServer{
 
         hasHermes = "ODD";
         newInteraction = true;
+        activeQuests = new ArrayList<Integer>();
 
         try {
             ss = new ServerSocket(60003);
@@ -107,7 +109,6 @@ public class GameServer{
                 }
             }
         }
-
         //compile
 
         //PLAYER DATA:
@@ -186,38 +187,8 @@ public class GameServer{
 
         tempString += "\n";
 
-        //Quest Data
-        
-        tempString+="Quest|";
-        // String finalQuest="-1";
-        // String actives="0";
-        // String[] sep = questData[0].split(",");
-        // for(String qData: questData){
-        //     System.out.println(qData);
-        //     if(qData!=null){
-                
-        //         int comp = sep[1]);
-        //         int act = Integer.parseInt(sep[2]);
-        //         // System.out.println("WAHH");
-        //         if (comp > mostrecentcomp || (comp == mostrecentcomp && act > mostrecentact)) {
-        //             System.out.println(comp);
-        //             mostrecentcomp = comp;
-        //             mostrecentact = act;
-        //         }
-        
-        //     }
-        // }
-        // if(questData[1]!=null){
-        //     actives=questData[1];
-        // }
-        // for(int i=0; i<sep.length;i++){
-        //     if(i!=sep.length-1){
-        //        finalQuest=finalQuest+",";
-        //     }
-        //      finalQuest=finalQuest+sep[i];
-
-        // }
-        
+        //Quest Data 
+        tempString+="Quest|";    
         tempString += questData[0];
 
         serverData = tempString;
