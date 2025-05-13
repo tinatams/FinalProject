@@ -68,7 +68,7 @@ public class Athena extends NPC{
                     }
                     else if(i==1){
                         System.out.println("ITs her?");
-                        result=during.get(dialognumber);
+                        result=during.get(0);
                         inventory=player.getInventory();
                         for(int j=0; j<inventory.size();j++){
                             if(inventory.get(j).getName().equals(QuestHandler.quests[i].getItemname()) && inventory.get(j).getAmount()>=QuestHandler.quests[i].getItemnumber()){
@@ -79,7 +79,7 @@ public class Athena extends NPC{
                                 else{
                                     inventory.get(j).setAmount(inventory.get(j).getAmount()-QuestHandler.quests[i].getItemnumber());
                                 }
-                                result=after.get(dialognumber);
+                                result=after.get(0);
                                 dialognumber++;
                                 first=true;
                                 if(dialognumber>1){
@@ -108,7 +108,7 @@ public class Athena extends NPC{
                         return result;
                     }
                     else{
-                        result=after.get(0);
+                        result=after.get(1);
                         first=true;
                         return result;
                     }

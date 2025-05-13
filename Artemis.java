@@ -66,11 +66,11 @@ public class Artemis extends NPC{
                     else if(i==2){
                         QuestHandler.states[2]=QuestHandler.COMPLETED;
                         QuestHandler.states[4]=QuestHandler.ACTIVE;
-                        result=before.get(dialognumber);
+                        result=before.get(0);
                         return result;
                     }
                     else if(i==4){
-                        result=during.get(dialognumber);
+                        result=during.get(0);
                         inventory=player.getInventory();
                         for(int j=0; j<inventory.size();j++){
                             if(inventory.get(j).getName().equals(QuestHandler.quests[i].getItemname()) && inventory.get(j).getAmount()>=QuestHandler.quests[i].getItemnumber()){
@@ -80,12 +80,7 @@ public class Artemis extends NPC{
                                 else{
                                     inventory.get(j).setAmount(inventory.get(j).getAmount()-QuestHandler.quests[i].getItemnumber());
                                 }
-                                result=after.get(dialognumber);
-                                dialognumber++;
-                                first=true;
-                                if(dialognumber>1){
-                                    completed=true;
-                                }
+                                result=after.get(0);
                                 QuestHandler.states[4]=QuestHandler.COMPLETED;
                                 QuestHandler.states[5]=QuestHandler.ACTIVE;
                                 return result;
@@ -93,7 +88,7 @@ public class Artemis extends NPC{
                         }
                     }
                     else if(i==5){
-                        result=during.get(dialognumber);
+                        result=during.get(1);
                         inventory=player.getInventory();
                         for(int j=0; j<inventory.size();j++){
                             if(inventory.get(j).getName().equals(QuestHandler.quests[i].getItemname()) && inventory.get(j).getAmount()>=QuestHandler.quests[i].getItemnumber()){
@@ -103,12 +98,8 @@ public class Artemis extends NPC{
                                 else{
                                     inventory.get(j).setAmount(inventory.get(j).getAmount()-QuestHandler.quests[i].getItemnumber());
                                 }
-                                result=after.get(dialognumber);
-                                dialognumber++;
-                                first=true;
-                                if(dialognumber>1){
-                                    completed=true;
-                                }
+                                result=after.get(1);
+                                completed=true;
                                 QuestHandler.states[5]=QuestHandler.COMPLETED;
                                 QuestHandler.states[6]=QuestHandler.ACTIVE;
                                 return result;
@@ -116,7 +107,7 @@ public class Artemis extends NPC{
                         }
                     }
                     else{
-                        result=after.get(dialognumber);
+                        result=after.get(1);
                     }
                     first=false;
                 
