@@ -178,16 +178,25 @@ public class Hermes extends NPC{
                 String itemName = itemData[i];
                 int amount = Integer.parseInt(itemData[i+1]);
 
-                if (!itemName.equals(KeyItem.ITEMNAME)){
+                if (!itemName.equals(KeyItem.ITEMNAME) && !itemName.equals(ProphecyItem.ITEMNAME)){
                     inventory.add(eg.newItem(itemName));
                     if(eg.newItem(itemName).isStackable()){
                         inventory.get(inventory.size() - 1).setAmount(amount);
                     }
-                } else {
-                    KeyItem k = new KeyItem(0,0,itemData[i+2]);
-                    k.setAmount(amount);
-                    inventory.add(k);
-                    i +=2;
+                } 
+                else {
+                    if(itemName.equals(KeyItem.ITEMNAME)){
+                        KeyItem k = new KeyItem(0,0,itemData[i+2]);
+                        k.setAmount(amount);
+                        inventory.add(k);
+                        i +=2;
+                    }  
+                    else if(itemName.equals(ProphecyItem.ITEMNAME)){
+                        ProphecyItem k = new ProphecyItem();
+                        k.setAmount(amount);
+                        inventory.add(k);
+                    }  
+                    
                 }
             }
         }   

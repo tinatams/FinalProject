@@ -1,8 +1,8 @@
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-public class Athena extends NPC{
-    public static final String name = "Athena";
+public class Artemis extends NPC{
+    public static final String name = "Artemis";
     private ArrayList<SuperItem> inventory;
     private EntityGenerator eg;
     private int x,y;
@@ -12,18 +12,20 @@ public class Athena extends NPC{
     
     
 
-    public Athena(int x, int y) {
+    public Artemis(int x, int y) {
         
-        super("Athena",x, y);
+        super("Artemis",x, y);
         inventory = new ArrayList<SuperItem>();
         eg = new EntityGenerator();
-        quests.add(1);
         quests.add(2);
-        during.add("Please come back later");
-        after.add("Apollo asked you to give me this you say?/n(You give her the prophecy)/nWhen faith runs dry and mortals stray,~Olympus shuts its shining way.~Five gods left in mortal dust,~Locked out by doubt, by fading trust./nTo skybound isle their hope is cast—~Go to temple high, call a power vast.~Only through prayer and kindled name~Can the twelve become axios of godly flame./n.../nInteresting./nIt seems that we are trapped here because~mortals have stopped believing in us./nThose who are among mortals remain until ~the gates of Olympus open once more./nWe must get to an island with a temple of~the Twelve…I think I know which one./nMortal, I know your kind do not believe ~in us currently but assist us and~ all of us will reward you. I swear it.");
-        before.add("How to help you ask?/nWell from the prophecy we need to find~a way to the island they spoke of. ~We will need a boat./nYou must speak with Hephaestus.~He likes to stick around caves./nI do believe that you will also need to~sacrifice to the goddess Demeter/nThe islands are barren and Hephaestus~will need wood ~to build a vessel./nThe goddess Artemis can help your friend~with that.");
-        during.add("(Hint: you might want to check this island~thoroughly for a hidden workshop)/n(hint: your friend might want to check ~thier island for a huntress in green)");
-        after.add("Good Job!");
+        quests.add(4);
+        quests.add(5);
+        before.add("Athena you say?/n Sacrifice to Demeter?/n Gather meat?/n I would love to help!/n But you see I’ve broken my bow.~Please get me string around the island!");
+        during.add("Hint: String can be found around the island");
+        after.add("Good Job! But now I think my dogs might be gone...");
+        before.add("Could you find my dogs?/nHere you go!~You can find them using this bone");
+        during.add("Hint: My dogs like to wander around.~They can also swim");
+        after.add("Thank you!");
         
         
         this.x = x;
@@ -53,24 +55,35 @@ public class Athena extends NPC{
     }
 
     public String check(Player player){
-        
-        System.out.println(dialognumber);
         String result="";
 
         if(first && dialognumber==0){
-            result="Hello Mortal! I am the goddess Athena./n Do you need something?/n .../nNo?/nI apologize but I'm a bit busy right now";
+            result="Hey! Have you seen my dogs?/n.../nNo?/nOk...";
         }
+        
         
         for(int q : quests){
             for(int qh: QuestHandler.active_index){
                 if(q==qh){
-                    if(first && dialognumber>0){
-                        result=before.get(dialognumber-1);
+                    if(first && dialognumber==0){
+                        result=before.get(dialognumber);
                         first=false;
                         return result;
                     }
+                    else if(first && dialognumber>0){
+                        result=before.get(dialognumber);
+                        first=false;
+                        player.collect(new WoodItem(1,1));
+                        player.collect(new WoodItem(1,1));
+                        return result;
+                    }
                     else{
-                        if(qh==1){
+                        if(qh==2){
+                            QuestHandler.active_index.remove(2);
+                            QuestHandler.active_index.add(4);
+                            QuestHandler.update();
+                        }
+                        else if(q==4){
                             result=during.get(dialognumber);
                             inventory=player.getInventory();
                             for(int i=0; i<inventory.size();i++){
@@ -87,18 +100,14 @@ public class Athena extends NPC{
                                     if(dialognumber>1){
                                         completed=true;
                                     }
-                                    System.out.println("HIII Its here");
-                                    QuestHandler.active_index.remove(0);
-                                    QuestHandler.active_index.add(2);
-                                    QuestHandler.active_index.add(3);
-                                    System.out.println("HIII It added"+QuestHandler.active_index.get(0));
-                                    System.out.println("HIII It added"+QuestHandler.active_index.get(1));
+                                    QuestHandler.active_index.remove(4);
+                                    QuestHandler.active_index.add(5);
                                     QuestHandler.update();
                                     return result;
                                 }
                             }
                         }
-                    }
+                }
                 first=false;
             }
             }

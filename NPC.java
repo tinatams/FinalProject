@@ -109,9 +109,9 @@ public abstract class NPC implements Interactable{ //should extend interactable
     public void setDialogues(String[] dialogues) {
         this.dialogues = dialogues;
         dialognumber=0;
-        for (String s:dialogues){
-            System.out.println(s);
-        }
+        // for (String s:dialogues){
+        //     System.out.println(s);
+        // }
     }
 
 

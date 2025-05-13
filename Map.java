@@ -188,6 +188,9 @@ public class Map{
                     else if(skin.equals("Apollo")){
                         NPCs.add(new Apollo(x,y));
                     }
+                    else if(skin.equals("Artemis")){
+                        NPCs.add(new Artemis(x,y));
+                    }
                     else{
                         NPCs.add(new Athena(x,y));
                     }
