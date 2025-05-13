@@ -88,6 +88,12 @@ public class Artemis extends NPC{
                         }
                     }
                     else if(i==5){
+                        if(first){
+                            result=before.get(1);
+                            player.collect(new BoneItem());
+                            first=false;
+                            return result;
+                        }
                         result=during.get(1);
                         inventory=player.getInventory();
                         for(int j=0; j<inventory.size();j++){
@@ -109,7 +115,6 @@ public class Artemis extends NPC{
                     else{
                         result=after.get(1);
                     }
-                    first=false;
                 
                 }
         }

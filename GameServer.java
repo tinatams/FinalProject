@@ -8,7 +8,7 @@ public class GameServer{
     private ArrayList<ClientRunnable> clients;
     private int clientNum = 0;
     private String serverData,hasHermes, hermesLastInv;
-    private String latestQuest="1,0,0,0,0,0";
+    private String latestQuest="1,0,0,0,0,0,0,0";
     private boolean canSwitch, newInteraction;
     private ArrayList<Integer> activeQuests;
 
