@@ -15,8 +15,6 @@
 //         super("Hephaestus",x, y);
 //         inventory = new ArrayList<SuperItem>();
 //         eg = new EntityGenerator();
-//         quests.add(1);
-//         quests.add(2);
 //         during.add("Please come back later");
 //         after.add("Apollo asked you to give me this you say?/n(You give her the prophecy)/nWhen faith runs dry and mortals stray,~Olympus shuts its shining way.~Five gods left in mortal dust,~Locked out by doubt, by fading trust./nTo skybound isle their hope is cast—~Go to temple high, call a power vast.~Only through prayer and kindled name~Can the twelve become axios of godly flame./n.../nInteresting./nIt seems that we are trapped here because~mortals have stopped believing in us./nThose who are among mortals remain until ~the gates of Olympus open once more./nWe must get to an island with a temple of~the Twelve…I think I know which one./nMortal, I know your kind do not believe ~in us currently but assist us and~ all of us will reward you. I swear it.");
 //         before.add("How to help you ask?/nWell from the prophecy we need to find~a way to the island they spoke of. ~We will need a boat./nYou must speak with Hephaestus.~He likes to stick around caves./nI do believe that you will also need to~sacrifice to the goddess Demeter/nThe islands are barren and Hephaestus~will need wood ~to build a vessel./nThe goddess Artemis can help your friend~with that.");

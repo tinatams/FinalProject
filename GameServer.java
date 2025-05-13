@@ -191,6 +191,7 @@ public class GameServer{
         //Quest Data
         
         tempString+="Quest|null,";
+        String result="";
         if(questData[0]!=null){
             
          System.out.println(questData[0]);
@@ -204,27 +205,29 @@ public class GameServer{
             for(int i=1;i<pastquests.length;i++){
                 sumpast+=Integer.parseInt(pastquests[i]);
             }
+            
 
             if(sumcurrent>sumpast){
                 System.out.println("RECENT");
                 for(int i=1;i<quests.length;i++){
-                    tempString+=quests[i];
+                    result+=quests[i];
                     if(i!=quests.length-1){
-                        tempString+=",";
+                        result+=",";
                     }
                 }      
             }
             else{
                 System.out.println("PAST");
                 for(int i=1;i<pastquests.length;i++){
-                    tempString+=pastquests[i];
+                    result+=pastquests[i];
                     if(i!=pastquests.length-1){
-                        tempString+=",";
+                        result+=",";
                     }
                 }
             }
         }        
-        
+        latestQuest=result;
+        tempString+=result;
         serverData = tempString;
         //System.out.println(newInteraction);
         System.out.println(serverData);

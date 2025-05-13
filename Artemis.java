@@ -22,7 +22,7 @@ public class Artemis extends NPC{
         quests.add(5);
         before.add("Athena you say?/n Sacrifice to Demeter?/n Gather meat?/n I would love to help!/n But you see I’ve broken my bow.~Please get me string around the island!");
         during.add("Hint: String can be found around the island");
-        after.add("Good Job! But now I think my dogs might be gone...");
+        after.add("Good Job! But now I can't find my dogs.");
         before.add("Could you find my dogs?/nHere you go!~You can find them using this bone");
         during.add("Hint: My dogs like to wander around.~They can also swim");
         after.add("Thank you for helping me out!/n Here's the meat");

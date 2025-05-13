@@ -6,8 +6,6 @@ public class Apollo extends NPC{
     private ArrayList<SuperItem> inventory;
     private EntityGenerator eg;
     private int x,y;
-    private int dialognumber=0;
-    private boolean first=true;
     
     
     public Apollo(int x, int y) {
@@ -34,8 +32,7 @@ public class Apollo extends NPC{
     @Override
     public void interact(Player player){
         if(super.getDialogNumber()==0){
-        super.setDialogues(check(player).split("/n"));
-        first=false;
+            super.setDialogues(check(player).split("/n"));
         }
         super.speak();
         // }
@@ -49,18 +46,18 @@ public class Apollo extends NPC{
             for(int i=0;i<QuestHandler.states.length;i++){
                 if(QuestHandler.states[i]==QuestHandler.ACTIVE){
                     if(i==0){
-                        result=before.get(dialognumber);
+                        result=before.get(0);
                         player.collect(new ProphecyItem());
                         QuestHandler.states[0]=QuestHandler.COMPLETED;
                         QuestHandler.states[1]=QuestHandler.ACTIVE;
                         break;
                     }
                     else if(i==1){
-                        result=during.get(dialognumber);
+                        result=during.get(0);
                         break;
                     }
                     else{
-                        result=after.get(dialognumber);
+                        result=after.get(0);
                         break;
                     }
                     }
