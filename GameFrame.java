@@ -22,6 +22,8 @@ public class GameFrame{
     private UIHandler ui; 
     private SoundHandler soundHandler;
     private QuestHandler questH;
+
+    private FishMiniGame fishy;
     
     private KeyHandler keyH;
     private MouseHandler mouseH;
@@ -33,6 +35,7 @@ public class GameFrame{
     public final static int INVENTORY_STATE = 1;
     public final static int DIALOG_STATE = 2;
     public final static int HERMES_STATE = 3;
+    public final static int FISHING_STATE = 4;
 
     public GameFrame(String data, int CN){
         frame = new JFrame();
@@ -65,6 +68,7 @@ public class GameFrame{
  
         selectedPlayer = new Player(skin, x * SCALED, y * SCALED, this);
         mapH = new MapHandler(this);
+        fishy = new FishMiniGame(selectedPlayer);
         ui = new UIHandler(this);
         canvas = new GameCanvas(data, this);
         keyH = new KeyHandler(this);
@@ -135,5 +139,8 @@ public class GameFrame{
 
     public QuestHandler getQuestH() {
         return questH;
+        
+    public FishMiniGame getFishy() {
+        return fishy;
     }
 }

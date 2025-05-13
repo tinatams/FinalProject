@@ -1,10 +1,10 @@
 import java.io.*;
 import javax.imageio.*;
 
-public class ProphecyItem extends SuperItem {
-    public static final String ITEMNAME = "PROPHECY";
+public class WingItem extends SuperItem {
+    public static final String ITEMNAME = "WINGS";
 
-    public ProphecyItem(){
+    public WingItem(){
         super(ITEMNAME,0, 0, 16, 16);
         setStackable(false);
     }
@@ -12,7 +12,7 @@ public class ProphecyItem extends SuperItem {
     @Override
     public void loadImage() {
         try{
-            sprite = (ImageIO.read(new File("./res/items/paper.png"))).getSubimage(5, 9, 16, 16);
+            sprite = ImageIO.read(new File("./res/items/Wings.png"));
         } catch (IOException e){
             
         }

@@ -17,7 +17,9 @@ public class Map{
 
     protected ArrayList<Teleporter> teleporters;
     protected ArrayList<Interactable> interacts;
-     private ArrayList<NPC> NPCs;
+    private ArrayList<NPC> NPCs;
+
+    private EntityGenerator eg;
 
     public Map(String n){
         baseTileMap = new int[maxColumn][maxRow];
@@ -34,6 +36,7 @@ public class Map{
         loadTeleporters();
         loadNPCs();
 
+        eg = new EntityGenerator();
     }
 
     public void loadMap(){
@@ -111,15 +114,16 @@ public class Map{
                     int mapTo = Integer.parseInt(mapData[4]);
                     int newX = Integer.parseInt(mapData[5]) * GameFrame.SCALED; //player position in new map
                     int newY = Integer.parseInt(mapData[6]) * GameFrame.SCALED; //player position in new map
-                    
-                    if (mapData.length >= 8){
-                        if (mapData[7].equals("LOCK")){
-                            teleporters.add(new Lock(x, y, w, h, mapTo, newX, newY, mapData[8]));
-                        } else if (mapData[7].equals("SPIKE")){
+                    int direction = Integer.parseInt(mapData[7]);
+
+                    if (mapData.length >= 9){
+                        if (mapData[8].equals("LOCK")){
+                            teleporters.add(new Lock(x, y, w, h, mapTo, newX, newY, direction, mapData[9]));
+                        } else if (mapData[8].equals("SPIKE")){
                             teleporters.add(new SpikeTrap(x, y, mapTo, newX, newY));
                         }
                     } else {
-                        teleporters.add(new Teleporter(x, y, w, h, mapTo, newX, newY));
+                        teleporters.add(new Teleporter(x, y, w, h, mapTo, newX, newY, direction));
                     }  
                 }
             }
@@ -142,18 +146,13 @@ public class Map{
                     String type = mapData[0];
                     int x = Integer.parseInt(mapData[1]);
                     int y = Integer.parseInt(mapData[2]);
-                    switch (type) {
-                        case "TREE":
-                            interacts.add(new Tree(x, y));
-                            break;
-                        case "BUSH":
-                            interacts.add(new Bush(x, y));
-                            break;
-                        case "ORE":
-                            interacts.add(new Ore(x, y));
-                            break;
-                        case "KEY":
-                            interacts.add(new KeyItem(x, y, mapData[3]));
+
+                    if (!type.equals("KEY") && !type.equals(FishArea.ITEMNAME)){
+                        interacts.add(eg.newInteractable(type, x, y));
+                    } 
+                    else {
+                        if (type.equals("KEY")) interacts.add(new KeyItem(x, y, mapData[3]));
+                        else if (type.equals(FishArea.ITEMNAME)) interacts.add(new FishArea(x, y, Integer.parseInt(mapData[3]), Integer.parseInt(mapData[4])));
                     }
                 }
             }

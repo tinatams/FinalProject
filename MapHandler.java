@@ -24,6 +24,7 @@ public class MapHandler{
     public static final int DHOUSE = 3;
     public static final int ASSIST1 = 4;
     public static final int ASSIST2 = 5;
+    public static final int SECRET = 11;
 
     //PLAYER 2
     public static final int POSEIDON = 6;
@@ -40,7 +41,7 @@ public class MapHandler{
         baseTiles = new BufferedImage[1000];
         decoTiles = new BufferedImage[1000];
         
-        maps = new Map[11];
+        maps = new Map[12];
         pFollow = frame.getSelected();
 
         currentMap = SPAWN;
@@ -55,7 +56,7 @@ public class MapHandler{
         maps[DIONYSUS] = new Map("dionysus");
         maps[DHOUSE] = new Map("d_house");  
         maps[ASSIST1] = new AssistOne();
-        //insert Assist2
+        maps[SECRET] = new Map("secret");
         maps[POSEIDON] = new Map("poseidon");
         maps[MINES] = new Map("mine");
         maps[WORKSHOP] = new Map("workshop");
@@ -202,35 +203,39 @@ public class MapHandler{
 
         for (Teleporter tele : teleporters){
             if (pFollow.isColliding(tele) && !(tele instanceof Lock) && !(tele instanceof SpikeTrap)){
-                if (currentMap == WORKSHOP){
-                    SoundHandler sh = pFollow.getFrame().getSoundHandler();
-                    sh.playEffect(SoundHandler.STAIRS);
+                if(pFollow.getDirection() == tele.getDirection()){
+                    if (currentMap == WORKSHOP){
+                        SoundHandler sh = pFollow.getFrame().getSoundHandler();
+                        sh.playEffect(SoundHandler.STAIRS);
+                    }
+                    currentMap = tele.teleportToMap();
+                    if (currentMap == WORKSHOP){
+                        SoundHandler sh = pFollow.getFrame().getSoundHandler();
+                        sh.playEffect(SoundHandler.STAIRS);
+                    }
+                    pFollow.teleportPlayer(tele.teleportPlayerX(), tele.teleportPlayerY());
                 }
-                currentMap = tele.teleportToMap();
-                if (currentMap == WORKSHOP){
-                    SoundHandler sh = pFollow.getFrame().getSoundHandler();
-                    sh.playEffect(SoundHandler.STAIRS);
-                }
-                pFollow.teleportPlayer(tele.teleportPlayerX(), tele.teleportPlayerY());
             } else if (pFollow.isColliding(tele) && (tele instanceof Lock)){
-                Lock lockObj = (Lock) tele;
-                ArrayList<SuperItem> keyItems = pFollow.getNotStackableItem("KEY");
-                KeyItem keyObj;
-                if (keyItems.size() > 0){
-                    for (SuperItem k : keyItems){
-                        keyObj = (KeyItem) k;
-                        if((keyObj.getLockName()).equals(lockObj.getlockName())){
-                            lockObj.setLocked(false);
-                            pFollow.discardItem(keyObj);
-                            break;
+                if (pFollow.getDirection() == tele.getDirection()){Lock lockObj = (Lock) tele;
+                    ArrayList<SuperItem> keyItems = pFollow.getNotStackableItem("KEY");
+                    KeyItem keyObj;
+                    if (keyItems.size() > 0){
+                        for (SuperItem k : keyItems){
+                            keyObj = (KeyItem) k;
+                            if((keyObj.getLockName()).equals(lockObj.getlockName())){
+                                lockObj.setLocked(false);
+                                pFollow.discardItem(keyObj);
+                                break;
+                            }
                         }
+                    }
+
+                    if (!lockObj.isLocked()){
+                        currentMap = tele.teleportToMap();
+                        pFollow.teleportPlayer(tele.teleportPlayerX(), tele.teleportPlayerY());
                     }
                 }
 
-                if (!lockObj.isLocked()){
-                    currentMap = tele.teleportToMap();
-                    pFollow.teleportPlayer(tele.teleportPlayerX(), tele.teleportPlayerY());
-                }
             }
 
             if (tele instanceof SpikeTrap spike){
@@ -339,6 +344,10 @@ public class MapHandler{
         }
 
         return null;
+    }
+
+    public BufferedImage[] getBaseTileset(){
+        return baseTiles;
     }
 
  }
