@@ -139,7 +139,8 @@ public class GameFrame{
 
     public QuestHandler getQuestH() {
         return questH;
-        
+    }
+
     public FishMiniGame getFishy() {
         return fishy;
     }

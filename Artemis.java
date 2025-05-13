@@ -25,7 +25,7 @@ public class Artemis extends NPC{
         after.add("Good Job! But now I think my dogs might be gone...");
         before.add("Could you find my dogs?/nHere you go!~You can find them using this bone");
         during.add("Hint: My dogs like to wander around.~They can also swim");
-        after.add("Thank you!");
+        after.add("Thank you for helping me out!/n Here's the meat");
         
         
         this.x = x;
