@@ -47,16 +47,6 @@ public class Player implements Collidable{
 
         sprites = new BufferedImage[5][2];
         inventory = new ArrayList<>();
-        inventory.add(new AxeItem());
-        inventory.add(new PickaxeItem());
-        inventory.add(new WingItem());
-        inventory.add(new StringItem());
-        inventory.add(new FishItem());
-        inventory.add(new MeatItem());
-        inventory.add(new BoneItem());
-        inventory.add(new WineItem());
-
-
 
         setUpSprites();
         hitBox = new Rectangle(worldX + 10, worldY + 30, spriteW-20, spriteH-30);
@@ -134,7 +124,7 @@ public class Player implements Collidable{
 
     public void update(){
         int origX = worldX, origY = worldY;
-        System.out.println(String.format("%d, %d", worldX, worldY));
+        //System.out.println(String.format("%d, %d", worldX, worldY));
         switch (direction){
             case UP:
                 worldY -= speed;
