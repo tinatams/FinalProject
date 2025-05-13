@@ -89,7 +89,9 @@ public class Athena extends NPC{
                                 QuestHandler.states[1]=QuestHandler.COMPLETED;
                                 QuestHandler.states[2]=QuestHandler.ACTIVE;
                                 QuestHandler.states[3]=QuestHandler.ACTIVE;
-                                
+                                for(int k:QuestHandler.states){
+                                    System.out.println(k);
+                                }
                                 System.out.println("IT SWITCHED");
                                 return result;
                             }

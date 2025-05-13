@@ -122,21 +122,7 @@ public class GameStarter{
                 try {
                     Player clientPlayer = frame.getSelected();
                     MapHandler mapH = frame.getMapHandler();
-<<<<<<< HEAD
                     QuestHandler questH=frame.getQuestH();
-=======
-                    String quest="";
-                    if (!QuestHandler.active_index.isEmpty()){
-                        for(int i=0; i<QuestHandler.active_index.size();i++){
-                        quest=quest+QuestHandler.active_index.get(i);
-                        if(i!=QuestHandler.active_index.size()-1){
-                            quest=quest+",";
-                        }
-                        //System.out.println(quest + "Hello");
-                    }
-
-                    }
->>>>>>> 01c352dcd64ff30b31684cfba8545b82abd4fc55
                     
                     clientData = String.format("Players|%d,%d,%d,%s,%d,%d,%s\n", clientNumber, clientPlayer.getWorldX(), clientPlayer.getWorldY(), clientPlayer.getSkin(), clientPlayer.getDirection(), clientPlayer.getVer(), frame.getMap());
                     clientData += String.format("Labyrinth|%d,%s\n",clientNumber, mapH.getVersion());

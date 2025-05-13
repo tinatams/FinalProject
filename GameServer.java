@@ -187,7 +187,7 @@ public class GameServer{
 
         tempString += "\n";
 
-<<<<<<< HEAD
+
         //Quest Data
         
         tempString+="Quest|null,";
@@ -223,14 +223,7 @@ public class GameServer{
                     }
                 }
             }
-        }
-=======
-        //Quest Data 
-        tempString+="Quest|";    
-        tempString += questData[0];
->>>>>>> 01c352dcd64ff30b31684cfba8545b82abd4fc55
-
-        
+        }        
         
         serverData = tempString;
         //System.out.println(newInteraction);
