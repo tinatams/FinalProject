@@ -61,15 +61,13 @@ public class Artemis extends NPC{
                 if(QuestHandler.states[i]==QuestHandler.ACTIVE){
                     if(i<2){
                         result="Hey! Have you seen my dogs?/n.../nNo?/nOk...";
+                        return result;
                     }
                     else if(i==2){
                         QuestHandler.states[2]=QuestHandler.COMPLETED;
                         QuestHandler.states[4]=QuestHandler.ACTIVE;
-                        if(first && dialognumber>0){
-                            result=before.get(dialognumber);
-                            first=false;
-                            return result;
-                        }
+                        result=before.get(dialognumber);
+                        return result;
                     }
                     else if(i==4){
                         result=during.get(dialognumber);

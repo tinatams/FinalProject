@@ -89,9 +89,6 @@ public class Athena extends NPC{
                                 QuestHandler.states[1]=QuestHandler.COMPLETED;
                                 QuestHandler.states[2]=QuestHandler.ACTIVE;
                                 QuestHandler.states[3]=QuestHandler.ACTIVE;
-                                for(int k:QuestHandler.states){
-                                    System.out.println(k);
-                                }
                                 System.out.println("IT SWITCHED");
                                 return result;
                             }
@@ -100,18 +97,18 @@ public class Athena extends NPC{
 
                     else if(i==2 || i==3){
                         if(first && dialognumber>0){
-                            result=before.get(dialognumber-1);
+                            result=before.get(0);
                             System.out.println(i);
                             first=false;
                         }
                         else{
-                            result=during.get(dialognumber);
+                            result=during.get(1);
                             System.out.println(i);
                         }
                         return result;
                     }
                     else{
-                        result=after.get(dialognumber);
+                        result=after.get(0);
                         first=true;
                         return result;
                     }
