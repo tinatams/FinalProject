@@ -114,15 +114,16 @@ public class Map{
                     int mapTo = Integer.parseInt(mapData[4]);
                     int newX = Integer.parseInt(mapData[5]) * GameFrame.SCALED; //player position in new map
                     int newY = Integer.parseInt(mapData[6]) * GameFrame.SCALED; //player position in new map
-                    
-                    if (mapData.length >= 8){
-                        if (mapData[7].equals("LOCK")){
-                            teleporters.add(new Lock(x, y, w, h, mapTo, newX, newY, mapData[8]));
-                        } else if (mapData[7].equals("SPIKE")){
+                    int direction = Integer.parseInt(mapData[7]);
+
+                    if (mapData.length >= 9){
+                        if (mapData[8].equals("LOCK")){
+                            teleporters.add(new Lock(x, y, w, h, mapTo, newX, newY, direction, mapData[9]));
+                        } else if (mapData[8].equals("SPIKE")){
                             teleporters.add(new SpikeTrap(x, y, mapTo, newX, newY));
                         }
                     } else {
-                        teleporters.add(new Teleporter(x, y, w, h, mapTo, newX, newY));
+                        teleporters.add(new Teleporter(x, y, w, h, mapTo, newX, newY, direction));
                     }  
                 }
             }
