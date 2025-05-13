@@ -56,63 +56,76 @@ public class Artemis extends NPC{
 
     public String check(Player player){
         String result="";
-
-        if(first && dialognumber==0){
-            result="Hey! Have you seen my dogs?/n.../nNo?/nOk...";
-        }
         
-        
-        for(int q : quests){
-            for(int qh: QuestHandler.active_index){
-                if(q==qh){
-                    if(first && dialognumber==0){
-                        result=before.get(dialognumber);
-                        first=false;
-                        return result;
+        for(int i=0;i<QuestHandler.states.length;i++){
+                if(QuestHandler.states[i]==QuestHandler.ACTIVE){
+                    if(i<2){
+                        result="Hey! Have you seen my dogs?/n.../nNo?/nOk...";
                     }
-                    else if(first && dialognumber>0){
-                        result=before.get(dialognumber);
-                        first=false;
-                        player.collect(new WoodItem(1,1));
-                        player.collect(new WoodItem(1,1));
-                        return result;
-                    }
-                    else{
-                        if(qh==2){
-                            QuestHandler.active_index.remove(2);
-                            QuestHandler.active_index.add(4);
-                            QuestHandler.update();
+                    else if(i==2){
+                        QuestHandler.states[2]=QuestHandler.COMPLETED;
+                        QuestHandler.states[4]=QuestHandler.ACTIVE;
+                        if(first && dialognumber>0){
+                            result=before.get(dialognumber);
+                            first=false;
+                            return result;
                         }
-                        else if(q==4){
-                            result=during.get(dialognumber);
-                            inventory=player.getInventory();
-                            for(int i=0; i<inventory.size();i++){
-                                if(inventory.get(i).getName().equals(QuestHandler.quests[qh].getItemname()) && inventory.get(i).getAmount()>=QuestHandler.quests[qh].getItemnumber()){
-                                    if(inventory.get(i).getAmount()==QuestHandler.quests[qh].getItemnumber()){ //it's showing still
-                                        player.discardItem(player.getInventory().get(i));
-                                    }
-                                    else{
-                                        inventory.get(i).setAmount(inventory.get(i).getAmount()-QuestHandler.quests[qh].getItemnumber());
-                                    }
-                                    result=after.get(dialognumber);
-                                    dialognumber++;
-                                    first=true;
-                                    if(dialognumber>1){
-                                        completed=true;
-                                    }
-                                    QuestHandler.active_index.remove(4);
-                                    QuestHandler.active_index.add(5);
-                                    QuestHandler.update();
-                                    return result;
+                    }
+                    else if(i==4){
+                        result=during.get(dialognumber);
+                        inventory=player.getInventory();
+                        for(int j=0; j<inventory.size();j++){
+                            if(inventory.get(j).getName().equals(QuestHandler.quests[i].getItemname()) && inventory.get(j).getAmount()>=QuestHandler.quests[i].getItemnumber()){
+                                if(inventory.get(j).getAmount()==QuestHandler.quests[i].getItemnumber()){ //it's showing still
+                                    player.discardItem(player.getInventory().get(j));
                                 }
+                                else{
+                                    inventory.get(j).setAmount(inventory.get(j).getAmount()-QuestHandler.quests[i].getItemnumber());
+                                }
+                                result=after.get(dialognumber);
+                                dialognumber++;
+                                first=true;
+                                if(dialognumber>1){
+                                    completed=true;
+                                }
+                                QuestHandler.states[4]=QuestHandler.COMPLETED;
+                                QuestHandler.states[5]=QuestHandler.ACTIVE;
+                                return result;
                             }
                         }
+                    }
+                    else if(i==5){
+                        result=during.get(dialognumber);
+                        inventory=player.getInventory();
+                        for(int j=0; j<inventory.size();j++){
+                            if(inventory.get(j).getName().equals(QuestHandler.quests[i].getItemname()) && inventory.get(j).getAmount()>=QuestHandler.quests[i].getItemnumber()){
+                                if(inventory.get(j).getAmount()==QuestHandler.quests[i].getItemnumber()){ //it's showing still
+                                    player.discardItem(player.getInventory().get(j));
+                                }
+                                else{
+                                    inventory.get(j).setAmount(inventory.get(j).getAmount()-QuestHandler.quests[i].getItemnumber());
+                                }
+                                result=after.get(dialognumber);
+                                dialognumber++;
+                                first=true;
+                                if(dialognumber>1){
+                                    completed=true;
+                                }
+                                QuestHandler.states[5]=QuestHandler.COMPLETED;
+                                QuestHandler.states[6]=QuestHandler.ACTIVE;
+                                return result;
+                            }
+                        }
+                    }
+                    else{
+                        result=after.get(dialognumber);
+                    }
+                    first=false;
+                
                 }
-                first=false;
-            }
-            }
         }
         return result;
+                  
     }
 
 

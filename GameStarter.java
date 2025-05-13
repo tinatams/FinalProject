@@ -122,25 +122,19 @@ public class GameStarter{
                 try {
                     Player clientPlayer = frame.getSelected();
                     MapHandler mapH = frame.getMapHandler();
-                    String quest="";
-                    for(int i=0; i<QuestHandler.active_index.size();i++){
-                        quest=quest+QuestHandler.active_index.get(i);
-                        if(i!=QuestHandler.active_index.size()-1){
-                            quest=quest+",";
-                            System.out.println(quest);
-                        }
-                    }
+                    QuestHandler questH=frame.getQuestH();
+                    
                     clientData = String.format("Players|%d,%d,%d,%s,%d,%d,%s\n", clientNumber, clientPlayer.getWorldX(), clientPlayer.getWorldY(), clientPlayer.getSkin(), clientPlayer.getDirection(), clientPlayer.getVer(), frame.getMap());
                     clientData += String.format("Labyrinth|%d,%s\n",clientNumber, mapH.getVersion());
                     if (GameFrame.gameState == GameFrame.HERMES_STATE){
                         Hermes hermes = (Hermes) mapH.getNPC(Hermes.name);
                         clientData += String.format("Hermes|%d,%s,%s\n",clientNumber, hermes.getAction(), hermes.getItemString());
                     }
-                        clientData += String.format("Quest|%d,%s\n", clientNumber, quest);
+                        clientData += String.format("Quest|%d,%s\n", clientNumber, questH.gatherData());
                     // System.out.println(clientData);
                     dataOut.writeUTF(clientData);
                     try {
-                        Thread.sleep(10);
+                        Thread.sleep(5);
                     } catch (InterruptedException ex) {
                     }
                 } catch (IOException ex) {
@@ -171,21 +165,14 @@ public class GameStarter{
                                 Hermes hermes = (Hermes) frame.getMapHandler().getNPC(Hermes.name);
                                 if (hermes != null) hermes.recieveData(compile(data));
                             }
-                            else if(data[0].equals("Quest")){
-                                String[] quest= data[1].split(",");
-                                if (quest!=null) {
+                            else if(data[0].equals("Quest")){    
+                                if (data.length>=2) {
+                                    String[] quest= data[1].split(",");
                                     try {
-                                        QuestHandler.active_index.removeAll(QuestHandler.active_index);
-                                        for(int i=0;i<quest.length;i++){
-                                            if(i!=0){
-                                                QuestHandler.active_index.add(Integer.parseInt(quest[i]));
-                                            }
-                                        }
-                                        if(QuestHandler.active_index.size()==0){
-                                            QuestHandler.active_index.add(0);
+                                        for(int i=0;i<quest.length-1;i++){
+                                            QuestHandler.states[i]=Integer.parseInt(quest[i+1]);
                                         }
 
-                                        QuestHandler.update();
                                     } catch (NumberFormatException e) {
                                         System.out.println("Bad quest data from server: " + data[1]);
                                     }

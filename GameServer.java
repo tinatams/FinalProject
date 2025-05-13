@@ -8,7 +8,7 @@ public class GameServer{
     private ArrayList<ClientRunnable> clients;
     private int clientNum = 0;
     private String serverData,hasHermes, hermesLastInv;
-    private String questLast;
+    private String latestQuest="1,0,0,0,0,0";
     private boolean canSwitch, newInteraction;
 
     public GameServer(){
@@ -188,38 +188,43 @@ public class GameServer{
 
         //Quest Data
         
-        tempString+="Quest|";
-        // String finalQuest="-1";
-        // String actives="0";
-        // String[] sep = questData[0].split(",");
-        // for(String qData: questData){
-        //     System.out.println(qData);
-        //     if(qData!=null){
-                
-        //         int comp = sep[1]);
-        //         int act = Integer.parseInt(sep[2]);
-        //         // System.out.println("WAHH");
-        //         if (comp > mostrecentcomp || (comp == mostrecentcomp && act > mostrecentact)) {
-        //             System.out.println(comp);
-        //             mostrecentcomp = comp;
-        //             mostrecentact = act;
-        //         }
-        
-        //     }
-        // }
-        // if(questData[1]!=null){
-        //     actives=questData[1];
-        // }
-        // for(int i=0; i<sep.length;i++){
-        //     if(i!=sep.length-1){
-        //        finalQuest=finalQuest+",";
-        //     }
-        //      finalQuest=finalQuest+sep[i];
+        tempString+="Quest|null,";
+        if(questData[0]!=null){
+            
+         System.out.println(questData[0]);
+            String[]quests=questData[0].split(",");
+            int sumcurrent=0;
+            int sumpast=0;
+            for(int i=1;i<quests.length;i++){
+                sumcurrent+=Integer.parseInt(quests[i]);
+            }
+            String[]pastquests=latestQuest.split(",");
+            for(int i=1;i<pastquests.length;i++){
+                sumpast+=Integer.parseInt(pastquests[i]);
+            }
 
-        // }
-        
-        tempString += questData[0];
+            if(sumcurrent>sumpast){
+                System.out.println("RECENT");
+                for(int i=1;i<quests.length;i++){
+                    tempString+=quests[i];
+                    if(i!=quests.length-1){
+                        tempString+=",";
+                    }
+                }      
+            }
+            else{
+                System.out.println("PAST");
+                for(int i=1;i<pastquests.length;i++){
+                    tempString+=pastquests[i];
+                    if(i!=pastquests.length-1){
+                        tempString+=",";
+                    }
+                }
+            }
+        }
 
+        
+        
         serverData = tempString;
         //System.out.println(newInteraction);
         System.out.println(serverData);

@@ -1,12 +1,11 @@
 
-import java.util.*;
 
 public class QuestHandler{
-    // public static ArrayList<Quest> active= new ArrayList<Quest>();
-    public static ArrayList<Integer> active_index= new ArrayList<Integer>();
-    public static Quest[] quests= new Quest[20];
-    // public static int comp=0;//number of completed quests
-    // public static int act=1;//number of active quests
+    public static int[] states= new int[6];
+    public static Quest[] quests= new Quest[6];
+    public static int BEFORE_ASSIGNED=0;
+    public static int ACTIVE=1;
+    public static int COMPLETED=2;
 
     public QuestHandler() {
         quests[0]=new Quest(0, "Talk to Apollo","Starter Quest",null,0);
@@ -15,19 +14,28 @@ public class QuestHandler{
         quests[3]=new Quest(3, "Speak to Hephaestus","Ask him what is needed to build a boat.",null,0);
         quests[4]=new Quest(4, "Get string!","It can be found around the island","ORE",2);
         quests[5]=new Quest(5, "Find my Dogs!","The dogs can be captured with the bone","WOOD",2);
-        active_index.add(0);
-        
+
+        states[0]=ACTIVE;
+        states[1]=BEFORE_ASSIGNED;
+        states[2]=BEFORE_ASSIGNED;
+        states[3]=BEFORE_ASSIGNED;
+        states[4]=BEFORE_ASSIGNED;
+        states[5]=BEFORE_ASSIGNED;
         // update();
 
     }
-    public static void update(){
-        // active.removeAll(active);
-        // System.out.println(active_index.size());
-        // for(int i=0;i<active_index.size();i++){
-        //     // System.out.println(quests[active_index.get(i)].getQuestno());
-        //     active.add(quests[active_index.get(i)]);
-        // }
-        
+
+    public String gatherData(){
+        String result="";
+        for(int i=0; i<states.length;i++){
+            result=result+Integer.toString(states[i]);
+            if(i!=states.length-1){
+                result=result+",";
+            }
+            
+        }
+        // System.out.println(result);
+        return result;
     }
    
    

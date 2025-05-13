@@ -42,7 +42,9 @@ public class Athena extends NPC{
                 super.setDialogues("Please stay steadfast! Our plan will work.".split("/n"));
             }
             else{
-                super.setDialogues(check(player).split("/n"));
+                String result=check(player);
+                super.setDialogues(result.split("/n"));
+                System.out.println(result);
             }
         }
         
@@ -54,55 +56,67 @@ public class Athena extends NPC{
 
     public String check(Player player){
         
-        System.out.println(dialognumber);
         String result="";
-
-        if(first && dialognumber==0){
-            result="Hello Mortal! I am the goddess Athena./n Do you need something?/n .../nNo?/nI apologize but I'm a bit busy right now";
-        }
         
-        for(int q : quests){
-            for(int qh: QuestHandler.active_index){
-                if(q==qh){
-                    if(first && dialognumber>0){
-                        result=before.get(dialognumber-1);
-                        first=false;
+        for(int i=0;i<QuestHandler.states.length;i++){
+            System.out.println("HIII");
+                if(QuestHandler.states[i]==QuestHandler.ACTIVE){
+                    System.out.println(i);
+                    if(i==0){
+                        result="Hello Mortal! I am the goddess Athena./n Do you need something?/n .../nNo?/nI apologize but I'm a bit busy right now";
                         return result;
                     }
-                    else{
-                        if(qh==1){
-                            result=during.get(dialognumber);
-                            inventory=player.getInventory();
-                            for(int i=0; i<inventory.size();i++){
-                                if(inventory.get(i).getName().equals(QuestHandler.quests[qh].getItemname()) && inventory.get(i).getAmount()>=QuestHandler.quests[qh].getItemnumber()){
-                                    if(inventory.get(i).getAmount()==QuestHandler.quests[qh].getItemnumber()){ //it's showing still
-                                        player.discardItem(player.getInventory().get(i));
-                                    }
-                                    else{
-                                        inventory.get(i).setAmount(inventory.get(i).getAmount()-QuestHandler.quests[qh].getItemnumber());
-                                    }
-                                    result=after.get(dialognumber);
-                                    dialognumber++;
-                                    first=true;
-                                    if(dialognumber>1){
-                                        completed=true;
-                                    }
-                                    System.out.println("HIII Its here");
-                                    QuestHandler.active_index.remove(0);
-                                    QuestHandler.active_index.add(2);
-                                    QuestHandler.active_index.add(3);
-                                    System.out.println("HIII It added"+QuestHandler.active_index.get(0));
-                                    System.out.println("HIII It added"+QuestHandler.active_index.get(1));
-                                    QuestHandler.update();
-                                    return result;
+                    else if(i==1){
+                        System.out.println("ITs her?");
+                        result=during.get(dialognumber);
+                        inventory=player.getInventory();
+                        for(int j=0; j<inventory.size();j++){
+                            if(inventory.get(j).getName().equals(QuestHandler.quests[i].getItemname()) && inventory.get(j).getAmount()>=QuestHandler.quests[i].getItemnumber()){
+                                System.out.println("Found");
+                                if(inventory.get(j).getAmount()==QuestHandler.quests[i].getItemnumber()){ //it's showing still
+                                    player.discardItem(player.getInventory().get(j));
                                 }
+                                else{
+                                    inventory.get(j).setAmount(inventory.get(j).getAmount()-QuestHandler.quests[i].getItemnumber());
+                                }
+                                result=after.get(dialognumber);
+                                dialognumber++;
+                                first=true;
+                                if(dialognumber>1){
+                                    completed=true;
+                                }
+
+                                QuestHandler.states[1]=QuestHandler.COMPLETED;
+                                QuestHandler.states[2]=QuestHandler.ACTIVE;
+                                QuestHandler.states[3]=QuestHandler.ACTIVE;
+                                
+                                System.out.println("IT SWITCHED");
+                                return result;
                             }
                         }
                     }
+
+                    else if(i==2 || i==3){
+                        if(first && dialognumber>0){
+                            result=before.get(dialognumber-1);
+                            System.out.println(i);
+                            first=false;
+                        }
+                        else{
+                            result=during.get(dialognumber);
+                            System.out.println(i);
+                        }
+                        return result;
+                    }
+                    else{
+                        result=after.get(dialognumber);
+                        first=true;
+                        return result;
+                    }
+                }
+
                 first=false;
             }
-            }
-        }
         return result;
     }
 

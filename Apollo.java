@@ -46,24 +46,24 @@ public class Apollo extends NPC{
     public String check(Player player){
         String result="";
 
-            for(int qh: QuestHandler.active_index){
-                if(qh==0){
-                    result=before.get(dialognumber);
-                    player.collect(new ProphecyItem());
-                    QuestHandler.active_index.remove(0);
-                    QuestHandler.active_index.add(1);
-                    System.out.print(QuestHandler.active_index);
-                    QuestHandler.update();
-                    break;
-                }
-                else if(qh==1){
-                    result=during.get(dialognumber);
-                    break;
-                }
-                else{
-                    result=after.get(dialognumber);
-                    break;
-                }
+            for(int i=0;i<QuestHandler.states.length;i++){
+                if(QuestHandler.states[i]==QuestHandler.ACTIVE){
+                    if(i==0){
+                        result=before.get(dialognumber);
+                        player.collect(new ProphecyItem());
+                        QuestHandler.states[0]=QuestHandler.COMPLETED;
+                        QuestHandler.states[1]=QuestHandler.ACTIVE;
+                        break;
+                    }
+                    else if(i==1){
+                        result=during.get(dialognumber);
+                        break;
+                    }
+                    else{
+                        result=after.get(dialognumber);
+                        break;
+                    }
+                    }
             }
         return result;
         }

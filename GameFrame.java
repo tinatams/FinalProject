@@ -132,4 +132,8 @@ public class GameFrame{
     public SoundHandler getSoundHandler() {
         return soundHandler;
     }
+
+    public QuestHandler getQuestH() {
+        return questH;
+    }
 }
