@@ -67,6 +67,10 @@ public class KeyHandler implements KeyListener{
                     currentNPC.setDialogNumber(currentNPC.getDialogNumber()+1);
                 }
             }
+
+            else if (GameFrame.gameState == GameFrame.FISHING_STATE){
+                frame.getFishy().catchFish();
+            }
         }
 
         //INVENTORY KEY

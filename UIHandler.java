@@ -18,6 +18,7 @@ public class UIHandler{
     private MapHandler mapHandler;
 
     private UIMiniMap minMap;
+    private FishMiniGame fishy;
 
     //UI COMPONENTS;
     private InventoryCellUI[] inventoryCellsPlayer, inventoryCellsHermes;
@@ -31,6 +32,7 @@ public class UIHandler{
         mapHandler = frame.getMapHandler();
 
         minMap = new UIMiniMap(0, 0, frame);
+        fishy = frame.getFishy();
 
         setUpUIComponents();
     }
@@ -66,6 +68,9 @@ public class UIHandler{
                 //g2d.drawImage(hermesHeader, 13*GameFrame.SCALED - GameFrame.SCALER, 2*GameFrame.SCALED -3*GameFrame.SCALER, 6*GameFrame.SCALED, 2*GameFrame.SCALED, null);   
 
                 hermesSendButton.draw(g2d);
+                break;
+            case GameFrame.FISHING_STATE:
+                fishy.draw(g2d);
                 break;
             default:
                 if (selectedPlayer.getFrame().getMapHandler().getCurrentMap() == MapHandler.ASSIST1) minMap.draw(g2d);

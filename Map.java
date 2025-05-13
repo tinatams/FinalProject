@@ -147,10 +147,12 @@ public class Map{
                     int x = Integer.parseInt(mapData[1]);
                     int y = Integer.parseInt(mapData[2]);
 
-                    if (!type.equals("KEY")){
+                    if (!type.equals("KEY") && !type.equals(FishArea.ITEMNAME)){
                         interacts.add(eg.newInteractable(type, x, y));
-                    } else {
-                        interacts.add(new KeyItem(x, y, mapData[3]));
+                    } 
+                    else {
+                        if (type.equals("KEY")) interacts.add(new KeyItem(x, y, mapData[3]));
+                        else if (type.equals(FishArea.ITEMNAME)) interacts.add(new FishArea(x, y, Integer.parseInt(mapData[3]), Integer.parseInt(mapData[4])));
                     }
                 }
             }

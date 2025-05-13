@@ -26,10 +26,13 @@ public class SoundHandler{
     public static final int QUEST_DONE = 13;
     public static final int START_GAME = 14;
 
+    public static final int FISH_BITE = 15;
+    public static final int FISH_ESCAPE = 16;
+
     private Random rand = new Random();
 
     public SoundHandler(){
-        effectName =  new String[] {"walk", "hitRock", "stoneCrack1", "stoneCrack2", "shakeBush", "woodChop", "treeBreak", "dogSound1", "dogSound2", "stairs", "buttonClick", "inventoryIn", "inventoryOut", "questDone", "startGame"};
+        effectName =  new String[] {"walk", "hitRock", "stoneCrack1", "stoneCrack2", "shakeBush", "woodChop", "treeBreak", "dogSound1", "dogSound2", "stairs", "buttonClick", "inventoryIn", "inventoryOut", "questDone", "startGame", "fishBite", "byeFishy"};
     }
 
     private Clip getClip(String name){
