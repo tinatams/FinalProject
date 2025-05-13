@@ -21,7 +21,6 @@ public class FishMiniGame {
     public void draw(Graphics2D g2d){
 
         drawTimer(g2d);
-
         if (version != -1){
             if (version >= 0 && version <= 15){
                 System.out.println(version);

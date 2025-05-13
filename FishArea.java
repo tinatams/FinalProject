@@ -2,14 +2,16 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 public class FishArea implements Interactable{
+    public static String ITEMNAME = "FISHAREA"; 
+
     private int worldX, worldY, width, height;
     private Rectangle bounds;
 
     public FishArea(int x, int y, int w, int h){
-        worldX = x;
-        worldY = y;
-        width = w;
-        height = h;
+        worldX = x * GameFrame.SCALED;
+        worldY = y * GameFrame.SCALED;
+        width = w * GameFrame.SCALED;
+        height = h * GameFrame.SCALED;
 
         bounds = new Rectangle(worldX, worldY, width, height);
     }
@@ -31,27 +33,27 @@ public class FishArea implements Interactable{
 
     @Override
     public int getWorldX() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return worldX;
     }
 
     @Override
     public int getWorldY() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return worldY;
     }
 
     @Override
     public int getSpriteW() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return width;
     }
 
     @Override
     public int getSpriteH() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return height;
     }
 
     @Override
     public Rectangle getHitBox() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return new Rectangle(-1,-1,0,0);
     }
     
 }
