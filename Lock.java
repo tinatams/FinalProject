@@ -2,8 +2,8 @@ public class Lock extends Teleporter{
     private String lockName;
     private boolean locked;
     
-    public Lock(int x, int y, int w, int h, int map, int newX, int newY, String n) {
-        super(x, y, w, h, map, newX, newY);
+    public Lock(int x, int y, int w, int h, int map, int newX, int newY, int direction, String n) {
+        super(x, y, w, h, map, newX, newY, direction);
         lockName = n;
         locked = true;
     }

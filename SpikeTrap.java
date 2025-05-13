@@ -17,7 +17,7 @@ public class SpikeTrap extends Teleporter{
     private static final int UP = 2;
 
     public SpikeTrap(int x, int y, int map, int newX, int newY) {
-        super(x, y, GameFrame.SCALED, GameFrame.SCALED, map, newX, newY);
+        super(x, y, GameFrame.SCALED, GameFrame.SCALED, map, newX, newY, -1); // direction doesnt matter
         activated = DOWN;
         scheduled = false;
         sprites = new BufferedImage[3];

@@ -7,10 +7,11 @@ public class Teleporter implements Collidable{
 
     private int worldX, worldY, width, height;
     private int putPlayerX, putPlayerY;
+    private int directionMove;
 
     private Rectangle hitBox;
     
-    public Teleporter(int x, int y, int w, int h, int map, int newX, int newY){
+    public Teleporter(int x, int y, int w, int h, int map, int newX, int newY, int direction){
         teleportTo = map;
         worldX = x;
         worldY = y;
@@ -19,6 +20,8 @@ public class Teleporter implements Collidable{
 
         putPlayerX = newX;
         putPlayerY = newY;
+
+        directionMove = direction;
 
         hitBox = new Rectangle(worldX, worldY, width, height);
     }
@@ -62,5 +65,9 @@ public class Teleporter implements Collidable{
     @Override
     public Rectangle getHitBox() {
         return hitBox;
+    }
+
+    public int getDirection(){
+        return directionMove;
     }
 }
