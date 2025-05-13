@@ -26,7 +26,9 @@ public class EntityGenerator{
             return new Ore(x,y);
         }
 
-
+        // if anything else needs to be added/ drawn onto the map (eg key or boneitem on the floor etc)
+        // could be useful for particles yuh yuh
+        
         return null;
     }
 }
