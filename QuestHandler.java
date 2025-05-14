@@ -1,8 +1,8 @@
 
 
 public class QuestHandler{
-    public static int[] states= new int[8];
-    public static Quest[] quests= new Quest[8];
+    public int[] states= new int[15];
+    public Quest[] quests= new Quest[15];
     public static int BEFORE_ASSIGNED=0;
     public static int ACTIVE=1;
     public static int COMPLETED=2;
@@ -14,8 +14,17 @@ public class QuestHandler{
         quests[3]=new Quest(3, "Speak to Hephaestus","Ask him what is needed to build a boat.",null,0);
         quests[4]=new Quest(4, "Get string!","It can be found around the island","WOOD",2);
         quests[5]=new Quest(5, "Find my Dogs!","The dogs can be captured with the bone","WOOD",2);
-        quests[6]=new Quest(6, "Collect Iron","Get 5 iron from the mines","IRON",5);
-        quests[7]=new Quest(7, "Collect Iron","Get 5 iron from the mines","IRON",5);
+        quests[6]=new Quest(6, "Collect Iron","Get 3 iron from the mines","IRON",3);
+        quests[7]=new Quest(7, "Talk to Poseidon","Find the statue",null,0);
+        quests[8]=new Quest(8, "Sacrfice to Poseidon","Get 3 fish to sacrifice","FISH",3);
+        quests[9]=new Quest(9, "Sacrifice to Demeter","Talk to the statue of demeter to give the meat","MEAT",1);
+        quests[10]=new Quest(10, "Collect Wood","Get 5 wood and give to Hepheastus","WOOD",5);
+        quests[11]=new Quest(11, "Encounter the Minotaur","Find the entrance to the labyrinth",null,0);
+        quests[12]=new Quest(12, "Talk to Dionysus","Find a way to defeat the minotaur",null,0);
+        quests[13]=new Quest(13, "Collect Grapes","Get 3 berries to make wine","GRAPES",3);
+        quests[14]=new Quest(14, "Enter the Labyrinth","Knock the Minotaur out","WINE",1);
+        quests[15]=new Quest(15, "Get the key","Finish the labarynth (with help from and assist room) then talk to Hepheastus",null,0);
+        quests[16]=new Quest(16, "Give the Wings","Hand over the wings to Hephaestus","WING",1);
 
         states[0]=ACTIVE;
         states[1]=BEFORE_ASSIGNED;
@@ -25,6 +34,15 @@ public class QuestHandler{
         states[5]=BEFORE_ASSIGNED;
         states[6]=BEFORE_ASSIGNED;
         states[7]=BEFORE_ASSIGNED;
+        states[8]=BEFORE_ASSIGNED;
+        states[9]=BEFORE_ASSIGNED;
+        states[10]=BEFORE_ASSIGNED;
+        states[11]=BEFORE_ASSIGNED;
+        states[12]=BEFORE_ASSIGNED;
+        states[13]=BEFORE_ASSIGNED;
+        states[14]=BEFORE_ASSIGNED;
+        states[15]=BEFORE_ASSIGNED;
+        states[16]=BEFORE_ASSIGNED;
         // update();
 
     }
@@ -32,13 +50,14 @@ public class QuestHandler{
     public String gatherData(){
         String result="";
         for(int i=0; i<states.length;i++){
+
             result=result+Integer.toString(states[i]);
             if(i!=states.length-1){
                 result=result+",";
             }
             
         }
-        // System.out.println(result);
+        System.out.println(result);
         return result;
     }
    

@@ -190,44 +190,45 @@ public class GameServer{
 
         //Quest Data
         
-        tempString+="Quest|null,";
-        String result="";
-        if(questData[0]!=null){
-            
-         System.out.println(questData[0]);
-            String[]quests=questData[0].split(",");
-            int sumcurrent=0;
-            int sumpast=0;
-            for(int i=1;i<quests.length;i++){
-                sumcurrent+=Integer.parseInt(quests[i]);
-            }
-            String[]pastquests=latestQuest.split(",");
-            for(int i=1;i<pastquests.length;i++){
-                sumpast+=Integer.parseInt(pastquests[i]);
-            }
-            
-
-            if(sumcurrent>sumpast){
-                System.out.println("RECENT");
-                for(int i=1;i<quests.length;i++){
-                    result+=quests[i];
-                    if(i!=quests.length-1){
-                        result+=",";
-                    }
-                }      
-            }
-            else{
-                System.out.println("PAST");
-                for(int i=1;i<pastquests.length;i++){
-                    result+=pastquests[i];
-                    if(i!=pastquests.length-1){
-                        result+=",";
-                    }
+        tempString += "Quest|null,";
+        String result = "";
+        for (String qData : questData) {
+            if (qData != null) {
+                String[] quests = qData.split(",");
+                int sumcurrent = 0;
+                for (int i = 1; i < quests.length; i++) {
+                    sumcurrent += Integer.parseInt(quests[i]);
                 }
-            }
-        }        
-        latestQuest=result;
-        tempString+=result;
+
+                String[] pastquests = latestQuest.split(",");
+                int sumpast = 0;
+                for (int i = 1; i < pastquests.length; i++) {
+                    sumpast += Integer.parseInt(pastquests[i]);
+                }
+        
+                if (sumcurrent > sumpast) {
+                    result = "";
+                    for (int i = 1; i < quests.length; i++) {
+                        result += quests[i];
+                        if (i != quests.length - 1) {
+                            result += ",";
+                        }
+                    }
+                latestQuest = result;
+                }
+                else{
+                    result = "";
+                    for (int i = 1; i < pastquests.length; i++) {
+                        result += pastquests[i];
+                        if (i != pastquests.length - 1) {
+                            result += ",";
+                        }
+                    }
+
+                }
+        }
+    }
+        tempString += result;
         serverData = tempString;
         //System.out.println(newInteraction);
         System.out.println(serverData);
@@ -308,7 +309,7 @@ public class GameServer{
             while (true) { 
                 compileServerData();
                 try {
-                    Thread.sleep(5);
+                    Thread.sleep(20);
                 } catch (InterruptedException ex) {
                 }
                 sendOutData();

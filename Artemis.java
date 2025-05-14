@@ -9,7 +9,7 @@ public class Artemis extends NPC{
     private int dialognumber=0;
     private boolean first=true;
     private boolean completed=false;
-    
+     private QuestHandler qh=new QuestHandler();
     
 
     public Artemis(int x, int y) {
@@ -41,10 +41,11 @@ public class Artemis extends NPC{
     public void interact(Player player){
         if(super.getDialogNumber()==0){
             if(completed){
-                super.setDialogues("Please stay steadfast! Our plan will work.".split("/n"));
+                super.setDialogues("Hey! Thanks for finding my dogs!".split("/n"));
             }
             else{
                 super.setDialogues(check(player).split("/n"));
+                player.getFrame().setQuestH(qh);
             }
         }
         
@@ -56,16 +57,16 @@ public class Artemis extends NPC{
 
     public String check(Player player){
         String result="";
-        
-        for(int i=0;i<QuestHandler.states.length;i++){
-                if(QuestHandler.states[i]==QuestHandler.ACTIVE){
+        qh=player.getFrame().getQuestH();
+        for(int i=0;i<qh.states.length;i++){
+                if(qh.states[i]==QuestHandler.ACTIVE){
                     if(i<2){
                         result="Hey! Have you seen my dogs?/n.../nNo?/nOk...";
                         return result;
                     }
                     else if(i==2){
-                        QuestHandler.states[2]=QuestHandler.COMPLETED;
-                        QuestHandler.states[4]=QuestHandler.ACTIVE;
+                        qh.states[2]=qh.COMPLETED;
+                        qh.states[4]=qh.ACTIVE;
                         result=before.get(0);
                         return result;
                     }
@@ -73,16 +74,16 @@ public class Artemis extends NPC{
                         result=during.get(0);
                         inventory=player.getInventory();
                         for(int j=0; j<inventory.size();j++){
-                            if(inventory.get(j).getName().equals(QuestHandler.quests[i].getItemname()) && inventory.get(j).getAmount()>=QuestHandler.quests[i].getItemnumber()){
-                                if(inventory.get(j).getAmount()==QuestHandler.quests[i].getItemnumber()){ //it's showing still
+                            if(inventory.get(j).getName().equals(qh.quests[i].getItemname()) && inventory.get(j).getAmount()>=qh.quests[i].getItemnumber()){
+                                if(inventory.get(j).getAmount()==qh.quests[i].getItemnumber()){ //it's showing still
                                     player.discardItem(player.getInventory().get(j));
                                 }
                                 else{
-                                    inventory.get(j).setAmount(inventory.get(j).getAmount()-QuestHandler.quests[i].getItemnumber());
+                                    inventory.get(j).setAmount(inventory.get(j).getAmount()-qh.quests[i].getItemnumber());
                                 }
                                 result=after.get(0);
-                                QuestHandler.states[4]=QuestHandler.COMPLETED;
-                                QuestHandler.states[5]=QuestHandler.ACTIVE;
+                                qh.states[4]=QuestHandler.COMPLETED;
+                                qh.states[5]=QuestHandler.ACTIVE;
                                 return result;
                             }
                         }
@@ -97,17 +98,20 @@ public class Artemis extends NPC{
                         result=during.get(1);
                         inventory=player.getInventory();
                         for(int j=0; j<inventory.size();j++){
-                            if(inventory.get(j).getName().equals(QuestHandler.quests[i].getItemname()) && inventory.get(j).getAmount()>=QuestHandler.quests[i].getItemnumber()){
-                                if(inventory.get(j).getAmount()==QuestHandler.quests[i].getItemnumber()){ //it's showing still
+                            if(inventory.get(j).getName().equals(qh.quests[i].getItemname()) && inventory.get(j).getAmount()>=qh.quests[i].getItemnumber()){
+                                if(inventory.get(j).getAmount()==qh.quests[i].getItemnumber()){ //it's showing still
                                     player.discardItem(player.getInventory().get(j));
                                 }
                                 else{
-                                    inventory.get(j).setAmount(inventory.get(j).getAmount()-QuestHandler.quests[i].getItemnumber());
+                                    inventory.get(j).setAmount(inventory.get(j).getAmount()-qh.quests[i].getItemnumber());
                                 }
                                 result=after.get(1);
                                 completed=true;
-                                QuestHandler.states[5]=QuestHandler.COMPLETED;
-                                QuestHandler.states[6]=QuestHandler.ACTIVE;
+                                qh.states[5]=QuestHandler.COMPLETED;
+                                qh.states[6]=QuestHandler.ACTIVE;
+                                player.discardItem(player.getInventory().get(j));
+                                player.collect(new MeatItem());
+                                completed=true;
                                 return result;
                             }
                         }

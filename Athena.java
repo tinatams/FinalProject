@@ -8,7 +8,8 @@ public class Athena extends NPC{
     private int x,y;
     private boolean completed=false;
     private boolean first=true;
-    
+    private boolean failsafe=false;
+    private QuestHandler qh=new QuestHandler();
     
 
     public Athena(int x, int y) {
@@ -42,6 +43,7 @@ public class Athena extends NPC{
                 String result=check(player);
                 super.setDialogues(result.split("/n"));
                 System.out.println(result);
+                player.getFrame().setQuestH(qh);
             }
         }
         
@@ -54,10 +56,10 @@ public class Athena extends NPC{
     public String check(Player player){
         
         String result="";
-        
-        for(int i=0;i<QuestHandler.states.length;i++){
+        qh=player.getFrame().getQuestH();
+        for(int i=0;i<qh.states.length;i++){
             System.out.println("HIII");
-                if(QuestHandler.states[i]==QuestHandler.ACTIVE){
+                if(qh.states[i]==qh.ACTIVE){
                     System.out.println(i);
                     if(i==0){
                         result="Hello Mortal! I am the goddess Athena./n Do you need something?/n .../nNo?/nI apologize but I'm a bit busy right now";
@@ -68,22 +70,29 @@ public class Athena extends NPC{
                         result=during.get(0);
                         inventory=player.getInventory();
                         for(int j=0; j<inventory.size();j++){
-                            if(inventory.get(j).getName().equals(QuestHandler.quests[i].getItemname()) && inventory.get(j).getAmount()>=QuestHandler.quests[i].getItemnumber()){
+                            if(inventory.get(j).getName().equals(qh.quests[i].getItemname()) && inventory.get(j).getAmount()>=qh.quests[i].getItemnumber()){
                                 System.out.println("Found");
-                                if(inventory.get(j).getAmount()==QuestHandler.quests[i].getItemnumber()){ //it's showing still
+                                failsafe=true;
+                                if(inventory.get(j).getAmount()==qh.quests[i].getItemnumber()){ //it's showing still
                                     player.discardItem(player.getInventory().get(j));
                                 }
                                 else{
-                                    inventory.get(j).setAmount(inventory.get(j).getAmount()-QuestHandler.quests[i].getItemnumber());
+                                    inventory.get(j).setAmount(inventory.get(j).getAmount()-qh.quests[i].getItemnumber());
                                 }
                                 result=after.get(0);
 
-                                QuestHandler.states[1]=QuestHandler.COMPLETED;
-                                QuestHandler.states[2]=QuestHandler.ACTIVE;
-                                QuestHandler.states[3]=QuestHandler.ACTIVE;
+                                qh.states[1]=QuestHandler.COMPLETED;
+                                qh.states[2]=QuestHandler.ACTIVE;
+                                qh.states[3]=QuestHandler.ACTIVE;
                                 System.out.println("IT SWITCHED");
                                 return result;
                             }
+                        }
+                        if(failsafe==true){
+                            qh.states[1]=QuestHandler.COMPLETED;
+                            qh.states[2]=QuestHandler.ACTIVE;
+                            qh.states[3]=QuestHandler.ACTIVE;
+                            result=after.get(0);
                         }
                     }
 

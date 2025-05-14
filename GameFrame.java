@@ -144,4 +144,8 @@ public class GameFrame{
     public FishMiniGame getFishy() {
         return fishy;
     }
+
+    public void setQuestH(QuestHandler questH) {
+        this.questH = questH;
+    }
 }

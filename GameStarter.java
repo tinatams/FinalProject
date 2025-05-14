@@ -5,6 +5,7 @@ public class GameStarter{
     private GameFrame frame;
     private GameMenu menuFrame;
     private Socket theSocket;
+    public int[] states=new int[15];
 
     private DataInputStream dataIn;
     private DataOutputStream dataOut;
@@ -130,7 +131,7 @@ public class GameStarter{
                         Hermes hermes = (Hermes) mapH.getNPC(Hermes.name);
                         clientData += String.format("Hermes|%d,%s,%s\n",clientNumber, hermes.getAction(), hermes.getItemString());
                     }
-                        clientData += String.format("Quest|%d,%s\n", clientNumber, questH.gatherData());
+                        clientData += String.format("Quest|%d,%s\n", clientNumber, frame.getQuestH().gatherData());
                     // System.out.println(clientData);
                     dataOut.writeUTF(clientData);
                     try {
@@ -170,7 +171,7 @@ public class GameStarter{
                                     String[] quest= data[1].split(",");
                                     try {
                                         for(int i=0;i<quest.length-1;i++){
-                                            QuestHandler.states[i]=Integer.parseInt(quest[i+1]);
+                                            frame.getQuestH().states[i]=Integer.parseInt(quest[i+1]);
                                         }
 
                                     } catch (NumberFormatException e) {
