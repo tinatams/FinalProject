@@ -1,4 +1,4 @@
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Poseidon extends NPC{
@@ -9,14 +9,17 @@ public class Poseidon extends NPC{
     private int dialognumber=0;
     private boolean first=true;
     private boolean completed=false;
-     private QuestHandler qh=new QuestHandler();
+    private QuestHandler qh=new QuestHandler();
     
 
     public Poseidon(int x, int y) {
-        
         super("Poseidon",x, y);
         inventory = new ArrayList<SuperItem>();
         eg = new EntityGenerator();
+
+        super.hitBox = new Rectangle(x + 5 ,y + 15 ,2*spriteW , (2*spriteH)-5);
+        super.interactionBox = new Rectangle(worldX - GameFrame.SCALED/2 ,worldY - GameFrame.SCALED/2 , 2*spriteW + GameFrame.SCALED, 2*spriteH + GameFrame.SCALED);
+        
         before.add("Poseidon only accepts fish as sacrifice");
         during.add("Hint: The water nearby can be used to get fish");
         after.add("FISH SACRIFICED!~May you have safe passage!");
@@ -44,10 +47,8 @@ public class Poseidon extends NPC{
         }
         
         super.speak();
-        // }
-        
-
     }
+
 
     public String check(Player player){
         String result="";

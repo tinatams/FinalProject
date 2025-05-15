@@ -112,7 +112,6 @@ public class Player implements Collidable{
 
     public void draw(Graphics2D g){
         g.drawImage(sprites[direction][version], worldX, worldY, spriteW, spriteH, null);
-
         counter++; 
         if (counter > 15){
             if (version == 0) version = 1;

@@ -1,4 +1,4 @@
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Minotaur extends NPC{
@@ -17,6 +17,10 @@ public class Minotaur extends NPC{
         super("Minotaur",x, y);
         inventory = new ArrayList<SuperItem>();
         eg = new EntityGenerator();
+        
+        super.hitBox = new Rectangle(x + 5 ,y + 15 ,2*spriteW , (2*spriteH)-5);
+        super.interactionBox = new Rectangle(worldX - GameFrame.SCALED/2 ,worldY - GameFrame.SCALED/2 , 2*spriteW + GameFrame.SCALED, 2*spriteH + GameFrame.SCALED);
+
         before.add("*ROAR!*/nYou cannot defeat this beast!/nPerhaps you need to subdue it./nLook for the god of wine./nHe may be able to help you!");
         during.add("Hint: The god of wine might be~on the other island");
         after.add("*The Minotaur faints*/nHint: There is an assist room for the~labyrinth in island 1");

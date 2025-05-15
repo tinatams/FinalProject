@@ -5,22 +5,21 @@ import java.util.ArrayList;
 import javax.imageio.*;
 
 public abstract class NPC implements Interactable{ //should extend interactable
-    private int worldX, worldY;
-    private int spriteW, spriteH;
+    protected int worldX, worldY;
+    protected int spriteW, spriteH;
     
     private String skin, name;
-    private Rectangle hitBox,interactionBox;
-    private BufferedImage spriteSheet;
+    protected Rectangle hitBox,interactionBox;
     private BufferedImage sprite;
 
     private String[] dialogues= new String[20];
     private int dialognumber=0;
 
-    public ArrayList<Integer> quests= new ArrayList<Integer>();
+    protected ArrayList<Integer> quests= new ArrayList<Integer>();
 
-    public ArrayList<String> before= new ArrayList<String>();
-    public ArrayList<String> during= new ArrayList<String>();
-    public ArrayList<String> after= new ArrayList<String>();
+    protected ArrayList<String> before= new ArrayList<String>();
+    protected ArrayList<String> during= new ArrayList<String>();
+    protected ArrayList<String> after= new ArrayList<String>();
     
 
    
@@ -30,19 +29,13 @@ public abstract class NPC implements Interactable{ //should extend interactable
         worldY = y;
         spriteW = GameFrame.SCALED; 
         spriteH = GameFrame.SCALED;
-        if(name.equals("Poseidon") || name.equals("Demeter") || name.equals("Minotaur")){
-            hitBox = new Rectangle(worldX + 5 ,worldY + 15 ,2*spriteW , (2*spriteH)-5);
-            interactionBox = new Rectangle(worldX - GameFrame.SCALED/2 ,worldY - GameFrame.SCALED/2 , 2*spriteW + GameFrame.SCALED, 2*spriteH + GameFrame.SCALED);
-        }
-        else{
-            hitBox = new Rectangle(worldX + 10 ,worldY + 20 ,spriteW , spriteH-5);
-            interactionBox = new Rectangle(worldX - GameFrame.SCALED/2 ,worldY - GameFrame.SCALED/2 , spriteW + GameFrame.SCALED, spriteH + GameFrame.SCALED);
-        }
+        
+        hitBox = new Rectangle(worldX + 10 ,worldY + 20 ,spriteW , spriteH-5);
+        interactionBox = new Rectangle(worldX - GameFrame.SCALED/2 ,worldY - GameFrame.SCALED/2 , spriteW + GameFrame.SCALED, spriteH + GameFrame.SCALED);
     }
 
 
     public void draw(Graphics2D g2d, String skin){
-        //System.out.println("Drawing" + name);
         try{
             sprite = ImageIO.read(new File(String.format("./res/NPCs/%s.png",skin)));
 
@@ -50,8 +43,6 @@ public abstract class NPC implements Interactable{ //should extend interactable
         }
         if(name.equals("Poseidon") || name.equals("Demeter") || name.equals("Minotaur")){
             g2d.drawImage(sprite, worldX, worldY, 2*GameFrame.SCALED, 2*GameFrame.SCALED, null);
-            // g2d.setBackground(Color.black);
-            // g2d.fill(hitBox);
         }
         else{
             g2d.drawImage(sprite, worldX, worldY, GameFrame.SCALED, GameFrame.SCALED, null);
@@ -90,11 +81,11 @@ public abstract class NPC implements Interactable{ //should extend interactable
     }
     @Override
     public Rectangle getHitBox() {
-        return new Rectangle(worldX + 10 ,worldY + 20 ,spriteW , spriteH-5);
+        return hitBox;
     }
     @Override
     public Rectangle getInteractionBox() {
-        return new Rectangle(worldX - GameFrame.SCALED/2 ,worldY - GameFrame.SCALED/2 , spriteW + GameFrame.SCALED, spriteH + GameFrame.SCALED);
+        return interactionBox;
     }
 
 

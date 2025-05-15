@@ -1,4 +1,4 @@
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Demeter extends NPC{
@@ -9,7 +9,7 @@ public class Demeter extends NPC{
     private int dialognumber=0;
     private boolean first=true;
     private boolean completed=false;
-     private QuestHandler qh=new QuestHandler();
+    private QuestHandler qh=new QuestHandler();
     
 
     public Demeter(int x, int y) {
@@ -17,6 +17,10 @@ public class Demeter extends NPC{
         super("Demeter",x, y);
         inventory = new ArrayList<SuperItem>();
         eg = new EntityGenerator();
+        
+        super.hitBox = new Rectangle(x , y + 15 ,2*spriteW , (2*spriteH)-5);
+        super.interactionBox = new Rectangle(worldX - GameFrame.SCALED/2 ,worldY - GameFrame.SCALED/2 , 2*spriteW + GameFrame.SCALED, 2*spriteH + GameFrame.SCALED);
+
         before.add("Demeter only accepts meat as sacrifice");
         during.add("Hint: Artemis should be able to help!");
         after.add("SACRIFICED ACCEPTED!~Spring has come!~Let the world bloom!");
@@ -44,9 +48,6 @@ public class Demeter extends NPC{
         }
         
         super.speak();
-        // }
-        
-
     }
 
     public String check(Player player){
