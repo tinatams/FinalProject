@@ -163,7 +163,7 @@ public class GameStarter{
                                 MapHandler mapH = frame.getMapHandler();
                                 mapH.recieveData(dataType);
                             } else if (data[0].equals("Hermes")){
-                                Hermes hermes = (Hermes) frame.getMapHandler().getNPC(Hermes.name);
+                                Hermes hermes = frame.getMapHandler().getHermes();
                                 if (hermes != null) hermes.recieveData(compile(data));
                             }
                             else if(data[0].equals("Quest")){  

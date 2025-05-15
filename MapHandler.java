@@ -14,6 +14,7 @@ public class MapHandler{
     private BufferedImage[] decoTiles;
 
     private int currentMap;
+    private Hermes hermes;
 
     //BOTH PLAYERS
     public static final int SPAWN = 0;
@@ -67,6 +68,13 @@ public class MapHandler{
             if (mapObj != null){
                 mapObj.setUpMaps();
                 mapObj.loadMap();
+            }
+        }
+
+        for (NPC npc : maps[SPAWN].getNPCs()){
+            if (Hermes.name.equals(npc.getName())){
+                hermes = (Hermes) npc;
+                break;
             }
         }
         
@@ -344,6 +352,10 @@ public class MapHandler{
         }
 
         return null;
+    }
+
+    public Hermes getHermes(){
+        return hermes;
     }
 
     public BufferedImage[] getBaseTileset(){
