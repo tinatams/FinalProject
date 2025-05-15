@@ -21,6 +21,7 @@ public class FishArea implements Interactable{
     public void interact(Player player) {
         player.getFrame().getFishy().scheduleFish();
         GameFrame.gameState = GameFrame.FISHING_STATE;
+        player.getFrame().getSoundHandler().playEffect(SoundHandler.FISH_IN);
     }
 
     @Override
