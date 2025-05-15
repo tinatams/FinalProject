@@ -30,9 +30,14 @@ public abstract class NPC implements Interactable{ //should extend interactable
         worldY = y;
         spriteW = GameFrame.SCALED; 
         spriteH = GameFrame.SCALED;
-
-        hitBox = new Rectangle(worldX + 10 ,worldY + 20 ,spriteW , spriteH-5);
-        interactionBox = new Rectangle(worldX - GameFrame.SCALED/2 ,worldY - GameFrame.SCALED/2 , spriteW + GameFrame.SCALED, spriteH + GameFrame.SCALED);
+        if(name.equals("Poseidon") || name.equals("Demeter") || name.equals("Minotaur")){
+            hitBox = new Rectangle(worldX + 10 ,worldY + 20 ,2*spriteW , (2*spriteH)-5);
+        interactionBox = new Rectangle(worldX - GameFrame.SCALED/2 ,worldY - GameFrame.SCALED/2 , 2*spriteW + GameFrame.SCALED, 2*spriteH + GameFrame.SCALED);
+        }
+        else{
+            hitBox = new Rectangle(worldX + 10 ,worldY + 20 ,spriteW , spriteH-5);
+            interactionBox = new Rectangle(worldX - GameFrame.SCALED/2 ,worldY - GameFrame.SCALED/2 , spriteW + GameFrame.SCALED, spriteH + GameFrame.SCALED);
+        }
     }
 
 

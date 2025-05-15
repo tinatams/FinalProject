@@ -79,6 +79,7 @@ public class Poseidon extends NPC{
                                 qh.states[8]=QuestHandler.COMPLETED;
                                 qh.states[10]=QuestHandler.ACTIVE;
                                 completed=true;
+                                Hephaestus.first=true;
                                 return result;
                             }
                         }

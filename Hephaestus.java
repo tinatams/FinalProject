@@ -7,7 +7,7 @@ public class Hephaestus extends NPC{
     private EntityGenerator eg;
     private int x,y;
     private boolean completed=false;
-    public boolean first=true;
+    public static boolean first=true;
     private QuestHandler qh=new QuestHandler();
     
 

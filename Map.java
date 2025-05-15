@@ -193,6 +193,9 @@ public class Map{
                     else if(skin.equals("Hephaestus")){
                         NPCs.add(new Hephaestus(x,y));
                     }
+                    else if(skin.equals("Poseidon")){
+                        NPCs.add(new Poseidon(x,y));
+                    }
                     else{
                         NPCs.add(new Athena(x,y));
                     }

@@ -60,14 +60,16 @@ public class Artemis extends NPC{
         qh=player.getFrame().getQuestH();
         for(int i=0;i<qh.states.length;i++){
                 if(qh.states[i]==QuestHandler.ACTIVE){
-                    if(i<2){
+                    if(i==0 || i==1){
+                        System.out.println(i);
                         result="Hey! Have you seen my dogs?/n.../nNo?/nOk...";
                         return result;
                     }
                     else if(i==2){
+                        System.out.println(i);
+                        result=before.get(0);
                         qh.states[2]=qh.COMPLETED;
                         qh.states[4]=qh.ACTIVE;
-                        result=before.get(0);
                         return result;
                     }
                     else if(i==4){

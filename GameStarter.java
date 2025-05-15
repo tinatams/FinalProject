@@ -5,7 +5,7 @@ public class GameStarter{
     private GameFrame frame;
     private GameMenu menuFrame;
     private Socket theSocket;
-    public int[] states=new int[15];
+
 
     private DataInputStream dataIn;
     private DataOutputStream dataOut;
@@ -166,20 +166,11 @@ public class GameStarter{
                                 Hermes hermes = (Hermes) frame.getMapHandler().getNPC(Hermes.name);
                                 if (hermes != null) hermes.recieveData(compile(data));
                             }
-                            else if(data[0].equals("Quest")){    
+                            else if(data[0].equals("Quest")){  
                                 if (data.length>=2) {
-                                    String[] quest= data[1].split(",");
-                                    try {
-                                        for(int i=0;i<quest.length-1;i++){
-                                            frame.getQuestH().states[i]=Integer.parseInt(quest[i+1]);
-                                        }
-
-                                    } catch (NumberFormatException e) {
-                                        System.out.println("Bad quest data from server: " + data[1]);
-                                    }
-                                } else {
-                                    System.out.println("Skipping invalid quest data: " + data[1]);
+                                    frame.getQuestH().recieveData(data[1]);
                                 }
+                            
                             }
                         }
                     }

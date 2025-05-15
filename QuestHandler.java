@@ -1,8 +1,8 @@
 
 
 public class QuestHandler{
-    public int[] states= new int[15];
-    public Quest[] quests= new Quest[15];
+    public int[] states= new int[17];
+    public Quest[] quests= new Quest[17];
     public static int BEFORE_ASSIGNED=0;
     public static int ACTIVE=1;
     public static int COMPLETED=2;
@@ -26,10 +26,10 @@ public class QuestHandler{
         quests[15]=new Quest(15, "Get the key","Finish the labarynth (with help from and assist room) then talk to Hepheastus",null,0);
         quests[16]=new Quest(16, "Give the Wings","Hand over the wings to Hephaestus","WING",1);
 
-        states[0]=ACTIVE;
-        states[1]=BEFORE_ASSIGNED;
-        states[2]=BEFORE_ASSIGNED;
-        states[3]=BEFORE_ASSIGNED;
+        states[0]=COMPLETED;
+        states[1]=COMPLETED;
+        states[2]=ACTIVE;
+        states[3]=ACTIVE;
         states[4]=BEFORE_ASSIGNED;
         states[5]=BEFORE_ASSIGNED;
         states[6]=BEFORE_ASSIGNED;
@@ -57,8 +57,28 @@ public class QuestHandler{
             }
             
         }
-        System.out.println(result);
+        // System.out.println(result);
         return result;
+    }
+
+    public void recieveData(String data){
+        String[] quests = data.split(",");
+        int sumcurrent = 0;
+        for (int i = 1; i < quests.length; i++) {
+            sumcurrent += Integer.parseInt(quests[i]);
+        }
+
+        int sumpast = 0;
+        for (int i = 0; i < states.length; i++) {
+            sumpast += states[i];
+        }
+
+        if (sumcurrent > sumpast) {
+            for(int i=0;i<quests.length-1;i++){
+                states[i]=Integer.parseInt(quests[i+1]);
+            }
+            
+        }  
     }
    
    
