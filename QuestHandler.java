@@ -57,7 +57,7 @@ public class QuestHandler{
             }
             
         }
-        // System.out.println(result);
+        System.out.println(result);
         return result;
     }
 
@@ -73,7 +73,7 @@ public class QuestHandler{
             sumpast += states[i];
         }
 
-        if (sumcurrent > sumpast) {
+        if (sumcurrent >= sumpast) {
             for(int i=0;i<quests.length-1;i++){
                 states[i]=Integer.parseInt(quests[i+1]);
             }
