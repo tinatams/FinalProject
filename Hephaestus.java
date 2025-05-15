@@ -25,7 +25,7 @@ public class Hephaestus extends NPC{
         before.add("Nice work kid.~Get the other materials now/nYou need to give me the wood so I can~start building");
         during.add("You don't got any wood yet");
         after.add("Nice work kid.~I need one last thing");
-        before.add("It’s in Daedalus’s workshop on the other~island. He always keeps his workshop locked./nThe key is at the center of the labyrinth.~The entrance to the labyrinth should~be somewhere in these mines");
+        before.add("It’s in Daedalus’s workshop on the other~island. He always keeps his workshop locked/nThe key is at the center of the labyrinth.~The entrance to the labyrinth should~be somewhere in these mines/nHere take this to enter the labyrinth!");
         during.add("*cling* *clang*/nYou need to get the item first kid");
         after.add("Good Job kid. Give me a second then we can go");
 
@@ -106,6 +106,9 @@ public class Hephaestus extends NPC{
                         result=during.get(1);
                         return result;
                     }
+                    else if(i==9){
+                        result="Kid you're gonna have to wait first";
+                    }
                     else if(i==10){
                         if(first){
                             result=before.get(2);
@@ -120,6 +123,7 @@ public class Hephaestus extends NPC{
                                 }
                                 result=after.get(1);
                                 qh.states[10]=QuestHandler.COMPLETED;
+                                qh.states[11]=QuestHandler.ACTIVE;
                                 qh.states[16]=QuestHandler.ACTIVE;
                                 first=true;
                                 return result;
@@ -131,6 +135,7 @@ public class Hephaestus extends NPC{
                         if(first){
                             result=before.get(3);
                             first=false;
+                            player.collect(new KeyItem(1,1,"HEPHAESTUS"));
                             return result;
                         }
                         result=during.get(3);

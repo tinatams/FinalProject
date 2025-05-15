@@ -1,1 +1,1 @@
-Minotaur,10,10,ROAR!
+Minotaur,10,5,ROAR!

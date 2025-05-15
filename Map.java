@@ -202,6 +202,12 @@ public class Map{
                     else if(skin.equals("Dog")){
                         NPCs.add(new Dog(x,y));
                     }
+                    else if(skin.equals("Minotaur")){
+                        NPCs.add(new Minotaur(x,y));
+                    }
+                    else if(skin.equals("Dionysus")){
+                        NPCs.add(new Dionysus(x,y));
+                    }
                     else{
                         NPCs.add(new Athena(x,y));
                     }

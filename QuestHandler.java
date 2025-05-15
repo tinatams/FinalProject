@@ -29,20 +29,20 @@ public class QuestHandler{
         states[0]=COMPLETED;
         states[1]=COMPLETED;
         states[2]=COMPLETED;
-        states[3]=ACTIVE;
+        states[3]=COMPLETED;
         states[4]=COMPLETED;
-        states[5]=ACTIVE;
-        states[6]=BEFORE_ASSIGNED;
-        states[7]=BEFORE_ASSIGNED;
-        states[8]=BEFORE_ASSIGNED;
-        states[9]=BEFORE_ASSIGNED;
-        states[10]=BEFORE_ASSIGNED;
-        states[11]=BEFORE_ASSIGNED;
+        states[5]=COMPLETED;
+        states[6]=COMPLETED;
+        states[7]=COMPLETED;
+        states[8]=COMPLETED;
+        states[9]=COMPLETED;
+        states[10]=COMPLETED;
+        states[11]=ACTIVE;
         states[12]=BEFORE_ASSIGNED;
         states[13]=BEFORE_ASSIGNED;
         states[14]=BEFORE_ASSIGNED;
         states[15]=BEFORE_ASSIGNED;
-        states[16]=BEFORE_ASSIGNED;
+        states[16]=ACTIVE;
         // update();
 
     }
