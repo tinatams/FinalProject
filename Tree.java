@@ -5,7 +5,6 @@ import javax.imageio.*;
 
 public class Tree implements Interactable{
     public static String ITEMNAME = "TREE";
-
     private int worldX, worldY, spriteW, spriteH;
     private String name;
     private BufferedImage treeSprite;
@@ -90,5 +89,13 @@ public class Tree implements Interactable{
     @Override
     public Rectangle getInteractionBox() {
         return interactionBox;
+    }
+
+    public void setHitBox(Rectangle hitBox) {
+        this.hitBox = hitBox;
+    }
+
+    public void setInteractionBox(Rectangle interactionBox) {
+        this.interactionBox = interactionBox;
     }
 }

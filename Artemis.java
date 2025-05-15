@@ -25,7 +25,7 @@ public class Artemis extends NPC{
         after.add("Good Job! But now I can't find my dogs.");
         before.add("Could you find my dogs?/nHere you go!~You can find them using this bone");
         during.add("Hint: My dogs like to wander around.~They can also swim");
-        after.add("Thank you for helping me out!/n Here's the meat");
+        after.add("Thank you for helping me out!/nHere's the meat");
         
         
         this.x = x;
@@ -105,7 +105,6 @@ public class Artemis extends NPC{
                                 completed=true;
                                 qh.states[5]=QuestHandler.COMPLETED;
                                 qh.states[6]=QuestHandler.ACTIVE;
-                                player.discardItem(player.getInventory().get(j));
                                 player.collect(new MeatItem());
                                 completed=true;
                                 return result;

@@ -373,4 +373,8 @@ public class Player implements Collidable{
     public GameFrame getFrame(){
         return frame;
     }
+
+    public MapHandler getMapH() {
+        return mapH;
+    }
 }   

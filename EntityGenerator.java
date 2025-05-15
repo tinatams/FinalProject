@@ -13,6 +13,7 @@ public class EntityGenerator{
         else if (itemName.equals(FishItem.ITEMNAME)) return new FishItem();
         else if (itemName.equals(MeatItem.ITEMNAME)) return new MeatItem();
         else if (itemName.equals(WingItem.ITEMNAME)) return new WingItem();
+        else if (itemName.equals(Captured_Dog.ITEMNAME)) return new Captured_Dog();
 
         return null;
     }

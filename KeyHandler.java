@@ -41,9 +41,11 @@ public class KeyHandler implements KeyListener{
             }
         } 
 
+        System.out.println(GameFrame.gameState);
         //INTERACTION KEY
         if (code ==  KeyEvent.VK_C){
             if (GameFrame.gameState == GameFrame.HERMES_STATE){
+                System.out.println("OMG why");
                 Hermes hermes = (Hermes) canvas.getMapHandler().getNPC(Hermes.name);
                 hermes.setUser(Hermes.NO_USER);
                 GameFrame.gameState = GameFrame.PLAYING_STATE;
@@ -51,7 +53,7 @@ public class KeyHandler implements KeyListener{
             }
 
             NPC currentNPC = selectedPlayer.getNPCinteracting();
-            if(currentNPC != null){
+            if(currentNPC != null && !currentNPC.getName().equals(Hermes.name)){
                 GameFrame.gameState = GameFrame.DIALOG_STATE;
             }
 

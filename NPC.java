@@ -31,8 +31,8 @@ public abstract class NPC implements Interactable{ //should extend interactable
         spriteW = GameFrame.SCALED; 
         spriteH = GameFrame.SCALED;
         if(name.equals("Poseidon") || name.equals("Demeter") || name.equals("Minotaur")){
-            hitBox = new Rectangle(worldX + 10 ,worldY + 20 ,2*spriteW , (2*spriteH)-5);
-        interactionBox = new Rectangle(worldX - GameFrame.SCALED/2 ,worldY - GameFrame.SCALED/2 , 2*spriteW + GameFrame.SCALED, 2*spriteH + GameFrame.SCALED);
+            hitBox = new Rectangle(worldX + 5 ,worldY + 15 ,2*spriteW , (2*spriteH)-5);
+            interactionBox = new Rectangle(worldX - GameFrame.SCALED/2 ,worldY - GameFrame.SCALED/2 , 2*spriteW + GameFrame.SCALED, 2*spriteH + GameFrame.SCALED);
         }
         else{
             hitBox = new Rectangle(worldX + 10 ,worldY + 20 ,spriteW , spriteH-5);
@@ -48,7 +48,14 @@ public abstract class NPC implements Interactable{ //should extend interactable
 
         } catch (IOException e){
         }
-        g2d.drawImage(sprite, worldX, worldY, GameFrame.SCALED, GameFrame.SCALED, null);
+        if(name.equals("Poseidon") || name.equals("Demeter") || name.equals("Minotaur")){
+            g2d.drawImage(sprite, worldX, worldY, 2*GameFrame.SCALED, 2*GameFrame.SCALED, null);
+            // g2d.setBackground(Color.black);
+            // g2d.fill(hitBox);
+        }
+        else{
+            g2d.drawImage(sprite, worldX, worldY, GameFrame.SCALED, GameFrame.SCALED, null);
+        }
     }
 
     @Override
@@ -117,6 +124,14 @@ public abstract class NPC implements Interactable{ //should extend interactable
         // for (String s:dialogues){
         //     System.out.println(s);
         // }
+    }
+
+    public void setHitBox(Rectangle hitBox) {
+        this.hitBox = hitBox;
+    }
+
+    public void setInteractionBox(Rectangle interactionBox) {
+        this.interactionBox = interactionBox;
     }
 
 
