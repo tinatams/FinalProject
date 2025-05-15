@@ -54,9 +54,9 @@ public class Poseidon extends NPC{
         qh=player.getFrame().getQuestH();
         for(int i=0;i<qh.states.length;i++){
                 if(qh.states[i]==QuestHandler.ACTIVE){
+                    System.out.println(i);
                     if(i<7){
                         result="It's a statue";
-                        return result;
                     }
                     else if(i==7){
                         qh.states[7]=qh.COMPLETED;
@@ -81,11 +81,6 @@ public class Poseidon extends NPC{
                             }
                         }
                     }
-        
-                    else{
-                        result=after.get(0);
-                    }
-                
                 }
         }
         return result;

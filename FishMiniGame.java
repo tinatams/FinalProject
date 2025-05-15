@@ -98,7 +98,7 @@ public class FishMiniGame {
                     timeToFish.scheduleAtFixedRate(timeLeft, 0, 1000);
                 }
             };
-            int randomInterval = rand.nextInt(10)*1000 + 5*1000;
+            int randomInterval = rand.nextInt(5)*1000 + 3*1000;
             fishTimer.schedule(fishy, randomInterval);
             System.out.println("FishScheduled " + randomInterval);
 

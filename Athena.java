@@ -63,7 +63,6 @@ public class Athena extends NPC{
                     System.out.println(i);
                     if(i==0){
                         result="Hello Mortal! I am the goddess Athena./n Do you need something?/n .../nNo?/nI apologize but I'm a bit busy right now";
-                        return result;
                     }
                     else if(i==1){
                         System.out.println("ITs her?");
@@ -102,11 +101,6 @@ public class Athena extends NPC{
                             result=during.get(1);
                             System.out.println(i);
                         }
-                        return result;
-                    }
-                    else{
-                        result=after.get(1);
-                        completed=true;
                         return result;
                     }
                 }
