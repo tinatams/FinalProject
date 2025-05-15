@@ -71,13 +71,9 @@ public class Athena extends NPC{
                         inventory=player.getInventory();
                         for(int j=0; j<inventory.size();j++){
                             if(inventory.get(j).getName().equals(qh.quests[i].getItemname()) && inventory.get(j).getAmount()>=qh.quests[i].getItemnumber()){
-                                System.out.println("Found");
                                 failsafe=true;
-                                if(inventory.get(j).getAmount()==qh.quests[i].getItemnumber()){ //it's showing still
+                                for(int inv=0; inv<qh.quests[i].getItemnumber();inv++){
                                     player.discardItem(player.getInventory().get(j));
-                                }
-                                else{
-                                    inventory.get(j).setAmount(inventory.get(j).getAmount()-qh.quests[i].getItemnumber());
                                 }
                                 result=after.get(0);
 

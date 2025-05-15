@@ -12,7 +12,7 @@ public class QuestHandler{
         quests[1]=new Quest(1, "Find Athena","Give the god of wisdom the prophecy","PROPHECY",1);
         quests[2]=new Quest(2, "Speak to Artemis","The goddess Artemis should be able to help you!",null,0);
         quests[3]=new Quest(3, "Speak to Hephaestus","Ask him what is needed to build a boat.",null,0);
-        quests[4]=new Quest(4, "Get string!","It can be found around the island","WOOD",2);
+        quests[4]=new Quest(4, "Get string!","It can be found around the island","STRING",3);
         quests[5]=new Quest(5, "Find my Dogs!","The dogs can be captured with the bone","WOOD",2);
         quests[6]=new Quest(6, "Collect Iron","Get 3 iron from the mines","IRON",3);
         quests[7]=new Quest(7, "Talk to Poseidon","Find the statue",null,0);
