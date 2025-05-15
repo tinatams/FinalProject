@@ -41,6 +41,7 @@ public class KeyHandler implements KeyListener{
             }
         } 
 
+        System.out.println(GameFrame.gameState);
         //INTERACTION KEY
         if (code ==  KeyEvent.VK_C){
             
@@ -58,7 +59,6 @@ public class KeyHandler implements KeyListener{
                 GameFrame.gameState = GameFrame.PLAYING_STATE;
                 frame.getSoundHandler().playEffect(SoundHandler.INV_OUT);
             }
-
 
             else if(GameFrame.gameState == GameFrame.DIALOG_STATE){
                 if(currentNPC.getDialogNumber() > currentNPC.getDialogueSize()){

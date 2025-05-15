@@ -49,8 +49,8 @@ public class Player implements Collidable{
         inventory = new ArrayList<>();
         inventory.add(new AxeItem());
 
-        inventory.add(new AxeItem());
-        inventory.add(new PickaxeItem());
+
+
 
         setUpSprites();
         hitBox = new Rectangle(worldX + 10, worldY + 30, spriteW-20, spriteH-30);
@@ -372,5 +372,9 @@ public class Player implements Collidable{
 
     public GameFrame getFrame(){
         return frame;
+    }
+
+    public MapHandler getMapH() {
+        return mapH;
     }
 }   

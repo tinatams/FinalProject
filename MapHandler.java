@@ -16,6 +16,8 @@ public class MapHandler{
     private int currentMap;
     private Hermes hermes;
 
+    private static boolean demeter_sacrifice=false;
+
     //BOTH PLAYERS
     public static final int SPAWN = 0;
 
@@ -184,7 +186,21 @@ public class MapHandler{
         ArrayList<Interactable> interacts = cm.getInteractables();
 
         for (Interactable interactObj : interacts){
-            interactObj.draw(g2d);
+            if (interactObj instanceof Tree){
+                if(demeter_sacrifice){
+                    interactObj.draw(g2d);
+                    ((Tree) interactObj).setInteractionBox(new Rectangle(interactObj.getWorldX() - GameFrame.SCALED/2,interactObj.getWorldY() - GameFrame.SCALED/2, interactObj.getSpriteW() + GameFrame.SCALED, interactObj.getSpriteH()+GameFrame.SCALED) );
+                    ((Tree) interactObj).setHitBox(new Rectangle(interactObj.getWorldX()+20,interactObj.getWorldY()+10,interactObj.getSpriteW()-40,interactObj.getSpriteH()-15));
+                }
+                else{
+                    ((Tree) interactObj).setInteractionBox(new Rectangle(0,0,0,0));
+                    ((Tree) interactObj).setHitBox(new Rectangle(0,0,0,0));
+
+                }
+            }
+            else{
+                interactObj.draw(g2d);
+            }
         }
 
         ArrayList<Teleporter> teleporters = cm.getTeleporters();
@@ -199,7 +215,22 @@ public class MapHandler{
         Map cm = maps[currentMap];
         ArrayList<NPC> NPCs = cm.getNPCs();
         for (NPC npc : NPCs){
-            npc.draw(g2d);
+            if (npc instanceof Dog){
+                if(((Dog) npc).isCaptured()){
+                    ((NPC) npc).setInteractionBox(new Rectangle(0,0,0,0));
+                    ((NPC) npc).setHitBox(new Rectangle(0,0,0,0));
+                }
+                else{
+                    npc.draw(g2d);
+                    ((Dog) npc).setInteractionBox(new Rectangle(npc.getWorldX() - GameFrame.SCALED/2,npc.getWorldY() - GameFrame.SCALED/2, npc.getSpriteW() + GameFrame.SCALED, npc.getSpriteH()+GameFrame.SCALED) );
+                    ((Dog) npc).setHitBox(new Rectangle(npc.getWorldX()+10,npc.getWorldY()+20,npc.getSpriteW(),npc.getSpriteH()-5));
+
+                }
+            }
+            else{
+                npc.draw(g2d);
+            }
+            
         }
         
     }
@@ -360,6 +391,9 @@ public class MapHandler{
 
     public BufferedImage[] getBaseTileset(){
         return baseTiles;
+    }
+     public static void setDemeter_sacrifice(boolean demeter_sacrifice) {
+        MapHandler.demeter_sacrifice = demeter_sacrifice;
     }
 
  }

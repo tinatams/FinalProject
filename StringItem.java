@@ -5,6 +5,7 @@ import java.util.*;
 import javax.imageio.*;
 
 public class StringItem extends SuperItem implements Interactable{
+
     public static final String ITEMNAME = "STRING";
     private Rectangle hitBox, interactionBox;
     private static boolean interactable=false;

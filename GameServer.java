@@ -100,7 +100,7 @@ public class GameServer{
                             case "Quest":
                             if(sepData[1]!=null){
                                 questData[Integer.parseInt(indivPlayerData[0])]=sepData[1];
-                                System.out.println(questData[Integer.parseInt(indivPlayerData[0])]);
+                                // System.out.println(questData[Integer.parseInt(indivPlayerData[0])]);
                             }
                                 break;
                         }
@@ -214,7 +214,7 @@ public class GameServer{
                             result += ",";
                         }
                     }
-                latestQuest = result;
+                    latestQuest = result;
                 }
                 else{
                     result = "";
