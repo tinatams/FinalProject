@@ -1,12 +1,16 @@
-
-import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.*;
+import java.awt.image.*;
+import java.io.*;
 import java.util.*;
+import javax.imageio.*;
+
+
 
 public class FishMiniGame {
     private Player player;
     private int secondsLeftToCatch;
     private boolean fishScheduled, canCatchFish;
+    private BufferedImage fishIcon, fishBorder;
     private Random rand = new Random();
     private int version;
 
@@ -16,11 +20,18 @@ public class FishMiniGame {
         canCatchFish = false;
         secondsLeftToCatch = 0;
         version = -1;
+
+        try {
+            fishIcon = ImageIO.read(new File("./res/items/fish.png"));
+            fishBorder = (ImageIO.read(new File(String.format("./res/uiAssets/ButtonAtlas.png")))).getSubimage(1 * 16, 3 * 16, 16, 16);
+        } catch (IOException ex) {
+        }
     }
 
     public void draw(Graphics2D g2d){
-
         drawTimer(g2d);
+        g2d.drawImage(fishBorder, 10, 10, 48, 48, null);
+        g2d.drawImage(fishIcon, 13, 13, 42, 42, null);
         if (version != -1){
             if (version >= 0 && version <= 15){
                 System.out.println(version);
@@ -36,7 +47,7 @@ public class FishMiniGame {
         if (canCatchFish){
             g2d.setFont(UIHandler.regularFont.deriveFont(30f));
             g2d.setColor(Color.RED);
-            g2d.drawString(Integer.toString(secondsLeftToCatch),10 , 30);
+            g2d.drawString(Integer.toString(secondsLeftToCatch), 68, 46);
         }
     }
 
