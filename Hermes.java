@@ -7,6 +7,7 @@ public class Hermes extends NPC{
     public static final String name = "Hermes";
     private ArrayList<SuperItem> inventory;
     private int user;
+    
     private String action = "UPDATE";
     private String playersWith = "ODD";
 
@@ -19,7 +20,7 @@ public class Hermes extends NPC{
     public static final int NO_USER = -1;
 
     public Hermes(int x, int y, int x_2, int y_2) {
-        super("Hermes",x, y);
+        super("Hermes", x, y);
         x1 = x;
         x2 = x_2;
         y1 = y;
@@ -47,7 +48,7 @@ public class Hermes extends NPC{
             user = NO_USER;
         }
 
-        super.draw(g2d,name);
+        super.draw(g2d, name);
     }
 
     @Override
@@ -56,9 +57,6 @@ public class Hermes extends NPC{
             GameFrame.gameState = GameFrame.HERMES_STATE;
             player.getFrame().getSoundHandler().playEffect(SoundHandler.INV_IN);
             user = player.getCliNum();
-        } 
-        else{
-
         }
     }
 
