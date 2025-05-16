@@ -155,7 +155,6 @@ public class GameCanvas extends JComponent{
 
     /**
         Recieves data
-
         @param data is assigned to dataFromServer     
     **/
     public void recieveData(String data){
@@ -202,14 +201,6 @@ public class GameCanvas extends JComponent{
                 } catch (InterruptedException e){}
             }
         }
-    }
-
-    /**
-        Gets the index of the current map
-        @return current map index from mapHandler
-    **/
-    public int getCurrentMap(){
-        return mapH.getCurrentMap();
     }
 
     /**
