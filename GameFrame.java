@@ -35,26 +35,6 @@ public class GameFrame{
     public final static int HERMES_STATE = 3;
     public final static int FISHING_STATE = 4;
 
-    public GameFrame(String data, int CN){
-        frame = new JFrame();
-        cp = (JPanel) frame.getContentPane();  
-
-        clientNumber = CN;
-        String skin = (CN % 2 == 0) ? "Hunter" : "Villager4";
-        int x = (CN % 2 == 0) ? 9 : 37;
-        int y = (CN % 2 == 0) ? 10 : 11;
- 
-        selectedPlayer = new Player(skin, x * SCALED, y * SCALED, this);
-        mapH = new MapHandler(this);
-        ui = new UIHandler(this);
-        canvas = new GameCanvas(data, this);
-        keyH = new KeyHandler(this);
-        mouseH = new MouseHandler(this);
-        soundHandler = new SoundHandler();
-
-        gameState = PLAYING_STATE;
-    }
-
     public GameFrame(String data, int CN, String skin){
         frame = new JFrame();
         cp = (JPanel) frame.getContentPane();  

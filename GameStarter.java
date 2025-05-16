@@ -17,7 +17,6 @@ public class GameStarter{
 
     public GameStarter(){
         connected = false;
-        startMenu();
         serverData = "nothing yet";
         clientData = "nothing yet";
     }
@@ -51,42 +50,6 @@ public class GameStarter{
         }
 
         closeSocketOnShutdown();
-    }
-
-    public void connectToServer2(){
-        try {
-            theSocket = new Socket("localhost", 60003);
-            System.out.println("CONNECTION SUCCESSFUL");
-
-            dataIn = new DataInputStream(theSocket.getInputStream());
-            dataOut = new DataOutputStream(theSocket.getOutputStream());
-
-            //GETS CLIENT NUMBER
-            //FIRST THING THAT THE SERVER SENDS
-            clientNumber = Integer.parseInt(dataIn.readUTF()); 
-            setUpFrame();
-
-            WriteToServer wts = new WriteToServer();
-            ReadFromServer rfs = new ReadFromServer();
-            
-            wts.start();
-            rfs.start();
-        } catch (IOException e) {
-            System.out.println("IOException from connectToServer() method");
-        }
-    }
-
-    public void setUpFrame(){
-        System.out.println("starting game up");
-        menuFrame.closeMenu();
-        frame = new GameFrame(serverData, clientNumber);
-        frame.setUpGUI();
-
-        WriteToServer wts = new WriteToServer();
-        ReadFromServer rfs = new ReadFromServer();
-            
-        wts.start();
-        rfs.start();
     }
 
     public void setUpFrame(String skin){
@@ -140,9 +103,7 @@ public class GameStarter{
     }
 
     public class ReadFromServer extends Thread{
-        public ReadFromServer(){
-
-        }
+        public ReadFromServer(){}
 
         public void run(){
             while (true) { 
@@ -176,15 +137,14 @@ public class GameStarter{
                 if (i + 1 < data.length){
                     tempString += "|";
                 }
-                
             }
-
             return tempString;
         }
     }
 
     public static void main(String[] args) {
         GameStarter c = new GameStarter();
+        c.startMenu();
     }
 
 }
