@@ -14,6 +14,8 @@ public class FishMiniGame {
     private Random rand = new Random();
     private int version;
 
+    private Timer fishTimer;
+
     public FishMiniGame(Player p){
         player = p;
         fishScheduled = false;
@@ -56,12 +58,14 @@ public class FishMiniGame {
             canCatchFish = false;
             player.collect(new FishItem());
             player.getFrame().getSoundHandler().playEffect(SoundHandler.QUEST_DONE);
-            secondsLeftToCatch = 0;
             GameFrame.gameState = GameFrame.PLAYING_STATE;
+            secondsLeftToCatch = 0;
         } else {
             player.getFrame().getSoundHandler().playEffect(SoundHandler.FISH_OUT);
-            secondsLeftToCatch = 0;
             GameFrame.gameState = GameFrame.PLAYING_STATE;
+            secondsLeftToCatch = 0;
+            fishTimer.cancel();
+            fishScheduled = false;
         }
     }
 
@@ -77,6 +81,7 @@ public class FishMiniGame {
                 @Override
                 public void run(){
                     secondsLeftToCatch--;
+                    System.out.println(secondsLeftToCatch--);
                     if (secondsLeftToCatch < 0){
                         secondsLeftToCatch = 0;
                         timeToFish.cancel();
@@ -85,13 +90,14 @@ public class FishMiniGame {
                         if(GameFrame.gameState == GameFrame.FISHING_STATE){
                             player.getFrame().getSoundHandler().playEffect(SoundHandler.FISH_ESCAPE);
                             canCatchFish = false;
+                            fishScheduled = false;
                             scheduleFish();
                         }
                     }
                 }
             };
 
-            Timer fishTimer = new Timer();
+            fishTimer = new Timer();
             TimerTask fishy = new TimerTask(){
                 @Override
                 public void run(){
