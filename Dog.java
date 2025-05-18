@@ -70,9 +70,11 @@ public class Dog extends NPC{
     public String check(Player player){ //Method that returns current dialogue according to active quest list and removes inventory items when needed
         String result="";
         qh=player.getFrame().getQuestH();
+        result=before.get(0);
         for(int i=0;i<qh.states.length;i++){
+
                 if(qh.states[i]==QuestHandler.ACTIVE){
-                    result=before.get(0);
+                    
                     
                     if(i==5){
                         result=during.get(0);
