@@ -160,7 +160,8 @@ public class MenuHandler extends JComponent{
                     if (!(button instanceof UIStartButton)){
                         soundHandler.playEffect(SoundHandler.BUTTON);
                     } else{
-                        soundHandler.playEffect(SoundHandler.START_GAME);
+                        if (gameStarter.isConnected())soundHandler.playEffect(SoundHandler.START_GAME);
+                        else soundHandler.playEffect(SoundHandler.BUTTON);
                     }
                     break;
                 }
