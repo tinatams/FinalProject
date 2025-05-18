@@ -21,6 +21,7 @@
 	of my program.
 **/
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
 public class Hermes extends NPC{
@@ -62,6 +63,9 @@ public class Hermes extends NPC{
             setWorldX(x1);
             setWorldY(y1);
         }
+
+        super.hitBox = new Rectangle(worldX + 10 ,worldY + 20 ,spriteW , spriteH-5);
+        super.interactionBox = new Rectangle(worldX - GameFrame.SCALED/2 ,worldY - GameFrame.SCALED/2 , spriteW + GameFrame.SCALED, spriteH + GameFrame.SCALED);
 
         if (originalx != getWorldX()){
             action = "UPDATE";
