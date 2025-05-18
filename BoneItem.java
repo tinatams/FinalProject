@@ -1,5 +1,5 @@
 /**
-    This class creates an Bone item that the player can use in the game.
+    This class creates a Bone item that the player can use in the game.
     It extends SuperItem, since it is an item. Item is non-stackable.
 
 	@author Martina Amale M. Llamas (242648); Zoe Angeli G. Uy (246707)

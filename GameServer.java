@@ -66,7 +66,7 @@ public class GameServer{
     }
 
     /**
-        Closes all connected sockets when, program is closed.
+        Method closes all connected sockets when, program is closed.
     **/
     public void closeSocketsOnShutdown(){
         Runtime.getRuntime().addShutdownHook(new Thread(() ->{
@@ -204,10 +204,7 @@ public class GameServer{
                     if (!(hermesLastInv).equals(finalHermInventory)){
                         finalHermInventory = hermesLastInv;
                     }
-
-                    
                 }
-                    
                 tempString += String.format("%s,%s,%s", sepHermData[0], hasHermes, finalHermInventory);
                 hermesLastInv = finalHermInventory;
 
@@ -277,10 +274,7 @@ public class GameServer{
         
         /**
             Gets data from the client and splits it into the Client data array, which is the data
-            separated by 'type'. 
-
-            Sends out client data, before constantly waiting for client data. 
-            When client leaves, removes this client and its socket from the server arrays. 
+            separated by 'type'. Sends out client data, before constantly waiting for client data. 
         **/
         @Override
         public void run(){
@@ -294,9 +288,9 @@ public class GameServer{
                 }
             } catch (IOException e) {
                 System.out.println("IOException from ClientRunnable's run() method");
-                System.out.println("Client left (booooooo) ");
-                clients.remove(this);
-                sockets.remove(clientSocket);
+                //System.out.println("Client left (booooooo) ");
+                //clients.remove(this);
+                //sockets.remove(clientSocket);
             }
         }
 

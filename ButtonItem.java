@@ -1,5 +1,5 @@
 /**
-    This class creates an Button item that the player can interact with.
+    This class creates a Button item that the player can interact with.
     It implements interactable interface. Has a variable that keeps track 
     of if the button is pressed
 

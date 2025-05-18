@@ -1,5 +1,5 @@
 /**
-    This class creates an Bush item that the player can interact with.
+    This class creates a Bush item that the player can interact with.
     It implements interactable interface. Bush gives player berry item
     when interacted with if bush has berries. 
 
