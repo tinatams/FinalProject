@@ -13,7 +13,7 @@ public class UIHandler{
     public static Font regularFont;
     public static String currentDialog = "";
     private BufferedImage dialogueBox, blankHalfPanel;
-    private BufferedImage gameTitle, inventoryHeader, questHeader, hermesHeader, backgroundImage;
+    private BufferedImage gameTitle, inventoryHeader, questHeader, hermesHeader, backgroundImage, instructions;
     private Player selectedPlayer;
     private MapHandler mapHandler;
 
@@ -40,7 +40,8 @@ public class UIHandler{
     public void draw(Graphics2D g2d){
         switch (GameFrame.gameState) {
             case GameFrame.INSTRUCTIONS:
-                
+                g2d.drawImage(instructions, 0, 0, GameFrame.WIDTH, GameFrame.HEIGHT, null);
+                break;
             case GameFrame.DIALOG_STATE:
                 drawDialogScreen(g2d);
                 break;
@@ -67,7 +68,7 @@ public class UIHandler{
                 }
 
                 g2d.drawImage(inventoryHeader, 2*GameFrame.SCALED - 6*GameFrame.SCALER, 2*GameFrame.SCALED -3*GameFrame.SCALER, 8*GameFrame.SCALED, 2*GameFrame.SCALED,null);
-                g2d.drawImage(hermesHeader, 13*GameFrame.SCALED - GameFrame.SCALER, 2*GameFrame.SCALED -3*GameFrame.SCALER, 6*GameFrame.SCALED, 2*GameFrame.SCALED, null);   
+                //g2d.drawImage(hermesHeader, 13*GameFrame.SCALED - GameFrame.SCALER, 2*GameFrame.SCALED -3*GameFrame.SCALER, 6*GameFrame.SCALED, 2*GameFrame.SCALED, null);   
 
                 hermesSendButton.draw(g2d);
                 break;
@@ -92,6 +93,7 @@ public class UIHandler{
             //Basic Components
             dialogueBox = ImageIO.read(new File("./res/uiAssets/BasicComponents/DialogueBoxSimple.png"));
             blankHalfPanel = ImageIO.read(new File("./res/uiAssets/BasicComponents/BlankTemplate.png"));
+            instructions = ImageIO.read(new File("./res/uiAssets/INSTRUCTIONS.png"));
 
             //Text Components
             int tileSize = GameFrame.PIXELRATIO;

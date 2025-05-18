@@ -91,7 +91,7 @@ public class GameFrame{
         mouseH = new MouseHandler(this);
         soundHandler = new SoundHandler();
 
-        gameState = PLAYING_STATE;
+        gameState = INSTRUCTIONS;
     }
 
     /**
