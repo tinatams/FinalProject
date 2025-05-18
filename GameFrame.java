@@ -57,6 +57,8 @@ public class GameFrame{
     public final static int HERMES_STATE = 3;
     public final static int FISHING_STATE = 4;
 
+    public final static int END_STATE = 5;
+
     /**
         Constructor that instantiates the default values of the GameFrame
 
