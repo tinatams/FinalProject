@@ -8,10 +8,13 @@ public class Lock extends Teleporter{
         locked = true;
     }
 
+    /**
+        Gets the name of the lock
+        @return lockName
+    **/
     public String getlockName(){
         return lockName;
     }
-
     public void setLocked(boolean lock){
         locked = lock;
     }
