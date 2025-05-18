@@ -1,9 +1,7 @@
 /**
     The GameFrame class sets up and manages all the main parts of the game,
-    like the player, map, canvas, UI, sound, and mini-games.
-    
-    Creates the game window and stores the state that the game is in 
-    (like playing, inventory, or dialog).
+    like the player, map, canvas, UI, sound, and mini-games. Creates the game window 
+    and stores the state that the game is in (like playing, inventory, or dialog).
 
     This class connects all the visuals, input, and logic parts of the program
     and allows other classes to access them.
@@ -60,7 +58,7 @@ public class GameFrame{
     public final static int FISHING_STATE = 4;
 
     /**
-        Constructor that instantiates the default values of the GameCanvas
+        Constructor that instantiates the default values of the GameFrame
 
      	@param data is the Server data
         @param CN is the client number

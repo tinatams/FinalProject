@@ -96,6 +96,8 @@ public class GameStarter{
                         Thread.sleep(10);
                     } catch (InterruptedException ex) {
                     }
+
+                    dataOut.flush();
                 } catch (IOException ex) {
                 }
             }
