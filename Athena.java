@@ -35,8 +35,10 @@ public class Athena extends NPC{
     private boolean failsafe=false;
     private QuestHandler qh=new QuestHandler();
     
-
-    public Athena(int x, int y) { //Constructor with location the entity should be drawn and dialogue
+    /**
+    Constructor with location the entity should be drawn and dialogue   
+    **/
+    public Athena(int x, int y) {
          
         super("Athena",x, y);
         inventory = new ArrayList<SuperItem>();
@@ -51,14 +53,18 @@ public class Athena extends NPC{
         this.x = x;
         this.y = y;
     }
-
+    /**
+     Draw method that calls NPC draw method
+    **/
     @Override 
-    public void draw(Graphics2D g2d){ //Draw method that calls NPC draw method
+    public void draw(Graphics2D g2d){ 
         super.draw(g2d,name);
     }
-
+    /**
+     Method that dictates dialogue when players interact with this NPC
+    **/
     @Override
-    public void interact(Player player){ //Method that dictates dialogue when players interact with this NPC
+    public void interact(Player player){ 
         if(super.getDialogNumber()==0){
             if(completed){
                 super.setDialogues("Please stay steadfast! Our plan will work.".split("/n"));
@@ -71,12 +77,15 @@ public class Athena extends NPC{
             }
         }
         
-        super.speak(); //Changes NPC dialogue
+        super.speak(); 
         
 
     }
+    /**
+     Method that returns current dialogue according to active quest list and removes inventory items when needed
+    **/
 
-    public String check(Player player){  //Method that returns current dialogue according to active quest list and removes inventory items when needed
+    public String check(Player player){  
         
         String result="";
         qh=player.getFrame().getQuestH();

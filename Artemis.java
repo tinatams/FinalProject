@@ -35,8 +35,10 @@ public class Artemis extends NPC{
     private boolean completed=false;
      private QuestHandler qh=new QuestHandler();
     
-
-    public Artemis(int x, int y) { //Constructor with location the entity should be drawn and dialogue
+    /**
+    Constructor with location the entity should be drawn and dialogue   
+    **/
+    public Artemis(int x, int y) { 
         
         super("Artemis",x, y);
         inventory = new ArrayList<SuperItem>();
@@ -55,14 +57,18 @@ public class Artemis extends NPC{
         this.x = x;
         this.y = y;
     }
-
+    /**
+     Draw method that calls NPC draw method
+    **/
     @Override 
-    public void draw(Graphics2D g2d){ //Draw method that calls NPC draw method
+    public void draw(Graphics2D g2d){ 
         super.draw(g2d,name);
     }
-
+     /**
+     Method that dictates dialogue when players interact with this NPC
+    **/
     @Override
-    public void interact(Player player){  //Method that dictates dialogue when players interact with this NPC
+    public void interact(Player player){ 
         if(super.getDialogNumber()==0){
             if(completed){
                 super.setDialogues("Hey! Thanks for finding my dogs!".split("/n"));
@@ -73,13 +79,17 @@ public class Artemis extends NPC{
             }
         }
         
-        super.speak();  //Changes NPC dialogue
+        super.speak(); 
 
         
 
     }
 
-    public String check(Player player){  //Method that returns current dialogue according to active quest list and removes inventory items when needed
+    /**
+     Method that returns current dialogue according to active quest list and removes inventory items when needed
+    **/
+
+    public String check(Player player){  
         String result="";
         qh=player.getFrame().getQuestH();
         for(int i=0;i<qh.states.length;i++){
@@ -142,10 +152,5 @@ public class Artemis extends NPC{
                   
     }
 
-
-
-    public ArrayList<SuperItem> getInventory(){
-        return inventory;
-    }
     
 }
