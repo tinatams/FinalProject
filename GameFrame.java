@@ -58,6 +58,7 @@ public class GameFrame{
     public final static int FISHING_STATE = 4;
 
     public final static int END_STATE = 5;
+    public final static int INSTRUCTIONS = 6;
 
     /**
         Constructor that instantiates the default values of the GameFrame
