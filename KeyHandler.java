@@ -63,6 +63,10 @@ public class KeyHandler implements KeyListener{
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
+        if (GameFrame.gameState == GameFrame.INSTRUCTIONS){
+            GameFrame.gameState = GameFrame.PLAYING_STATE;
+        }
+
         //PLAYER MOVEMENT
         if (GameFrame.gameState == GameFrame.PLAYING_STATE){
             switch (code){
