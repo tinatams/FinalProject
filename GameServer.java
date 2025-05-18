@@ -8,7 +8,7 @@ public class GameServer{
     private ArrayList<ClientRunnable> clients;
     private int clientNum = 0;
     private String serverData,hasHermes, hermesLastInv;
-    private String latestQuest="1,0,0,0,0,0,0,0";
+    private String latestQuest="1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0";
     private boolean canSwitch, newInteraction;
     private ArrayList<Integer> activeQuests;
 
@@ -202,9 +202,11 @@ public class GameServer{
 
                 String[] pastquests = latestQuest.split(",");
                 int sumpast = 0;
-                for (int i = 1; i < pastquests.length; i++) {
+                for (int i = 0; i < pastquests.length; i++) {
                     sumpast += Integer.parseInt(pastquests[i]);
                 }
+                
+                
         
                 if (sumcurrent > sumpast) {
                     result = "";
@@ -215,10 +217,12 @@ public class GameServer{
                         }
                     }
                     latestQuest = result;
+                    
+                    pastquests = latestQuest.split(",");
                 }
                 else{
                     result = "";
-                    for (int i = 1; i < pastquests.length; i++) {
+                    for (int i = 0; i < pastquests.length; i++) {
                         result += pastquests[i];
                         if (i != pastquests.length - 1) {
                             result += ",";
@@ -226,12 +230,12 @@ public class GameServer{
                     }
 
                 }
-        }
+            }
     }
         tempString += result;
         serverData = tempString;
         //System.out.println(newInteraction);
-        System.out.println(serverData);
+        // System.out.println(serverData);
     }
 
     public void sendOutData(){

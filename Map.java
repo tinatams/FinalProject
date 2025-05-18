@@ -18,7 +18,7 @@ public class Map{
     protected ArrayList<Teleporter> teleporters;
     protected ArrayList<Interactable> interacts;
     private ArrayList<NPC> NPCs;
-    
+
     private EntityGenerator eg;
 
     public Map(String n){
@@ -148,7 +148,7 @@ public class Map{
                     int y = Integer.parseInt(mapData[2]);
 
                     if (!type.equals("KEY") && !type.equals(FishArea.ITEMNAME)){
-                            interacts.add(eg.newInteractable(type, x, y));
+                        interacts.add(eg.newInteractable(type, x, y));
                     } 
                     else {
                         if (type.equals("KEY")) interacts.add(new KeyItem(x, y, mapData[3]));
@@ -180,7 +180,7 @@ public class Map{
 
                     if (skin.equals("Hermes")){
                         NPCs.add(new Hermes(x,y,Integer.parseInt(mapData[3]) * GameFrame.SCALED, Integer.parseInt(mapData[4]) * GameFrame.SCALED));
-                    } 
+                    }
                     else if(skin.equals("Athena")){
                         NPCs.add(new Athena(x,y));
                     }
@@ -211,6 +211,7 @@ public class Map{
                     else{
                         NPCs.add(new Athena(x,y));
                     }
+
                     
                 }
             }
@@ -256,6 +257,4 @@ public class Map{
     public int getWidth() {
         return mapWidth;
     }
-
-
 }

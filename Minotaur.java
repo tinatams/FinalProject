@@ -1,7 +1,34 @@
-import java.awt.Graphics2D;
-import java.util.ArrayList;
+/**
+    Minotaur Class that extends NPC and contains an instances of iventory,Entity Generator, Quest Handler, and the name of the NPC,
+    as well as variables to determine the location of where in the frame the entity is drawn. It contains dialogue options that shift
+    according to active quests and removes quest items when needed. It also has a draw method that activates the NPC draw method.
+ 
+	@author Martina Amale M. Llamas (242648); Zoe Angeli G. Uy (246707)
+	@version May 19, 2025
+	
+	I have not discussed the Java language code in my program 
+	with anyone other than my instructor or the teaching assistants 
+	assigned to this course.
 
-public class Minotaur extends NPC{
+	I have not used Java language code obtained from another student, 
+	or any other unauthorized source, either modified or unmodified.
+
+	If any Java language code or documentation used in my program 
+	was obtained from another source, such as a textbook or website, 
+	that has been clearly noted with a proper citation in the comments 
+	of my program.
+
+    
+
+**/
+import java.awt.*;
+import java.awt.image.*;
+import java.io.*;
+import java.util.ArrayList;
+import javax.imageio.*;
+
+
+public class Minotaur extends NPC{ 
     public static final String name = "Minotaur";
     private ArrayList<SuperItem> inventory;
     private EntityGenerator eg;
@@ -12,11 +39,15 @@ public class Minotaur extends NPC{
      private QuestHandler qh=new QuestHandler();
     
 
-    public Minotaur(int x, int y) {
+    public Minotaur(int x, int y) { //Constructor with location the entity should be drawn and dialogue
         
         super("Minotaur",x, y);
         inventory = new ArrayList<SuperItem>();
         eg = new EntityGenerator();
+        
+        super.hitBox = new Rectangle(x + 5 ,y + 15 ,2*spriteW , (2*spriteH)-5);
+        super.interactionBox = new Rectangle(worldX - GameFrame.SCALED/2 ,worldY - GameFrame.SCALED/2 , 2*spriteW + GameFrame.SCALED, 2*spriteH + GameFrame.SCALED);
+
         before.add("*ROAR!*/nYou cannot defeat this beast!/nPerhaps you need to subdue it./nLook for the god of wine./nHe may be able to help you!");
         during.add("Hint: The god of wine might be~on the other island");
         after.add("*The Minotaur faints*/nHint: There is an assist room for the~labyrinth in island 1");
@@ -27,12 +58,12 @@ public class Minotaur extends NPC{
     }
 
     @Override 
-    public void draw(Graphics2D g2d){
-        super.draw(g2d,name);
+    public void draw(Graphics2D g2d){ //Draw method that calls NPC draw method
+        super.draw(g2d,name); 
     }
 
     @Override
-    public void interact(Player player){
+    public void interact(Player player){ //Method that dictates dialogue when players interact with this NPC
         if(super.getDialogNumber()==0){
             if(completed){
                 super.setDialogues("*snore*".split("/n"));
@@ -43,13 +74,13 @@ public class Minotaur extends NPC{
             }
         }
         
-        super.speak();
-        // }
+        super.speak(); //Changes NPC dialogue
+
         
 
     }
 
-    public String check(Player player){
+    public String check(Player player){ //Method that returns current dialogue according to active quest list and removes inventory items when needed
         String result="";
         qh=player.getFrame().getQuestH();
         for(int i=0;i<qh.states.length;i++){
@@ -72,10 +103,11 @@ public class Minotaur extends NPC{
                                     player.discardItem(player.getInventory().get(j));
                                 }
                                 result=after.get(0);
-                                qh.states[14]=QuestHandler.COMPLETED;
-                                qh.states[15]=QuestHandler.ACTIVE;
                                 player.collect(new KeyItem(1,1,"MINOTAUR"));
                                 completed=true;
+                                inventory.add(new KeyItem(1,1,"DIONYSUS"));
+                                qh.states[14]=QuestHandler.COMPLETED;
+                                qh.states[15]=QuestHandler.ACTIVE;
                                 return result;
                             }
                         }
@@ -89,8 +121,4 @@ public class Minotaur extends NPC{
 
 
 
-    public ArrayList<SuperItem> getInventory(){
-        return inventory;
-    }
-    
 }

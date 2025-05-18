@@ -132,7 +132,7 @@ public class GameStarter{
                         clientData += String.format("Hermes|%d,%s,%s\n",clientNumber, hermes.getAction(), hermes.getItemString());
                     }
                         clientData += String.format("Quest|%d,%s\n", clientNumber, frame.getQuestH().gatherData());
-                    // System.out.println(clientData);
+                    System.out.println(clientData);
                     dataOut.writeUTF(clientData);
                     try {
                         Thread.sleep(5);

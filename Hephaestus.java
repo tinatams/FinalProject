@@ -1,7 +1,31 @@
+/**
+    Hephaestus Class that extends NPC and contains an instances of iventory,Entity Generator, Quest Handler, and the name of the NPC,
+    as well as variables to determine the location of where in the frame the entity is drawn. It contains dialogue options that shift
+    according to active quests and removes quest items when needed. It also has a draw method that activates the NPC draw method.
+ 
+	@author Martina Amale M. Llamas (242648); Zoe Angeli G. Uy (246707)
+	@version May 19, 2025
+	
+	I have not discussed the Java language code in my program 
+	with anyone other than my instructor or the teaching assistants 
+	assigned to this course.
+
+	I have not used Java language code obtained from another student, 
+	or any other unauthorized source, either modified or unmodified.
+
+	If any Java language code or documentation used in my program 
+	was obtained from another source, such as a textbook or website, 
+	that has been clearly noted with a proper citation in the comments 
+	of my program.
+
+    
+
+**/
+
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-public class Hephaestus extends NPC{
+public class Hephaestus extends NPC{ 
     public static final String name = "Hephaestus";
     private ArrayList<SuperItem> inventory;
     private EntityGenerator eg;
@@ -11,7 +35,7 @@ public class Hephaestus extends NPC{
     private QuestHandler qh=new QuestHandler();
     
 
-    public Hephaestus(int x, int y) {
+    public Hephaestus(int x, int y) { //Constructor with location the entity should be drawn and dialogue
         
         super("Hephaestus",x, y);
         inventory = new ArrayList<SuperItem>();
@@ -25,7 +49,7 @@ public class Hephaestus extends NPC{
         before.add("Nice work kid.~Get the other materials now/nYou need to give me the wood so I can~start building");
         during.add("You don't got any wood yet");
         after.add("Nice work kid.~I need one last thing");
-        before.add("It’s in Daedalus’s workshop on the other~island. He always keeps his workshop locked/nThe key is at the center of the labyrinth.~The entrance to the labyrinth should~be somewhere in these mines/nHere take this to enter the labyrinth!");
+        before.add("It’s in Daedalus’s workshop on the other~island. He always keeps his workshop locked./nThe key is at the center of the labyrinth.~The entrance to the labyrinth should~be somewhere in these mines/nHere take this to open the~labyrinth!");
         during.add("*cling* *clang*/nYou need to get the item first kid");
         after.add("Good Job kid. Give me a second then we can go");
 
@@ -36,12 +60,12 @@ public class Hephaestus extends NPC{
     }
 
     @Override 
-    public void draw(Graphics2D g2d){
+    public void draw(Graphics2D g2d){ //Draw method that calls NPC draw method
         super.draw(g2d,name);
     }
 
     @Override
-    public void interact(Player player){
+    public void interact(Player player){ //Method that dictates dialogue when players interact with this NPC
         if(super.getDialogNumber()==0){
             if(completed){
                 super.setDialogues("Please stay steadfast! Our plan will work.".split("/n"));
@@ -54,13 +78,13 @@ public class Hephaestus extends NPC{
             }
         }
         
-        super.speak();
-        // }
+        super.speak(); //Changes NPC dialogue
+        
         
 
     }
 
-    public String check(Player player){
+    public String check(Player player){ //Method that returns current dialogue according to active quest list and removes inventory items when needed
         
         String result="";
         qh=player.getFrame().getQuestH();
@@ -97,7 +121,7 @@ public class Hephaestus extends NPC{
                             }
                         }
                     }
-                    else if(i==7 || i==8){
+                    else if(i==7 || i==8 || i==9){
                         if(first){
                             result=before.get(1);
                             first=false;
@@ -105,9 +129,6 @@ public class Hephaestus extends NPC{
                         }
                         result=during.get(1);
                         return result;
-                    }
-                    else if(i==9){
-                        result="Kid you're gonna have to wait first";
                     }
                     else if(i==10){
                         if(first){
@@ -123,7 +144,6 @@ public class Hephaestus extends NPC{
                                 }
                                 result=after.get(1);
                                 qh.states[10]=QuestHandler.COMPLETED;
-                                qh.states[11]=QuestHandler.ACTIVE;
                                 qh.states[16]=QuestHandler.ACTIVE;
                                 first=true;
                                 return result;
@@ -135,7 +155,7 @@ public class Hephaestus extends NPC{
                         if(first){
                             result=before.get(3);
                             first=false;
-                            player.collect(new KeyItem(1,1,"HEPHAESTUS"));
+                            player.collect(new KeyItem(1,1,"HEPHEASTUS"));
                             return result;
                         }
                         result=during.get(3);
@@ -159,10 +179,5 @@ public class Hephaestus extends NPC{
         return result;
     }
 
-
-
-    public ArrayList<SuperItem> getInventory(){
-        return inventory;
-    }
     
 }

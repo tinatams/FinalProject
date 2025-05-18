@@ -66,4 +66,7 @@ public class KeyItem extends SuperItem implements Interactable{
     public String getLockName() {
         return lockName;
     }
+    public void setInteractionBox(Rectangle interactionBox) {
+        this.interactionBox = interactionBox;
+    }
 }

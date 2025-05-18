@@ -1,3 +1,25 @@
+/**
+    UITextBox Class implements UIButton. Draws the textbox and dialogue.
+
+	@author Martina Amale M. Llamas (242648); Zoe Angeli G. Uy (246707)
+	@version May 19, 2025
+	
+	I have not discussed the Java language code in my program 
+	with anyone other than my instructor or the teaching assistants 
+	assigned to this course.
+
+	I have not used Java language code obtained from another student, 
+	or any other unauthorized source, either modified or unmodified.
+
+	If any Java language code or documentation used in my program 
+	was obtained from another source, such as a textbook or website, 
+	that has been clearly noted with a proper citation in the comments 
+	of my program.
+
+    
+
+**/
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.*;
@@ -15,7 +37,7 @@ public class UITextBox implements UIButton {
     private boolean highlighted,mousePressed,mouseOver, selected;
     private Rectangle bounds;
 
-    public UITextBox(int xPos, int yPos){
+    public UITextBox(int xPos, int yPos){ //constructor
 
         x = xPos;
         y = yPos;
@@ -43,7 +65,7 @@ public class UITextBox implements UIButton {
     }
 
     @Override
-    public void draw(Graphics2D g2d) {
+    public void draw(Graphics2D g2d) { //draws the text box and the text inside
         BufferedImage toDraw = containerIMG;
         if (highlighted){
             toDraw = highlightedIMG;
@@ -57,7 +79,7 @@ public class UITextBox implements UIButton {
     }
 
     @Override
-    public void update(){
+    public void update(){ //updates the assets based on mouse action
         if (mouseOver || mousePressed || selected){
             highlighted = true;
         } else {
@@ -66,50 +88,50 @@ public class UITextBox implements UIButton {
     }
 
     @Override
-    public boolean isMousePressed() {
+    public boolean isMousePressed() { //getter for mousePressed
         return mousePressed;
     }
 
     @Override
-    public void setMousePressed(boolean mousePressed) {
+    public void setMousePressed(boolean mousePressed) { //setter for mousePressed
         this.mousePressed = mousePressed;
     }
 
     @Override
-    public boolean isMouseOver() {
+    public boolean isMouseOver() { //getter for mouseOver
         return mouseOver;
     }
 
     @Override
-    public void setMouseOver(boolean mouseOver) {
+    public void setMouseOver(boolean mouseOver) { //setter for mouseOver
         this.mouseOver = mouseOver;
     }
 
     @Override
-    public Rectangle getBounds() {
+    public Rectangle getBounds() { //getter for bounds
         return bounds;
     }
 
     @Override
-    public void clicked() {
+    public void clicked() {//changes the status of selected
         selected = !selected;
     }
 
     @Override
-    public void resetBools(){
+    public void resetBools(){ //reset for the mouse actions
         mousePressed = false;
         mouseOver = false;
     }
 
-    public boolean isSelected() {
+    public boolean isSelected() { //getter for selected
         return selected;
     }
 
     public void setSelected(boolean selected) {
-        this.selected = selected;
+        this.selected = selected; //setter for selected
     }
 
-    public void type(KeyEvent e) {
+    public void type(KeyEvent e) { //based on the character typed by the player and types it into the UI
         int code = e.getKeyCode();
 
         if (code == KeyEvent.VK_BACK_SPACE){
@@ -121,7 +143,7 @@ public class UITextBox implements UIButton {
         }
     }
 
-    public String getContents() {
+    public String getContents() { //getter for contents of text box
         return contents;
     }
 

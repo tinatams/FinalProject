@@ -1,3 +1,25 @@
+/**
+    UIHandler Class ihandles all the UI elements to be drawn including buttons and assets.
+
+	@author Martina Amale M. Llamas (242648); Zoe Angeli G. Uy (246707)
+	@version May 19, 2025
+	
+	I have not discussed the Java language code in my program 
+	with anyone other than my instructor or the teaching assistants 
+	assigned to this course.
+
+	I have not used Java language code obtained from another student, 
+	or any other unauthorized source, either modified or unmodified.
+
+	If any Java language code or documentation used in my program 
+	was obtained from another source, such as a textbook or website, 
+	that has been clearly noted with a proper citation in the comments 
+	of my program.
+
+    
+
+**/
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
@@ -24,7 +46,7 @@ public class UIHandler{
     private InventoryCellUI[] inventoryCellsPlayer, inventoryCellsHermes;
     private UISendHermes hermesSendButton;
     
-    public UIHandler(GameFrame frame){
+    public UIHandler(GameFrame frame){ //constructor
         inventoryCellsHermes = new InventoryCellUI[70];
         inventoryCellsPlayer = new InventoryCellUI[70];
         
@@ -37,7 +59,7 @@ public class UIHandler{
         setUpUIComponents();
     }
 
-    public void draw(Graphics2D g2d){
+    public void draw(Graphics2D g2d){ //draws according to current game state
         switch (GameFrame.gameState) {
             case GameFrame.DIALOG_STATE:
                 drawDialogScreen(g2d);
@@ -78,7 +100,7 @@ public class UIHandler{
         }
     }
 
-    public void setUpUIComponents(){
+    public void setUpUIComponents(){ //sets up assets (i.e. inventory and quest page)
         try {
             //Basic Components
             dialogueBox = ImageIO.read(new File("./res/uiAssets/BasicComponents/DialogueBoxSimple.png"));
@@ -103,11 +125,11 @@ public class UIHandler{
         hermesSendButton = new UISendHermes((PANEL_RIGHT_X+5)* GameFrame.SCALED, (PANEL_Y+1)*GameFrame.SCALED, this);
     }
     
-    public void drawQuestPanel(Graphics2D g2d,int panelX, int panelY){
+    public void drawQuestPanel(Graphics2D g2d,int panelX, int panelY){ //draws quest panel
         g2d.drawImage(blankHalfPanel, panelX * GameFrame.SCALED, panelY * GameFrame.SCALED, 9 * GameFrame.SCALED, 14 * GameFrame.SCALED, null);
     }
     
-    public void setUpCells(){
+    public void setUpCells(){ //sets up needed inventory cells
         int x = 1;
         int y = 3;
         for (int i = 0; i < 70; i++){
@@ -122,7 +144,7 @@ public class UIHandler{
         }
     }
     
-    public void drawInventory(Graphics2D g2d, int panelX, int panelY, ArrayList<SuperItem> inventory, InventoryCellUI[] cells){
+    public void drawInventory(Graphics2D g2d, int panelX, int panelY, ArrayList<SuperItem> inventory, InventoryCellUI[] cells){ //draws inventory cells and GUI design
         g2d.drawImage(blankHalfPanel, panelX * GameFrame.SCALED, panelY * GameFrame.SCALED, 9 * GameFrame.SCALED, 14 * GameFrame.SCALED, null);
 
         int x = 1;
@@ -143,21 +165,12 @@ public class UIHandler{
         }
     }
 
-    public void drawDialogScreen(Graphics2D g2d){
+    public void drawDialogScreen(Graphics2D g2d){ //draws dialog screen
         int x=16*2;
         int y=30;
         int width= GameFrame.WIDTH-90;
         int height=GameFrame.HEIGHT/3;
         
-        // other way to do it
-        // Color c=new Color(0,0,0,200);
-        // g2d.setColor(c);
-        // g2d.fillRoundRect(x,y,width,height,35,35);
-
-        // c=new Color(250,250,250);
-        // g2d.setColor(c);
-        // g2d.setStroke(new BasicStroke(5));
-        // g2d.drawRoundRect(x+5,y+5,width-10,height-10,25,25);
 
         g2d.drawImage(dialogueBox, x, y, width, height, null);
         
@@ -173,7 +186,7 @@ public class UIHandler{
         }
     }
 
-    public void update(){
+    public void update(){ //updates inventory cells accordingly when hermes is used
         if (GameFrame.gameState == GameFrame.HERMES_STATE){
             for (int i = 0; i < inventoryCellsHermes.length ; i++){
                 inventoryCellsHermes[i].update();
@@ -183,15 +196,15 @@ public class UIHandler{
         }
     }
 
-    public Player getSelectedPlayer() {
+    public Player getSelectedPlayer() { //getter for selected player
         return selectedPlayer;
     }
 
-    public MapHandler getMapHandler() {
+    public MapHandler getMapHandler() { //getter for map handler
         return mapHandler;
     }
 
-    public void mousePressed(MouseEvent e){
+    public void mousePressed(MouseEvent e){ //adjusts hermes based on what item or button is clicked
         if (GameFrame.gameState == GameFrame.HERMES_STATE){
             for (int i = 0; i < 70; i++){
                 if ( isIn(e, inventoryCellsHermes[i])){
@@ -212,7 +225,7 @@ public class UIHandler{
 
     }
 
-    public void mouseReleased(MouseEvent e){
+    public void mouseReleased(MouseEvent e){ //adjusts hermes based on what item or button is clicked and plays sound effects
         if (GameFrame.gameState == GameFrame.HERMES_STATE){
             for (int i = 0; i < 70; i++){
                 if ( isIn(e, inventoryCellsHermes[i])){
@@ -244,7 +257,7 @@ public class UIHandler{
 
     }
 
-    public void mouseMoved(MouseEvent e){
+    public void mouseMoved(MouseEvent e){ //adjusrs the status of the cells based on where the mouse is
         resetButtons();
         if (GameFrame.gameState == GameFrame.HERMES_STATE){
             for (int i = 0; i < 70; i++){
@@ -270,11 +283,11 @@ public class UIHandler{
         }
     }
 
-    private boolean isIn(MouseEvent e, UIButton button){
+    private boolean isIn(MouseEvent e, UIButton button){ //checks if the mouse is in the bounds of the button
         return button.getBounds().contains(e.getX(), e.getY());
     }
 
-    private void resetButtons() {
+    private void resetButtons() { //resets all buttons
         if (GameFrame.gameState == GameFrame.HERMES_STATE){
             for (int i = 0; i < 70; i++){
                 inventoryCellsPlayer[i].resetBools();
@@ -286,7 +299,7 @@ public class UIHandler{
         }
     }
 
-    private void resetCells(){
+    private void resetCells(){ //empties inventory cells for player and hermes
         for (int i = 0; i < 70; i++){
             inventoryCellsPlayer[i].setContents(null);
             inventoryCellsHermes[i].setContents(null);

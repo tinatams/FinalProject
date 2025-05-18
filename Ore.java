@@ -1,3 +1,26 @@
+/**
+    Ore Class that implements Interactable. It allows Interactions so that the iron can be picked up (hitbox and interaction box) based on 
+    the interactable item's health.
+ 
+	@author Martina Amale M. Llamas (242648); Zoe Angeli G. Uy (246707)
+	@version May 19, 2025
+	
+	I have not discussed the Java language code in my program 
+	with anyone other than my instructor or the teaching assistants 
+	assigned to this course.
+
+	I have not used Java language code obtained from another student, 
+	or any other unauthorized source, either modified or unmodified.
+
+	If any Java language code or documentation used in my program 
+	was obtained from another source, such as a textbook or website, 
+	that has been clearly noted with a proper citation in the comments 
+	of my program.
+
+    
+
+**/
+
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
@@ -13,7 +36,7 @@ public class Ore implements Interactable{
 
     private Rectangle hitBox, interactionBox;
 
-    public Ore(int x, int y){
+    public Ore(int x, int y){ //Constructor where the entity is drawn and it's health bar
         spriteW = GameFrame.SCALED;
         spriteH = GameFrame.SCALED;
         
@@ -28,7 +51,7 @@ public class Ore implements Interactable{
         loadImage();
     }
 
-    public void loadImage(){
+    public void loadImage(){ //reads what png needs to be drawn
         try {
             BufferedImage tileSheet = ImageIO.read(new File("./res/tileSets/TileSetDeco.png")); 
             int tileSize = 16;
@@ -40,12 +63,12 @@ public class Ore implements Interactable{
     }
 
     @Override
-    public void draw(Graphics2D g2d){
+    public void draw(Graphics2D g2d){ //calls the draw method for interactable
         g2d.drawImage(treeSprite, worldX, worldY, spriteW, spriteH, null);
     }
 
     @Override
-    public void interact(Player player) {
+    public void interact(Player player) { //calls the collect method whenever health is zero and sound effects
         if (player.getItem(PickaxeItem.ITEMNAME) != null){
             health--;
             SoundHandler sh = player.getFrame().getSoundHandler();
@@ -60,36 +83,38 @@ public class Ore implements Interactable{
     }
 
     @Override
-    public int getWorldX() {
+    public int getWorldX() { //returns where the item is (x-coordinates)
         return worldX;
     }
 
     @Override
-    public int getWorldY() {
+    public int getWorldY() { //returns where the item is (y-coordinates)
         return worldY;
     }
 
     @Override
-    public int getSpriteW() {
+    public int getSpriteW() { //returns the width of the item
         return spriteW;
     }
 
     @Override
-    public int getSpriteH() {
+    public int getSpriteH() { //returns the height of the item
         return spriteH;
     }
 
     @Override
-    public Rectangle getHitBox() {
+    public Rectangle getHitBox() { //returns the hitbox dimensions
         return hitBox;
     }
 
-    public int getHealth(){
+
+    @Override
+    public Rectangle getInteractionBox() { //returns the interaction box dimensions
+        return interactionBox;
+    }
+
+    public int getHealth() {//gets health
         return health;
     }
 
-    @Override
-    public Rectangle getInteractionBox() {
-        return interactionBox;
-    }
 }
