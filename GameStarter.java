@@ -1,3 +1,25 @@
+/**
+    The GameStarter initializes the game client. Starts the game menu, connects to server,
+    handles collecting data and proccessing client and server data. 
+
+    Class sets up and controls data through threads, creates and instantiates GameFrame and 
+    collects data to update its states and attributes. 
+
+	@author Martina Amale M. Llamas (242648); Zoe Angeli G. Uy (246707)
+	@version May 19, 2025
+	
+	I have not discussed the Java language code in my program 
+	with anyone other than my instructor or the teaching assistants 
+	assigned to this course.
+
+	I have not used Java language code obtained from another student, 
+	or any other unauthorized source, either modified or unmodified.
+
+	If any Java language code or documentation used in my program 
+	was obtained from another source, such as a textbook or website, 
+	that has been clearly noted with a proper citation in the comments 
+	of my program.
+**/
 import java.io.*;
 import java.net.*;
 
@@ -15,13 +37,21 @@ public class GameStarter{
 
     private boolean connected;
 
+    /**
+        Instantiates attributes
+
+        connected to false because not yet connected to a server
+        serverdata and client data to nothing yet since there is no information yet
+    **/
     public GameStarter(){
         connected = false;
-        startMenu();
         serverData = "nothing yet";
         clientData = "nothing yet";
     }
 
+    /**
+        Method closes the socket when the program is closed
+    **/
     public void closeSocketOnShutdown(){
         Runtime.getRuntime().addShutdownHook(new Thread( ()-> {
             try {
@@ -32,6 +62,14 @@ public class GameStarter{
         }));
     }
 
+    /**
+        Method connects the client to server. 
+
+        @param is the ip address of the server
+        @param port is the portnumber of the server
+
+        if successfully connected, connected attribute is set to true, and recieves clients number
+    **/
     public void connectToServer(String ip, String port){
         try {
             theSocket = new Socket(ip.trim(), Integer.parseInt(port.trim()));
@@ -53,42 +91,14 @@ public class GameStarter{
         closeSocketOnShutdown();
     }
 
-    public void connectToServer2(){
-        try {
-            theSocket = new Socket("localhost", 60003);
-            System.out.println("CONNECTION SUCCESSFUL");
+    /**
+        Method initiates the GameFrame/ the actual game itself. 
+        Instantiates GameFrame object and passes the current server data, clientdata and chosen skin of player.
 
-            dataIn = new DataInputStream(theSocket.getInputStream());
-            dataOut = new DataOutputStream(theSocket.getOutputStream());
+        @param skin is the chosen skin of the player
 
-            //GETS CLIENT NUMBER
-            //FIRST THING THAT THE SERVER SENDS
-            clientNumber = Integer.parseInt(dataIn.readUTF()); 
-            setUpFrame();
-
-            WriteToServer wts = new WriteToServer();
-            ReadFromServer rfs = new ReadFromServer();
-            
-            wts.start();
-            rfs.start();
-        } catch (IOException e) {
-            System.out.println("IOException from connectToServer() method");
-        }
-    }
-
-    public void setUpFrame(){
-        System.out.println("starting game up");
-        menuFrame.closeMenu();
-        frame = new GameFrame(serverData, clientNumber);
-        frame.setUpGUI();
-
-        WriteToServer wts = new WriteToServer();
-        ReadFromServer rfs = new ReadFromServer();
-            
-        wts.start();
-        rfs.start();
-    }
-
+        read and write threads are instantiated. 
+    **/
     public void setUpFrame(String skin){
         System.out.println("starting game up");
         menuFrame.closeMenu();
@@ -102,21 +112,41 @@ public class GameStarter{
         rfs.start();
     }
 
+    /**
+        Method starts the GameMenu, and starts it's GUI/ frame. 
+    **/
     public void startMenu(){
         menuFrame = new GameMenu(this);
         menuFrame.setUpGUI();
     }
 
+    /**
+        Gets if the client is connected to the server
+        @return connected
+    **/
     public boolean isConnected() {
         return connected;
     }
 
+    /**
+        Private/ inner classs that is used to send data to the server. 
+    **/
     public class WriteToServer extends Thread{
         public WriteToServer(){
 
         }
 
-        public void run(){
+        /**
+            Gets data and sends it to the server every 10 miliseconds. 
+
+            Sends Player data, Labyrinth data, Hermes inventory data, and Quest Data
+
+            Player Data: coordinates, and sprite data
+            Labyrinth: What map version the laybrinth is in
+            Hermes: the inventory of hermes, and 'action' <- if hermes needs to be switched to the other island
+            Quest: the state of each quest : not assigned, active, complete
+        **/
+        public void run(){  
             while (true) { 
                 try {
                     Player clientPlayer = frame.getSelected();
@@ -133,17 +163,24 @@ public class GameStarter{
                         Thread.sleep(10);
                     } catch (InterruptedException ex) {
                     }
+
+                    dataOut.flush();
                 } catch (IOException ex) {
                 }
             }
         }
     }
 
+    /**
+        Private/ inner class that is used to recieve data from the server
+    **/
     public class ReadFromServer extends Thread{
-        public ReadFromServer(){
+        public ReadFromServer(){}
 
-        }
-
+        /**
+            Recieves data from the server and distributes it to the respective classes for them
+            to be updated accordingly.
+        **/
         public void run(){
             while (true) { 
                try {
@@ -169,6 +206,9 @@ public class GameStarter{
             }
         }
 
+        /**
+            Compiles that data to remove the 'data type' and send only necessary data. 
+        **/
         private String compile(String[] data){
             String tempString = "";
             for (int i = 1; i < data.length ; i++){
@@ -176,15 +216,17 @@ public class GameStarter{
                 if (i + 1 < data.length){
                     tempString += "|";
                 }
-                
             }
-
             return tempString;
         }
     }
 
+    /**
+        Main method that instantiates GameStarter and starts the game Menu.
+    **/
     public static void main(String[] args) {
         GameStarter c = new GameStarter();
+        c.startMenu();
     }
 
 }

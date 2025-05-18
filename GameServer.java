@@ -1,3 +1,23 @@
+/**
+    The GameFrame manages clients and sockets. Connects clients together and facilitates
+    sending of information from clients to each other. Collects, processes, and redistributes 
+    data for real-time in game updates. 
+
+	@author Martina Amale M. Llamas (242648); Zoe Angeli G. Uy (246707)
+	@version May 19, 2025
+	
+	I have not discussed the Java language code in my program 
+	with anyone other than my instructor or the teaching assistants 
+	assigned to this course.
+
+	I have not used Java language code obtained from another student, 
+	or any other unauthorized source, either modified or unmodified.
+
+	If any Java language code or documentation used in my program 
+	was obtained from another source, such as a textbook or website, 
+	that has been clearly noted with a proper citation in the comments 
+	of my program.
+**/
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -11,6 +31,10 @@ public class GameServer{
     private String serverData,hasHermes, hermesLastInv;
     private boolean canSwitch, newInteraction;
 
+    /**
+        Constructor that instantiates the default values of the GameServer.  
+        Sets the socket of the server to 60003
+    **/
     public GameServer(){
         serverData = "nothing yet";
         hermesLastInv = "NULL";
@@ -25,9 +49,12 @@ public class GameServer{
         } catch (IOException e) {
             System.out.println("IOException from ChatServer constructor");
         }
-        System.out.println("THE CHAT SERVER HAS BEEN CREATED");
+        System.out.println("THE GAME SERVER HAS BEEN CREATED");
     }
 
+    /**
+        Method that switches hermes from one island to the other
+    **/
     public void passHermes(){
         if (canSwitch){
             if (hasHermes.equals("ODD")){
@@ -38,6 +65,9 @@ public class GameServer{
         }
     }
 
+    /**
+        Method closes all connected sockets when, program is closed.
+    **/
     public void closeSocketsOnShutdown(){
         Runtime.getRuntime().addShutdownHook(new Thread(() ->{
             try {
@@ -50,9 +80,19 @@ public class GameServer{
         }));
     }
 
+    /**
+        Waits for client connections.
+        When a client connects it creates a new instance of ClientRunnable and passes the socket and clientNumber
+        of the client. 
+
+        Starts the Thread of the client. 
+    **/
     public void waitForConnections(){
         try {
             System.out.println("NOW ACCEPTING CONNECTIONS...");
+            ServerOut so = new ServerOut();
+            so.start();
+            
             while (true) { 
                 Socket sock = ss.accept();
                 sockets.add(sock);
@@ -61,15 +101,18 @@ public class GameServer{
                 clientNum++;
                 cr.startThread();
                 clients.add(cr);
-
-                ServerOut so = new ServerOut();
-                so.start();
             }
         } catch (IOException e) {
             System.out.println("IOException from waitForConnections() method");
         }
     }
 
+    /**
+        Compiles and unifies client data for distribution. 
+
+        Separates client data by 'type' and processes data appropriately before
+        recompiling for redistribution.
+    **/
     public void compileServerData(){
         String tempString = "";
         String[] playerData = new String[clients.size()];
@@ -161,10 +204,7 @@ public class GameServer{
                     if (!(hermesLastInv).equals(finalHermInventory)){
                         finalHermInventory = hermesLastInv;
                     }
-
-                    
                 }
-                    
                 tempString += String.format("%s,%s,%s", sepHermData[0], hasHermes, finalHermInventory);
                 hermesLastInv = finalHermInventory;
 
@@ -182,12 +222,18 @@ public class GameServer{
         //System.out.println(serverData);
     }
 
+    /**
+        Sends out the server data to the clients.
+    **/
     public void sendOutData(){
         for (ClientRunnable c : clients){
             c.sendDataToClient(serverData);
         }
     }
 
+    /**
+        Inner class that represents the client thread. Handles sending and recieving data from client. 
+    **/
     private class ClientRunnable implements Runnable{
         private Socket clientSocket;
         private DataInputStream dataIn;
@@ -197,6 +243,14 @@ public class GameServer{
         private String clientData;
         private String[] clientArray;
 
+        /**
+            Constructor that instantiates needed classes and sets defualt values
+
+            @param sck is the socket of the client
+            @param n is the client number
+
+            derives the input and output streams from the client socket. 
+        **/
         public ClientRunnable(Socket sck, int n){
             clientSocket = sck;
             cid = n; 
@@ -210,11 +264,18 @@ public class GameServer{
             }
         }
 
+        /**
+            Starts the client thread by passing this thread as the Runnable object.
+        **/
         public void startThread(){
             Thread t = new Thread(this);
             t.start();
         }
         
+        /**
+            Gets data from the client and splits it into the Client data array, which is the data
+            separated by 'type'. Sends out client data, before constantly waiting for client data. 
+        **/
         @Override
         public void run(){
             try {
@@ -224,35 +285,57 @@ public class GameServer{
                 while (true) { 
                     clientData = dataIn.readUTF();
                     clientArray = clientData.split("\n");
-                    //sendToClients(messageFromClient, this);
                 }
             } catch (IOException e) {
                 System.out.println("IOException from ClientRunnable's run() method");
+                //System.out.println("Client left (booooooo) ");
                 //clients.remove(this);
+                //sockets.remove(clientSocket);
             }
         }
 
+        /**
+            Sends data to client
+
+            @param data is the data to be sent out 
+        **/
         public void sendDataToClient(String data){
             try {
                 dataOut.writeUTF(data);
+                dataOut.flush();
             } catch (IOException ex) {
             }
         }
 
+        /**
+            Gets the clientData of the client
+
+            @return clientdata
+        **/
         public String getClientData(){
             return clientData;
         }
 
+        /**
+            Gets the separated data of the client
+
+            @return clientArray 
+        **/
         public String[] getClientDataArray(){
             return clientArray;
         }
     }
 
+    /**
+        Inner class that sends out data to clients. Extends thread to run concurrently
+        with other tasks.  
+    **/
     private class ServerOut extends Thread {
-        public ServerOut(){
+        public ServerOut(){}
 
-        }
-
+        /**
+            Sends out data to clients, every 10 miliseconds. Calls compileData and SendOutData.
+        **/
         public void run(){
             while (true) { 
                 compileServerData();
@@ -265,6 +348,10 @@ public class GameServer{
         }
     }
 
+    /**
+       Instantiates the GameServer, sets up a shutdown hook to close sockets, and starts waiting on 
+       client connections.
+    **/
     public static void main(String[] args) {
         GameServer s = new GameServer();
         s.closeSocketsOnShutdown();
