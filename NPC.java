@@ -16,9 +16,6 @@
 	was obtained from another source, such as a textbook or website, 
 	that has been clearly noted with a proper citation in the comments 
 	of my program.
-
-    
-
 **/
 import java.awt.*;
 import java.awt.image.*;
@@ -73,8 +70,7 @@ public abstract class NPC implements Interactable{ //should extend interactable
 
     @Override
     public void interact(Player player) { //changes dialog number (shown dialogue) based on interactions with the player
-        speak();
-        
+        speak(); 
     }
 
     public void speak(){
@@ -111,7 +107,6 @@ public abstract class NPC implements Interactable{ //should extend interactable
     public Rectangle getInteractionBox() { //getter for interaction box
         return interactionBox;
     }
-
 
     public int getDialogueSize(){ //getter for dialogue size
         return dialogues.length-1;
