@@ -83,19 +83,22 @@ public class KeyHandler implements KeyListener{
 
         //INTERACTION KEY
         if (code ==  KeyEvent.VK_C){
-            if (GameFrame.gameState == GameFrame.HERMES_STATE){
+            
+            NPC currentNPC = selectedPlayer.getNPCinteracting();
+            if(currentNPC != null){
+                if (!(currentNPC instanceof Hermes))
+                GameFrame.gameState = GameFrame.DIALOG_STATE;
+            }
+
+            if(GameFrame.gameState == GameFrame.PLAYING_STATE)selectedPlayer.interact();
+
+            else if (GameFrame.gameState == GameFrame.HERMES_STATE){
                 Hermes hermes = (Hermes) canvas.getMapHandler().getNPC(Hermes.name);
                 hermes.setUser(Hermes.NO_USER);
                 GameFrame.gameState = GameFrame.PLAYING_STATE;
                 frame.getSoundHandler().playEffect(SoundHandler.INV_OUT);
             }
 
-            NPC currentNPC = selectedPlayer.getNPCinteracting();
-            if(currentNPC != null){
-                GameFrame.gameState = GameFrame.DIALOG_STATE;
-            }
-
-            if(GameFrame.gameState == GameFrame.PLAYING_STATE) selectedPlayer.interact();
 
             else if(GameFrame.gameState == GameFrame.DIALOG_STATE){
                 if(currentNPC.getDialogNumber() > currentNPC.getDialogueSize()){
@@ -126,6 +129,16 @@ public class KeyHandler implements KeyListener{
                 }
             }
             
+        }
+
+        //RESET / ESCAPE FROM OTHER STATES
+        if (code == KeyEvent.VK_ESCAPE){
+            if (GameFrame.gameState == GameFrame.HERMES_STATE){
+                Hermes hermes = (Hermes) canvas.getMapHandler().getNPC(Hermes.name);
+                hermes.setUser(Hermes.NO_USER);
+            }
+            GameFrame.gameState = GameFrame.PLAYING_STATE;
+            frame.getSoundHandler().playEffect(SoundHandler.INV_OUT);
         }
     }
 
