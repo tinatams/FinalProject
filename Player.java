@@ -160,11 +160,7 @@ public class Player implements Collidable{
                 worldX -= speed;
                 break;
         }
-<<<<<<< Updated upstream
         // System.out.println(worldX+""+worldY);
-=======
-        //System.out.println(worldX+""+worldY);
->>>>>>> Stashed changes
 
         if (direction != IDLE && version == 0 && counter == 0){
             frame.getSoundHandler().playEffect(SoundHandler.WALK);
