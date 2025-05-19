@@ -13,7 +13,7 @@
 
 	If any Java language code or documentation used in my program 
 	was obtained from another source, such as a textbook or website, 
-	that has been clearly noted with a proper citation in the comments 
+	that has been clearly noted with a proper citation in the comments c
 	of my program.
 
     
@@ -38,6 +38,7 @@ public class UIHandler{
     private BufferedImage gameTitle, inventoryHeader, questHeader, hermesHeader;
     private Player selectedPlayer;
     private MapHandler mapHandler;
+    private QuestHandler qh=new QuestHandler();
 
     private UIMiniMap minMap;
     private FishMiniGame fishy;
@@ -52,6 +53,7 @@ public class UIHandler{
         
         selectedPlayer = frame.getSelected();
         mapHandler = frame.getMapHandler();
+        qh=frame.getQuestH();
 
         minMap = new UIMiniMap(0, 0, frame);
         fishy = frame.getFishy();
@@ -126,7 +128,18 @@ public class UIHandler{
     }
     
     public void drawQuestPanel(Graphics2D g2d,int panelX, int panelY){ //draws quest panel
+        try{
+        BufferedImage temp = ImageIO.read(new File("./res/uiAssets/QuestBox.png"));
         g2d.drawImage(blankHalfPanel, panelX * GameFrame.SCALED, panelY * GameFrame.SCALED, 9 * GameFrame.SCALED, 14 * GameFrame.SCALED, null);
+        for(int i=0;i<qh.states.length;i++){
+            if(qh.states[i]==1){
+                // g2d.drawImage(temp, panelX * GameFrame.SCALED-20, panelY * GameFrame.SCALED/5, null);
+            }
+        }
+        }
+        catch(IOException ex){
+            
+        }
     }
     
     public void setUpCells(){ //sets up needed inventory cells

@@ -144,6 +144,7 @@ public class Hephaestus extends NPC{
                                 }
                                 result=after.get(1);
                                 qh.states[10]=QuestHandler.COMPLETED;
+                                qh.states[11]=QuestHandler.ACTIVE;
                                 qh.states[16]=QuestHandler.ACTIVE;
                                 first=true;
                                 return result;
@@ -156,6 +157,7 @@ public class Hephaestus extends NPC{
                             result=before.get(3);
                             first=false;
                             player.collect(new KeyItem(1,1,"HEPHEASTUS"));
+                            player.collect(new KeyItem(2,2,"DIONYSUS"));
                             return result;
                         }
                         result=during.get(3);

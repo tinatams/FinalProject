@@ -101,6 +101,7 @@ public class KeyHandler implements KeyListener{
 
 
             else if(GameFrame.gameState == GameFrame.DIALOG_STATE){
+                if(currentNPC!=null){
                 if(currentNPC.getDialogNumber() > currentNPC.getDialogueSize()){
                     currentNPC.setDialogNumber(0);
                     GameFrame.gameState = GameFrame.PLAYING_STATE;
@@ -109,6 +110,7 @@ public class KeyHandler implements KeyListener{
                     selectedPlayer.interact();
                     currentNPC.setDialogNumber(currentNPC.getDialogNumber()+1);
                 }
+            }
             }
 
             else if (GameFrame.gameState == GameFrame.FISHING_STATE){

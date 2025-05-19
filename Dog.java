@@ -60,6 +60,9 @@ public class Dog extends NPC{
                 super.setDialogues(check(player).split("/n"));
                 player.getFrame().setQuestH(qh);
         }
+        else{
+            super.setDialogues("This dog is really stubborn".split("/n"));
+        }
         
         super.speak(); //Changes NPC dialogue
         
@@ -83,6 +86,7 @@ public class Dog extends NPC{
                             if(inventory.get(j).getName().equals("BONE")){
                                 result=after.get(0);
                                 player.collect(new Captured_Dog());
+                                dialognumber++;
                                 captured=true; //variable for when a dog meets the captured criteria
                                 return result;
                             }
