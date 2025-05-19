@@ -24,43 +24,66 @@ import java.awt.event.*;
 
 public class MouseHandler implements MouseListener, MouseMotionListener{
     private UIHandler UI;
-
-    public MouseHandler(GameFrame frame){ //constructor based on frame
+    /**
+        constructor based on frame
+    **/
+    public MouseHandler(GameFrame frame){ 
         UI = frame.getUi();
     }
     
+    /**
+        what happens when mouse is clicked 
+    **/
     @Override
-    public void mouseClicked(MouseEvent e) { //what happens when mouse is clicked
+    public void mouseClicked(MouseEvent e) { 
     }
 
+    /**
+        when mouse is pressed it calls the UI function
+    **/
     @Override
-    public void mousePressed(MouseEvent e) { //when mouse is pressed it calls the UI function
+    public void mousePressed(MouseEvent e) { 
         UI.mousePressed(e);
 
     }
 
+    /**
+        when mouse is released it calls the UI function
+    **/
     @Override
-    public void mouseReleased(MouseEvent e) { //when mouse is released it calls the UI function
+    public void mouseReleased(MouseEvent e) {
         UI.mouseReleased(e);
     }
 
+    /**
+        what happens when mouse enters
+    **/
     @Override
-    public void mouseEntered(MouseEvent e) { //what happens when mouse enters
+    public void mouseEntered(MouseEvent e) {
 
     }
 
+    /**
+        what happens when mouse exits
+    **/
     @Override
-    public void mouseExited(MouseEvent e) {//what happens when mouse exits
+    public void mouseExited(MouseEvent e) {
 
     }
 
+    /**
+       what happens when mouse is dragged
+    **/
     @Override
-    public void mouseDragged(MouseEvent e) { //what happens when mouse is dragged
+    public void mouseDragged(MouseEvent e) {
 
     }
 
+    /**
+        when mouse is moved it calls the UI function
+    **/
     @Override
-    public void mouseMoved(MouseEvent e) { //when mouse is moved it calls the UI function
+    public void mouseMoved(MouseEvent e) { 
         UI.mouseMoved(e);
     }
 

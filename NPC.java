@@ -23,7 +23,7 @@ import java.io.*;
 import java.util.ArrayList;
 import javax.imageio.*;
 
-public abstract class NPC implements Interactable{ //should extend interactable
+public abstract class NPC implements Interactable{
     protected int worldX, worldY;
     protected int spriteW, spriteH;
     
@@ -41,8 +41,10 @@ public abstract class NPC implements Interactable{ //should extend interactable
     protected ArrayList<String> after= new ArrayList<String>();
     
 
-   
-    public NPC(String name,int x, int y){ //Constructor with the NPC name and location
+    /**
+        Constructor with the NPC name and location
+    **/
+    public NPC(String name,int x, int y){ 
         this.name=name;
         worldX = x;
         worldY = y;
@@ -53,8 +55,10 @@ public abstract class NPC implements Interactable{ //should extend interactable
         interactionBox = new Rectangle(worldX - GameFrame.SCALED/2 ,worldY - GameFrame.SCALED/2 , spriteW + GameFrame.SCALED, spriteH + GameFrame.SCALED);
     }
 
-
-    public void draw(Graphics2D g2d, String skin){ //draw method for a certain NPC (reads the necessary sprite)
+     /**
+        draw method for a certain NPC (reads the necessary sprite)
+    **/
+    public void draw(Graphics2D g2d, String skin){ 
         try{
             sprite = ImageIO.read(new File(String.format("./res/NPCs/%s.png",skin)));
 
@@ -68,76 +72,128 @@ public abstract class NPC implements Interactable{ //should extend interactable
         }
     }
 
+    /**
+        changes dialog number (shown dialogue) based on interactions with the player
+    **/
     @Override
-    public void interact(Player player) { //changes dialog number (shown dialogue) based on interactions with the player
+    public void interact(Player player) {
         speak(); 
     }
 
+    /**
+        sets shown dialog based on  current dialoghnumber
+    **/
     public void speak(){
         UIHandler.currentDialog=dialogues[dialognumber];
     }
 
-    public int getDialogNumber(){ //getter for dialogue number
+    /**
+        getter for dialogue number
+    **/
+    public int getDialogNumber(){ 
         return dialognumber;
     }
 
-
+     /**
+        getter for sprite width
+    **/
     @Override
-    public int getSpriteW() {  //getter for sprite width
+    public int getSpriteW() { 
         return spriteW;
     }
 
+     /**
+       getter for sprite height
+    **/
     @Override
-    public int getSpriteH() { //getter for sprite height
+    public int getSpriteH() {
         return spriteH;
     }
 
-    public int getWorldX() { //getter for sprite x-coordinate
+     /**
+        getter for sprite x-coordinate
+    **/
+    public int getWorldX() { 
         return worldX;
     }
 
-    public int getWorldY() { //getter for sprite y-coordinate
+     /**
+        getter for sprite y-coordinate
+    **/
+    public int getWorldY() { 
         return worldY;
     }
+
+     /**
+        getter for hitbox
+    **/
     @Override
-    public Rectangle getHitBox() { //getter for hitbox
+    public Rectangle getHitBox() { 
         return hitBox;
     }
+
+     /**
+        getter for interaction box
+    **/
     @Override
-    public Rectangle getInteractionBox() { //getter for interaction box
+    public Rectangle getInteractionBox() { 
         return interactionBox;
     }
 
-    public int getDialogueSize(){ //getter for dialogue size
+     /**
+        getter for dialogue size
+    **/
+    public int getDialogueSize(){
         return dialogues.length-1;
     }
 
-
-    public String getName(){ //getter for name
+     /**
+        getter for name
+    **/
+    public String getName(){ 
         return name;
     }
 
-    public void setWorldX(int worldX) { //setter for x-coordinate
+    /**
+        setter for x-coordinate
+    **/
+    public void setWorldX(int worldX) {
         this.worldX = worldX;
     }
 
-    public void setWorldY(int worldY) { //setter for y-coordinate
+     /**
+        setter for y-coordinate
+    **/
+    public void setWorldY(int worldY) { //
         this.worldY = worldY;
     }
 
-    public void setDialogues(String[] dialogues) { //setter for dialogues
+     /**
+        setter for dialogues
+    **/
+    public void setDialogues(String[] dialogues) { 
         this.dialogues = dialogues;
         dialognumber=0;
     }
 
-    public void setHitBox(Rectangle hitBox) { //setter for hitbox
+     /**
+        setter for hitbox
+    **/
+    public void setHitBox(Rectangle hitBox) { 
         this.hitBox = hitBox;
     }
 
-    public void setInteractionBox(Rectangle interactionBox) { //setter for interaction box
+     /**
+        setter for interaction box
+    **/
+    public void setInteractionBox(Rectangle interactionBox) { 
         this.interactionBox = interactionBox;
     }
-    public void setDialogNumber(int dialognumber){ //setter for dialog number
+
+     /**
+       setter for dialog number
+    **/
+    public void setDialogNumber(int dialognumber){ 
         this.dialognumber=dialognumber;
     }
 
