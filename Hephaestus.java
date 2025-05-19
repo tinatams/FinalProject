@@ -72,7 +72,7 @@ public class Hephaestus extends NPC{
         if(super.getDialogNumber()==0){
             if(completed){
                 super.setDialogues("Ok then let's go.".split("/n"));
-                GameFrame.gameState=GameFrame.END_STATE;
+                // GameFrame.gameState=GameFrame.END_STATE;
             }
             else{
                 String result=check(player);
