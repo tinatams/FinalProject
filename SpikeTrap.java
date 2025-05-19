@@ -84,7 +84,7 @@ public class SpikeTrap extends Teleporter{
                 }
             };
 
-            int randomInterval = (rand.nextInt(5-1) + 1) * 10000;
+            int randomInterval = (rand.nextInt(5-1) + 1) * 1000;
             timer.schedule(changeSpikes, randomInterval);
             scheduled = true;
 

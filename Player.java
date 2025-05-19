@@ -67,8 +67,6 @@ public class Player implements Collidable{
         counter = 0;
         version = 0;
 
-        
-
         sprites = new BufferedImage[5][2];
         inventory = new ArrayList<>();
 
@@ -132,12 +130,14 @@ public class Player implements Collidable{
 
     public void draw(Graphics2D g){ //draw for the needed asset based on player direction
         g.drawImage(sprites[direction][version], worldX, worldY, spriteW, spriteH, null);
-        counter++; 
-        if (counter > 15){
-            if (version == 0) version = 1;
-            else if (version ==1) version = 0;
+        
+        if (direction != IDLE){counter++; 
+            if (counter > 15){
+                if (version == 0) version = 1;
+                else if (version ==1) version = 0;
 
-            counter = 0;
+                counter = 0;
+            }
         }
     }
 
@@ -224,6 +224,10 @@ public class Player implements Collidable{
 
     public void setDirection(int dir){ //setter for the direction
         direction = dir;
+        if (dir == IDLE){
+            version = 0;
+            counter = 0;
+        }
     }
 
     public void setOther(int dir, int v){ //setter for the direction and where the player is facing
