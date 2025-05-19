@@ -65,9 +65,7 @@ public class Dog extends NPC{
         }
         
         super.speak(); //Changes NPC dialogue
-        
-        
-
+        player.getFrame().getSoundHandler().playEffect(SoundHandler.DOG_SOUND);
     }
 
     public String check(Player player){ //Method that returns current dialogue according to active quest list and removes inventory items when needed
@@ -77,8 +75,6 @@ public class Dog extends NPC{
         for(int i=0;i<qh.states.length;i++){
 
                 if(qh.states[i]==QuestHandler.ACTIVE){
-                    
-                    
                     if(i==5){
                         result=during.get(0);
                         inventory=player.getInventory();
