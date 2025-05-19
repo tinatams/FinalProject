@@ -36,7 +36,10 @@ public class Ore implements Interactable{
 
     private Rectangle hitBox, interactionBox;
 
-    public Ore(int x, int y){ //Constructor where the entity is drawn and it's health bar
+    /**
+       Constructor where the entity is drawn and it's health bar
+    **/
+    public Ore(int x, int y){ 
         spriteW = GameFrame.SCALED;
         spriteH = GameFrame.SCALED;
         
@@ -51,7 +54,10 @@ public class Ore implements Interactable{
         loadImage();
     }
 
-    public void loadImage(){ //reads what png needs to be drawn
+    /**
+        reads what png needs to be drawn
+    **/
+    public void loadImage(){ 
         try {
             BufferedImage tileSheet = ImageIO.read(new File("./res/tileSets/TileSetDeco.png")); 
             int tileSize = 16;
@@ -62,13 +68,19 @@ public class Ore implements Interactable{
         }
     }
 
+    /**
+        calls the draw method for interactable
+    **/
     @Override
-    public void draw(Graphics2D g2d){ //calls the draw method for interactable
+    public void draw(Graphics2D g2d){ 
         g2d.drawImage(treeSprite, worldX, worldY, spriteW, spriteH, null);
     }
 
+    /**
+        calls the collect method whenever health is zero and sound effects
+    **/
     @Override
-    public void interact(Player player) { //calls the collect method whenever health is zero and sound effects
+    public void interact(Player player) { 
         if (player.getItem(PickaxeItem.ITEMNAME) != null){
             health--;
             SoundHandler sh = player.getFrame().getSoundHandler();
@@ -81,39 +93,60 @@ public class Ore implements Interactable{
         }
         
     }
-
+    
+    /**
+        returns where the item is (x-coordinates)
+    **/
     @Override
-    public int getWorldX() { //returns where the item is (x-coordinates)
+    public int getWorldX() { //
         return worldX;
     }
 
+    /**
+        returns where the item is (y-coordinates)
+    **/
     @Override
-    public int getWorldY() { //returns where the item is (y-coordinates)
+    public int getWorldY() { 
         return worldY;
     }
 
+    /**
+        returns the width of the item
+    **/
     @Override
-    public int getSpriteW() { //returns the width of the item
+    public int getSpriteW() { 
         return spriteW;
     }
 
+    /**
+        returns the height of the item
+    **/
     @Override
-    public int getSpriteH() { //returns the height of the item
+    public int getSpriteH() { 
         return spriteH;
     }
 
+    /**
+        returns the hitbox dimensions
+    **/
     @Override
-    public Rectangle getHitBox() { //returns the hitbox dimensions
+    public Rectangle getHitBox() { 
         return hitBox;
     }
 
 
+    /**
+        returns the interaction box dimensions
+    **/
     @Override
-    public Rectangle getInteractionBox() { //returns the interaction box dimensions
+    public Rectangle getInteractionBox() { 
         return interactionBox;
     }
 
-    public int getHealth() {//gets health
+    /**
+        gets health
+    **/
+    public int getHealth() {
         return health;
     }
 
