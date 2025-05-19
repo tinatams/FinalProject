@@ -46,6 +46,10 @@ public class KeyItem extends SuperItem implements Interactable{
         lockName = n;
     }
 
+    @Override
+    public void draw(Graphics2D g2d){
+        super.draw(g2d);
+    }
     /**
         loads the image of the class, sets the sprite variable to an image with the file path
         "./res/items/key.png"

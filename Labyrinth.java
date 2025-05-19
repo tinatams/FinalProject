@@ -21,8 +21,6 @@
 
 **/
 
-
-
 public class Labyrinth extends Map{
     private String version;
     private int[][] defaultBaseMap;
@@ -60,6 +58,8 @@ public class Labyrinth extends Map{
 
         baseTileMap = defaultBaseMap;
         collisionMap = defaultCollisionMap;
+
+        loadInteract();
     }
 
     public void loadNewMap(String newMap){ //Loads new map, decoration, collisions, and buttons based on what button is pressed
