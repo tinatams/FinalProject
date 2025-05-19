@@ -48,6 +48,9 @@ public class Player implements Collidable{
         sprites = new BufferedImage[5][2];
         inventory = new ArrayList<>();
 
+        inventory.add(new KeyItem(1,1,"DIONYSUS"));
+        inventory.add(new KeyItem(0,0,"ICARUS"));
+
         setUpSprites();
         hitBox = new Rectangle(worldX + 10, worldY + 30, spriteW-20, spriteH-30);
     }
