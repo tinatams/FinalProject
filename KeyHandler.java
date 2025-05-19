@@ -105,6 +105,9 @@ public class KeyHandler implements KeyListener{
                     if(currentNPC.getDialogNumber() > currentNPC.getDialogueSize()){
                         currentNPC.setDialogNumber(0);
                         GameFrame.gameState = GameFrame.PLAYING_STATE;
+                        if (currentNPC instanceof Dog){
+                            frame.getMapHandler().getNPCs().remove(currentNPC);
+                        }
                     }
                     else{
                         selectedPlayer.interact();
