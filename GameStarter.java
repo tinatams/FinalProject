@@ -28,6 +28,7 @@ public class GameStarter{
     private GameMenu menuFrame;
     private Socket theSocket;
 
+
     private DataInputStream dataIn;
     private DataOutputStream dataOut;
 
@@ -36,6 +37,7 @@ public class GameStarter{
     private String serverData; // data recieved from server
 
     private boolean connected;
+    
 
     /**
         Instantiates attributes
@@ -151,16 +153,19 @@ public class GameStarter{
                 try {
                     Player clientPlayer = frame.getSelected();
                     MapHandler mapH = frame.getMapHandler();
+                    QuestHandler questH=frame.getQuestH();
+                    
                     clientData = String.format("Players|%d,%d,%d,%s,%d,%d,%s\n", clientNumber, clientPlayer.getWorldX(), clientPlayer.getWorldY(), clientPlayer.getSkin(), clientPlayer.getDirection(), clientPlayer.getVer(), frame.getMap());
                     clientData += String.format("Labyrinth|%d,%s\n",clientNumber, mapH.getVersion());
                     if (GameFrame.gameState == GameFrame.HERMES_STATE){
                         Hermes hermes = (Hermes) mapH.getNPC(Hermes.name);
                         clientData += String.format("Hermes|%d,%s,%s\n",clientNumber, hermes.getAction(), hermes.getItemString());
                     }
-                    //System.out.println(clientData);
+                        clientData += String.format("Quest|%d,%s\n", clientNumber, frame.getQuestH().gatherData());
+                    // System.out.println(clientData);
                     dataOut.writeUTF(clientData);
                     try {
-                        Thread.sleep(10);
+                        Thread.sleep(5);
                     } catch (InterruptedException ex) {
                     }
 
@@ -197,6 +202,12 @@ public class GameStarter{
                             } else if (data[0].equals("Hermes")){
                                 Hermes hermes = frame.getMapHandler().getHermes();
                                 if (hermes != null) hermes.recieveData(compile(data));
+                            }
+                            else if(data[0].equals("Quest")){  
+                                if (data.length>=2) {
+                                    frame.getQuestH().recieveData(data[1]);
+                                }
+                            
                             }
                         }
                     }

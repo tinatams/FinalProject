@@ -5,6 +5,8 @@ import java.util.*;
 import javax.imageio.*;
 
 public class MapHandler{
+
+  
     private int clientNumber;
 
     private Map[] maps; 
@@ -15,6 +17,8 @@ public class MapHandler{
 
     private int currentMap;
     private Hermes hermes;
+
+    private static boolean demeter_sacrifice=false;
 
     //BOTH PLAYERS
     public static final int SPAWN = 0;
@@ -35,8 +39,10 @@ public class MapHandler{
     public static final int LABYRINTH = 10;
 
     private int bufferSize = GameFrame.WIDTH;
-
-    public MapHandler(GameFrame frame){
+     /**
+    Constructor for a map handler per client 
+    **/
+    public MapHandler(GameFrame frame){ 
         clientNumber = frame.getClientNumber();
 
         baseTiles = new BufferedImage[1000];
@@ -50,8 +56,10 @@ public class MapHandler{
         setUpMaps();
         setUpTiles();
     }
-
-    public void setUpMaps(){
+     /**
+    Method for the different options for maps and which one it should draw  
+    **/
+    public void setUpMaps(){ 
         maps[SPAWN] = new Map("spawn");
         maps[DEMETER] = new Map("demeter");
         maps[DIONYSUS] = new Map("dionysus");
@@ -79,8 +87,10 @@ public class MapHandler{
         }
         
     }
-
-    public void setUpTiles(){
+     /**
+    sets up the tile sets for the maps to choose to draw from
+    **/
+    public void setUpTiles(){ 
         int spriteSize = 16;
         try {
             BufferedImage bkgTileSource = ImageIO.read(new File("./res/tileSets/CompiledCompact.png"));
@@ -117,8 +127,10 @@ public class MapHandler{
         } catch (IOException ex) {
         }
     }
-
-    public void drawBase(Graphics2D g2d){
+     /**
+    draw function for the base map based on the dimensions and tiles read from the text file 
+    **/
+    public void drawBase(Graphics2D g2d){ 
         Map cm = maps[currentMap];
         int[][] currentMap = cm.getBaseMap();
 
@@ -137,7 +149,9 @@ public class MapHandler{
         }
 
     }
-
+     /**
+    draw function for the decorations based on the dimensions and tiles read from the text file   
+    **/
     public void drawDeco(Graphics2D g2d){
         Map cm = maps[currentMap];
         int[][] currentMap = cm.getDecoMap();
@@ -158,7 +172,9 @@ public class MapHandler{
         }
 
     }
-
+     /**
+    draw function for the collidables based on the dimensions and tiles read from the text file
+    **/
     public void drawColAbles(Graphics2D g2d){
         Map cm = maps[currentMap];
         int[][] currentMap = cm.getColAbleMap();
@@ -178,13 +194,28 @@ public class MapHandler{
             }
         }
     }
-
-    public void drawInteracts(Graphics2D g2d){
+     /**
+    draw function for the interactables based on the dimensions and tiles read from the text file
+    **/
+    public void drawInteracts(Graphics2D g2d){ 
         Map cm = maps[currentMap];
-        ArrayList<Interactable> interacts = cm.getInteractables();
-
+        ArrayList<Interactable> interacts = cm.getInteractables();;
         for (Interactable interactObj : interacts){
-            interactObj.draw(g2d);
+            if (interactObj instanceof Tree){
+                if(demeter_sacrifice){
+                    interactObj.draw(g2d);
+                    ((Tree) interactObj).setInteractionBox(new Rectangle(interactObj.getWorldX() - GameFrame.SCALED/2,interactObj.getWorldY() - GameFrame.SCALED/2, interactObj.getSpriteW() + GameFrame.SCALED, interactObj.getSpriteH()+GameFrame.SCALED) );
+                    ((Tree) interactObj).setHitBox(new Rectangle(interactObj.getWorldX()+20,interactObj.getWorldY()+10,interactObj.getSpriteW()-40,interactObj.getSpriteH()-15));
+                }
+                else{
+                    ((Tree) interactObj).setInteractionBox(new Rectangle(0,0,0,0));
+                    ((Tree) interactObj).setHitBox(new Rectangle(0,0,0,0));
+
+                }
+            }
+            else{
+                interactObj.draw(g2d);
+            }
         }
 
         ArrayList<Teleporter> teleporters = cm.getTeleporters();
@@ -194,7 +225,9 @@ public class MapHandler{
                 }
         }
     }
-
+     /**
+    draw function for the NPCs based on the dimensions and tiles read from the text file 
+    **/
     public void drawNPCs(Graphics2D g2d){
         Map cm = maps[currentMap];
         ArrayList<NPC> NPCs = cm.getNPCs();
@@ -203,8 +236,10 @@ public class MapHandler{
         }
         
     }
-
-    public void update(){
+     /**
+    update method checks if the player is colliding with teleporters or interactables
+    **/
+    public void update(){ 
         Map cm = maps[currentMap];
         ArrayList<Teleporter> teleporters = cm.getTeleporters();
         ArrayList<Interactable> interactables = cm.getInteractables();
@@ -291,7 +326,9 @@ public class MapHandler{
             }
         }
     }
-
+    /**
+    gets data from the server  
+    **/
     public void recieveData(String data){
         Labyrinth labMap = (Labyrinth) maps[LABYRINTH];
 
@@ -303,48 +340,68 @@ public class MapHandler{
 
         if(!newVersion.equals(labMap.getVersion())) labMap.loadNewMap(newVersion);
     }
-
+     /**
+    getter method for Labyrinth
+    **/
     public Labyrinth getLabyrinth(){
         return (Labyrinth) maps[LABYRINTH];
     }
-
-    public String getVersion(){
+     /**
+    getter method for version of the labyrinth map  
+    **/
+    public String getVersion(){ 
         AssistOne assistOne = (AssistOne) maps[ASSIST1];
         return assistOne.getVersion();
     }
-    
-    public int[][] getColMap(){
+     /**
+    getter method for ColMap
+    **/  
+    public int[][] getColMap(){ 
         return maps[currentMap].getColMap();
     }
-
-    public int getCurrentMap(){
+     /**
+    getter method for the current map
+    **/
+    public int getCurrentMap(){ 
         return currentMap;
     }
-
-    public int getMapWidth(){
+     /**
+    getter method for the map width 
+    **/
+    public int getMapWidth(){ 
         Map cm = maps[currentMap];
         return cm.getWidth();
     }
-
+    /**
+    getter method for the map height
+    **/
     public int getMapHeight(){
         Map cm = maps[currentMap];
         return cm.getHeight();
     }
-
+    /**
+    checks the dimensions of the map returns whether it's withing parameters   
+    **/
     public boolean canDraw(int X, int Y){
         return (X < pFollow.getWorldX() + bufferSize && X > pFollow.getWorldX() -  bufferSize &&
             Y < pFollow.getWorldY() + bufferSize && Y > pFollow.getWorldY() - bufferSize);
     }
-
+    /**
+    getter method for the interactables array list  
+    **/
     public ArrayList<Interactable> getInteractables() {
         return maps[currentMap].getInteractables();
     }
-
+     /**
+    getter method for the NPCs array list 
+    **/
     public ArrayList<NPC> getNPCs() {
         return maps[currentMap].getNPCs();
     }
-
-    public NPC getNPC(String name){
+     /**
+    getter for a particlar NPC 
+    **/
+    public NPC getNPC(String name){ 
         for (NPC npc : maps[currentMap].getNPCs()){
             if (name.equals(npc.getName())){
                 return npc;
@@ -353,13 +410,23 @@ public class MapHandler{
 
         return null;
     }
-
-    public Hermes getHermes(){
+     /**
+    getter for hermes
+    **/
+    public Hermes getHermes(){ 
         return hermes;
     }
-
-    public BufferedImage[] getBaseTileset(){
+     /**
+    getter for BaseTileset
+    **/
+    public BufferedImage[] getBaseTileset(){ 
         return baseTiles;
+    }
+     /**
+    setter to change whether demeter quest is done 
+    **/
+     public static void setDemeter_sacrifice(boolean demeter_sacrifice) { 
+        MapHandler.demeter_sacrifice = demeter_sacrifice;
     }
 
  }

@@ -43,11 +43,13 @@ public class GameFrame{
     private MapHandler mapH;
     private UIHandler ui; 
     private SoundHandler soundHandler;
+    private QuestHandler questH;
 
     private FishMiniGame fishy;
     
     private KeyHandler keyH;
     private MouseHandler mouseH;
+
 
     public static int gameState;
     
@@ -90,6 +92,7 @@ public class GameFrame{
         keyH = new KeyHandler(this);
         mouseH = new MouseHandler(this);
         soundHandler = new SoundHandler();
+        questH=new QuestHandler();
 
         gameState = INSTRUCTIONS;
     }
@@ -201,11 +204,15 @@ public class GameFrame{
         return soundHandler;
     }
 
-    /**
-        Gets the fish minigame
-        @return fishy
-    **/
+    public QuestHandler getQuestH() {
+        return questH;
+    }
+
     public FishMiniGame getFishy() {
         return fishy;
+    }
+
+    public void setQuestH(QuestHandler questH) {
+        this.questH = questH;
     }
 }

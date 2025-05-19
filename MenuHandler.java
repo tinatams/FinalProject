@@ -1,3 +1,26 @@
+/**
+    MenuHandler Class extends JComponent and handles the starting menu. It also handles the buttons and animations according to
+    mouse movements and gets IP address and port number from the player.
+ 
+	@author Martina Amale M. Llamas (242648); Zoe Angeli G. Uy (246707)
+	@version May 19, 2025
+	
+	I have not discussed the Java language code in my program 
+	with anyone other than my instructor or the teaching assistants 
+	assigned to this course.
+
+	I have not used Java language code obtained from another student, 
+	or any other unauthorized source, either modified or unmodified.
+
+	If any Java language code or documentation used in my program 
+	was obtained from another source, such as a textbook or website, 
+	that has been clearly noted with a proper citation in the comments 
+	of my program.
+
+    
+
+**/
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
@@ -19,7 +42,7 @@ public class MenuHandler extends JComponent{
     private UIButton[] chooseStateButtons;
     private SoundHandler soundHandler;
 
-    public MenuHandler(GameStarter gs, SoundHandler s){
+    public MenuHandler(GameStarter gs, SoundHandler s){ //Constructor per client
         gameStarter = gs;
         soundHandler = s;
         setUpAssets();
@@ -28,7 +51,7 @@ public class MenuHandler extends JComponent{
     }
     
     @Override 
-    protected void paintComponent(Graphics g){
+    protected void paintComponent(Graphics g){ //paint fuction that draws the needed grpahics for the start menu
         Graphics2D g2d = (Graphics2D) g;
 
         if (GameMenu.STATE == GameMenu.CHOOSING){
@@ -65,14 +88,14 @@ public class MenuHandler extends JComponent{
 
     }
 
-    public void update(){
+    public void update(){ //update method based on what buttons are pressed
         startButton.update();
         for(UIButton button :chooseStateButtons){
             button.update();
         }
     }
 
-    public void setUpAssets(){
+    public void setUpAssets(){ //sers up all the needed aseets(images)
         chooseStateButtons = new UIButton[5];
         try {
             backgroundImage = ImageIO.read(new File("./res/uiAssets/Background.png"));
@@ -109,9 +132,9 @@ public class MenuHandler extends JComponent{
         chooseStateButtons[4] = arrowLeft;
     }
 
-    //to accept listener things
+    
 
-    public void mousePressed(MouseEvent e){
+    public void mousePressed(MouseEvent e){ //listener when a mouse is pressed for the buttons
         if (GameMenu.STATE == GameMenu.CHOOSING){
             for (UIButton button : chooseStateButtons){
                 if (isIn(e, button)){
@@ -127,7 +150,7 @@ public class MenuHandler extends JComponent{
         }
     }
 
-    public void mouseReleased(MouseEvent e){
+    public void mouseReleased(MouseEvent e){//listener when a mouse is released to check which box is selected
         portBox.setSelected(false);
         ipBox.setSelected(false);
         if (GameMenu.STATE == GameMenu.CHOOSING){
@@ -154,7 +177,7 @@ public class MenuHandler extends JComponent{
         resetButtons();
     }
 
-    public void mouseMoved(MouseEvent e){
+    public void mouseMoved(MouseEvent e){ //checks if the mouse is over a button
         resetButtons();
         if (GameMenu.STATE == GameMenu.CHOOSING){
             for (UIButton button : chooseStateButtons){
@@ -171,7 +194,7 @@ public class MenuHandler extends JComponent{
         }
     }
 
-    public void keyTyped(KeyEvent e){
+    public void keyTyped(KeyEvent e){ //when a key is typed it appears in the text box
         if (GameMenu.STATE == GameMenu.CHOOSING){
             if (ipBox.isSelected()){
                 ipBox.type(e);
@@ -183,11 +206,11 @@ public class MenuHandler extends JComponent{
         }
     }
 
-    private boolean isIn(MouseEvent e, UIButton button){
+    private boolean isIn(MouseEvent e, UIButton button){ //checks if the mouse is in the area to trigger the button
         return button.getBounds().contains(e.getX(), e.getY());
     }
 
-    private void resetButtons(){
+    private void resetButtons(){//resets buttons to not be pressed
         startButton.resetBools();
 
         for(UIButton button : chooseStateButtons){
@@ -195,34 +218,34 @@ public class MenuHandler extends JComponent{
         }
     }
 
-    public String getPortNumber(){
+    public String getPortNumber(){ //getter for port number
         return portBox.getContents();
     }
 
-    public String getIpAddress(){
+    public String getIpAddress(){ //getter for IP address
         return ipBox.getContents();
     }
 
-    public void startAnimation(){
+    public void startAnimation(){ //starts animation thread
         Animation a = new Animation();
         a.start();
     }
 
-    public void setValidInputs(boolean validInputs) {
+    public void setValidInputs(boolean validInputs) {//setter for validinputs
         this.validInputs = validInputs;
     }
 
-    public String getSkin() {
+    public String getSkin() { //getter for skin
         return skinPicker.getCurrentSkin();
     }
 
-    private class Animation extends Thread {
+    private class Animation extends Thread { //inner class for thread
 
         public void Animation(){
 
         }
 
-        public void run(){
+        public void run(){//class to update and repaint the frame 
             while(true){
                 update();
                 repaint();

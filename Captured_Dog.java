@@ -1,5 +1,5 @@
 /**
-    WineItem Class that extends SuperItem and contains the item name and a load method for the image. Also determines whether an 
+    Captured Dog Class that extends SuperItem and contains the item name and a load method for the image. Also determines whether an 
     item is stackable to add to the inventory.
  
 	@author Martina Amale M. Llamas (242648); Zoe Angeli G. Uy (246707)
@@ -21,21 +21,22 @@
 
 **/
 
+
 import java.io.*;
 import javax.imageio.*;
 
-public class WineItem extends SuperItem {
-    public static final String ITEMNAME = "WINE";
+public class Captured_Dog extends SuperItem {
+    public static final String ITEMNAME = "CAPTURED_DOG";
 
-    public WineItem(){ //Constructor determines the size of the entity drawn in inventory and whether it is stackable
+    public Captured_Dog(){ //Constructor determines the size of the entity drawn in inventory and whether it is stackable
         super(ITEMNAME,0, 0, 16, 16);
-        setStackable(false);
+        setStackable(true);
     }
 
     @Override
     public void loadImage() { //reads what png needs to be drawn
         try{
-            sprite = (ImageIO.read(new File("./res/tileSets/TileSetDeco.png"))).getSubimage(5*16, 9*16, 16, 16);
+            sprite = ImageIO.read(new File("./res/NPCs/Dog.png"));
         } catch (IOException e){
             
         }

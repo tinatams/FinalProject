@@ -1,3 +1,25 @@
+/**
+    UIStartButton Class implements UIButton. Draws the start button using assets.
+
+	@author Martina Amale M. Llamas (242648); Zoe Angeli G. Uy (246707)
+	@version May 19, 2025
+	
+	I have not discussed the Java language code in my program 
+	with anyone other than my instructor or the teaching assistants 
+	assigned to this course.
+
+	I have not used Java language code obtained from another student, 
+	or any other unauthorized source, either modified or unmodified.
+
+	If any Java language code or documentation used in my program 
+	was obtained from another source, such as a textbook or website, 
+	that has been clearly noted with a proper citation in the comments 
+	of my program.
+
+    
+
+**/
+
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
@@ -15,7 +37,7 @@ public class UIStartButton implements UIButton {
     private boolean mousePressed,mouseOver;
     private Rectangle bounds;
     
-    public UIStartButton(int xPos, int yPos, GameStarter gs, MenuHandler mh){
+    public UIStartButton(int xPos, int yPos, GameStarter gs, MenuHandler mh){//constructor
         gameStarter = gs;
         menuHandler = mh;
 
@@ -41,12 +63,12 @@ public class UIStartButton implements UIButton {
     }
 
     @Override
-    public void draw(Graphics2D g2d) {
+    public void draw(Graphics2D g2d) { //draws the chosen assets
         g2d.drawImage(sprites[indexNum], x, y, 5 * GameFrame.SCALED, 2*GameFrame.SCALED, null);
     }
 
     @Override
-    public void update() {
+    public void update() {  //updates the assets based on mouse action
         indexNum = 0;
 
         if (mouseOver){
@@ -58,33 +80,35 @@ public class UIStartButton implements UIButton {
         }
     }
 
+
     @Override
-    public boolean isMousePressed() {
+    public boolean isMousePressed() { //getter for mousePressed
         return mousePressed;
     }
 
     @Override
-    public void setMousePressed(boolean mousePressed) {
+    public void setMousePressed(boolean mousePressed) { //setter for mousePressed
         this.mousePressed = mousePressed;
     }
 
     @Override
-    public boolean isMouseOver() {
+    public boolean isMouseOver() { //getter for mouseOver
         return mouseOver;
     }
 
     @Override
-    public void setMouseOver(boolean mouseOver) {
+    public void setMouseOver(boolean mouseOver) { //setter for mouseOver
         this.mouseOver = mouseOver;
     }
 
     @Override
-    public Rectangle getBounds() {
+    public Rectangle getBounds() { //getter for bounds
         return bounds;
     }
 
+
     @Override
-    public void clicked() {
+    public void clicked() {//method to connect to server once all fields are inputted and set up the frame and skin needed
         if (GameMenu.STATE == GameMenu.CHOOSING){
             if (!menuHandler.getPortNumber().isBlank() && !menuHandler.getIpAddress().isBlank()){
                 gameStarter.connectToServer(menuHandler.getIpAddress(), menuHandler.getPortNumber());
@@ -102,7 +126,7 @@ public class UIStartButton implements UIButton {
     }
 
     @Override
-    public void resetBools() {
+    public void resetBools() { //reset for the mouse actions
         mouseOver = false;
         mousePressed = false;
     }

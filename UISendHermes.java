@@ -1,3 +1,25 @@
+/**
+    UISendHermes Class implements UIButton. Draws hermes inventory
+
+	@author Martina Amale M. Llamas (242648); Zoe Angeli G. Uy (246707)
+	@version May 19, 2025
+	
+	I have not discussed the Java language code in my program 
+	with anyone other than my instructor or the teaching assistants 
+	assigned to this course.
+
+	I have not used Java language code obtained from another student, 
+	or any other unauthorized source, either modified or unmodified.
+
+	If any Java language code or documentation used in my program 
+	was obtained from another source, such as a textbook or website, 
+	that has been clearly noted with a proper citation in the comments 
+	of my program.
+
+    
+
+**/
+
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
@@ -13,7 +35,7 @@ public class UISendHermes implements UIButton{
     private boolean mousePressed,mouseOver;
     private Rectangle bounds;
 
-    public UISendHermes(int xPos, int yPos, UIHandler u){
+    public UISendHermes(int xPos, int yPos, UIHandler u){//constructor
         ui = u;
 
         x = xPos;
@@ -38,12 +60,12 @@ public class UISendHermes implements UIButton{
     }
 
     @Override
-    public void draw(Graphics2D g2d) {
+    public void draw(Graphics2D g2d) { //draws assets depending on if the cell is selected
         g2d.drawImage(sprites[indexNum], x, y, 3 * GameFrame.SCALED, GameFrame.SCALED, null);
     }
 
     @Override
-    public void update() {
+    public void update() {//updates based on mouse action
         indexNum = 0;
 
         if (mouseOver){
@@ -56,32 +78,32 @@ public class UISendHermes implements UIButton{
     }
 
     @Override
-    public boolean isMousePressed() {
+    public boolean isMousePressed() { //getter for mousePressed
         return mousePressed;
     }
 
     @Override
-    public void setMousePressed(boolean mousePressed) {
+    public void setMousePressed(boolean mousePressed) { //setter for mousePressed
         this.mousePressed = mousePressed;
     }
 
     @Override
-    public boolean isMouseOver() {
+    public boolean isMouseOver() { //getter for mouseOver
         return mouseOver;
     }
 
     @Override
-    public void setMouseOver(boolean mouseOver) {
+    public void setMouseOver(boolean mouseOver) { //setter for mouseOver
         this.mouseOver = mouseOver;
     }
 
     @Override
-    public Rectangle getBounds() {
+    public Rectangle getBounds() { //getter for bounds
         return bounds;
     }
 
     @Override
-    public void clicked() {
+    public void clicked() { //will send hermes to the other island
         Hermes hermes = (Hermes) ui.getMapHandler().getNPC(Hermes.name);
         if (hermes != null){
             hermes.send();
@@ -89,7 +111,7 @@ public class UISendHermes implements UIButton{
     }
 
     @Override
-    public void resetBools() {
+    public void resetBools() {//resets booleans
         mouseOver = false;
         mousePressed = false;
     }

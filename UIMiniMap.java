@@ -1,3 +1,25 @@
+/**
+    UIMiniMap Class draws how the minimap is drawn for the labyrinth and updates it
+
+	@author Martina Amale M. Llamas (242648); Zoe Angeli G. Uy (246707)
+	@version May 19, 2025
+	
+	I have not discussed the Java language code in my program 
+	with anyone other than my instructor or the teaching assistants 
+	assigned to this course.
+
+	I have not used Java language code obtained from another student, 
+	or any other unauthorized source, either modified or unmodified.
+
+	If any Java language code or documentation used in my program 
+	was obtained from another source, such as a textbook or website, 
+	that has been clearly noted with a proper citation in the comments 
+	of my program.
+
+    
+
+**/
+
 import java.awt.*;
 import java.awt.geom.*;
 import java.awt.image.*;
@@ -15,7 +37,7 @@ public class UIMiniMap {
 
     private BufferedImage[] baseTiles;
 
-    public UIMiniMap(int x, int y, GameFrame frame){
+    public UIMiniMap(int x, int y, GameFrame frame){ //constructor
         this.x = x;
         this.y = y;
         this.frame = frame;
@@ -29,7 +51,7 @@ public class UIMiniMap {
         }
     }   
 
-    public void draw(Graphics2D g2d){
+    public void draw(Graphics2D g2d){ //draws the minimap based on player data of labyrinth in the other island. 
         AffineTransform reset = g2d.getTransform();
         g2d.translate(x, y);
         

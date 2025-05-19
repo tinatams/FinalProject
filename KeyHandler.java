@@ -105,13 +105,22 @@ public class KeyHandler implements KeyListener{
 
 
             else if(GameFrame.gameState == GameFrame.DIALOG_STATE){
-                if(currentNPC.getDialogNumber() > currentNPC.getDialogueSize()){
-                    currentNPC.setDialogNumber(0);
-                    GameFrame.gameState = GameFrame.PLAYING_STATE;
-                }
-                else{
-                    selectedPlayer.interact();
-                    currentNPC.setDialogNumber(currentNPC.getDialogNumber()+1);
+                if(currentNPC!=null){
+                    if(currentNPC.getDialogNumber() > currentNPC.getDialogueSize()){
+                        currentNPC.setDialogNumber(0);
+                        GameFrame.gameState = GameFrame.PLAYING_STATE;
+                        if (currentNPC instanceof Dog){
+                            if (((Dog) currentNPC).isCaptured())
+                            frame.getMapHandler().getNPCs().remove(currentNPC);
+                        } if (currentNPC instanceof Minotaur){
+                            Minotaur minotaur = ((Minotaur) currentNPC);
+                            minotaur.moveMino();
+                        }
+                    }
+                    else{
+                        selectedPlayer.interact();
+                        currentNPC.setDialogNumber(currentNPC.getDialogNumber()+1);
+                    }
                 }
             }
 

@@ -26,10 +26,11 @@ public class GameServer{
     private ServerSocket ss;
     private ArrayList<Socket> sockets;
     private ArrayList<ClientRunnable> clients;
-
     private int clientNum = 0;
     private String serverData,hasHermes, hermesLastInv;
+    private String latestQuest="1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0";
     private boolean canSwitch, newInteraction;
+    private ArrayList<Integer> activeQuests;
 
     /**
         Constructor that instantiates the default values of the GameServer.  
@@ -43,6 +44,7 @@ public class GameServer{
 
         hasHermes = "ODD";
         newInteraction = true;
+        activeQuests = new ArrayList<Integer>();
 
         try {
             ss = new ServerSocket(60003);
@@ -118,6 +120,7 @@ public class GameServer{
         String[] playerData = new String[clients.size()];
         String[] labyrinthData = new String[clients.size()];
         String[] hermesData = new String[clients.size()];
+        String[] questData = new String[clients.size()];
 
         //separate the data into their types
         for (ClientRunnable c : clients){
@@ -137,13 +140,18 @@ public class GameServer{
                             case "Hermes":
                                 hermesData[Integer.parseInt(indivPlayerData[0])] = sepData[1];
                                 break;
+                            case "Quest":
+                            if(sepData[1]!=null){
+                                questData[Integer.parseInt(indivPlayerData[0])]=sepData[1];
+                                // System.out.println(questData[Integer.parseInt(indivPlayerData[0])]);
+                            }
+                                break;
                         }
                     }
                         
                 }
             }
         }
-
         //compile
 
         //PLAYER DATA:
@@ -217,9 +225,57 @@ public class GameServer{
             newInteraction = true;
         }
 
+        tempString += "\n";
+
+
+        //Quest Data
+        
+        tempString += "Quest|null,";
+        String result = "";
+        for (String qData : questData) {
+            if (qData != null) {
+                String[] quests = qData.split(",");
+                int sumcurrent = 0;
+                for (int i = 1; i < quests.length; i++) {
+                    sumcurrent += Integer.parseInt(quests[i]);
+                }
+
+                String[] pastquests = latestQuest.split(",");
+                int sumpast = 0;
+                for (int i = 0; i < pastquests.length; i++) {
+                    sumpast += Integer.parseInt(pastquests[i]);
+                }
+                
+                
+        
+                if (sumcurrent > sumpast) {
+                    result = "";
+                    for (int i = 1; i < quests.length; i++) {
+                        result += quests[i];
+                        if (i != quests.length - 1) {
+                            result += ",";
+                        }
+                    }
+                    latestQuest = result;
+                    
+                    pastquests = latestQuest.split(",");
+                }
+                else{
+                    result = "";
+                    for (int i = 0; i < pastquests.length; i++) {
+                        result += pastquests[i];
+                        if (i != pastquests.length - 1) {
+                            result += ",";
+                        }
+                    }
+
+                }
+            }
+    }
+        tempString += result;
         serverData = tempString;
         //System.out.println(newInteraction);
-        //System.out.println(serverData);
+        // System.out.println(serverData);
     }
 
     /**
@@ -339,6 +395,10 @@ public class GameServer{
         public void run(){
             while (true) { 
                 compileServerData();
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException ex) {
+                }
                 sendOutData();
                 try {
                     Thread.sleep(10);

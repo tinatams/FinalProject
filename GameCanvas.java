@@ -35,6 +35,7 @@ public class GameCanvas extends JComponent{
 
     private MapHandler mapH;
     private UIHandler ui;
+    
 
     /**
         Constructor that instantiates the default values of the GameCanvas

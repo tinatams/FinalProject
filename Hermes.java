@@ -21,12 +21,14 @@
 	of my program.
 **/
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
 public class Hermes extends NPC{
     public static final String name = "Hermes";
     private ArrayList<SuperItem> inventory;
     private int user;
+    
     private String action = "UPDATE";
     private String playersWith = "ODD";
 
@@ -35,20 +37,8 @@ public class Hermes extends NPC{
     private int x1,y1,x2,y2;
     public static final int NO_USER = -1;
 
-    /**
-        Passes default item values and coordinates to superItem. 
-        Initializes the current user to NO_USER. 
-        Instantiates inventory and entity generator. 
-
-        @param s s is the 'skin' of the NPC
-        @param x is the x coordinate
-        @param y is the y coordinate
-        @param x_2 is the second x coordinate
-        @param y_@ is the second y coordinate
-        @param String[] dialogues is the alternative dialogues of Hermes
-    **/
-    public Hermes(String s, int x, int y, int x_2, int y_2, String[] dialogues) {
-        super(s, x, y, dialogues);
+    public Hermes(int x, int y, int x_2, int y_2) {
+        super("Hermes", x, y);
         x1 = x;
         x2 = x_2;
         y1 = y;
@@ -74,13 +64,16 @@ public class Hermes extends NPC{
             setWorldY(y1);
         }
 
+        super.hitBox = new Rectangle(worldX + 10 ,worldY + 20 ,spriteW , spriteH-5);
+        super.interactionBox = new Rectangle(worldX - GameFrame.SCALED/2 ,worldY - GameFrame.SCALED/2 , spriteW + GameFrame.SCALED, spriteH + GameFrame.SCALED);
+
         if (originalx != getWorldX()){
             action = "UPDATE";
             GameFrame.gameState = GameFrame.PLAYING_STATE;
             user = NO_USER;
         }
 
-        super.draw(g2d);
+        super.draw(g2d, name);
     }
 
     /**
@@ -97,8 +90,6 @@ public class Hermes extends NPC{
             GameFrame.gameState = GameFrame.HERMES_STATE;
             player.getFrame().getSoundHandler().playEffect(SoundHandler.INV_IN);
             user = player.getCliNum();
-        } else {
-            super.speak();
         }
     }
 
@@ -273,16 +264,25 @@ public class Hermes extends NPC{
                 String itemName = itemData[i];
                 int amount = Integer.parseInt(itemData[i+1]);
 
-                if (!itemName.equals(KeyItem.ITEMNAME)){
+                if (!itemName.equals(KeyItem.ITEMNAME) && !itemName.equals(ProphecyItem.ITEMNAME)){
                     inventory.add(eg.newItem(itemName));
                     if(eg.newItem(itemName).isStackable()){
                         inventory.get(inventory.size() - 1).setAmount(amount);
                     }
-                } else {
-                    KeyItem k = new KeyItem(0,0,itemData[i+2]);
-                    k.setAmount(amount);
-                    inventory.add(k);
-                    i +=2;
+                } 
+                else {
+                    if(itemName.equals(KeyItem.ITEMNAME)){
+                        KeyItem k = new KeyItem(0,0,itemData[i+2]);
+                        k.setAmount(amount);
+                        inventory.add(k);
+                        i +=2;
+                    }  
+                    else if(itemName.equals(ProphecyItem.ITEMNAME)){
+                        ProphecyItem k = new ProphecyItem();
+                        k.setAmount(amount);
+                        inventory.add(k);
+                    }  
+                    
                 }
             }
         }   
