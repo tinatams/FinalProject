@@ -67,6 +67,7 @@ public class GameMenu{
 
         menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         menuFrame.setVisible(true);
+        menuFrame.setResizable(false);
         menuFrame.pack();
     }
 
