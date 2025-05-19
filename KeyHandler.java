@@ -110,6 +110,7 @@ public class KeyHandler implements KeyListener{
                         currentNPC.setDialogNumber(0);
                         GameFrame.gameState = GameFrame.PLAYING_STATE;
                         if (currentNPC instanceof Dog){
+                            if (((Dog) currentNPC).isCaptured())
                             frame.getMapHandler().getNPCs().remove(currentNPC);
                         } if (currentNPC instanceof Minotaur){
                             Minotaur minotaur = ((Minotaur) currentNPC);
