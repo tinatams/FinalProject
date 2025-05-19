@@ -35,17 +35,20 @@ public class UIHandler{
     public static Font regularFont;
     public static String currentDialog = "";
     private BufferedImage dialogueBox, blankHalfPanel;
-    private BufferedImage gameTitle, inventoryHeader, questHeader, hermesHeader, backgroundImage, instructions;
+    private BufferedImage gameTitle, inventoryHeader, questHeader, backgroundImage, instructions;
+    private BufferedImage questCards[];
     private Player selectedPlayer;
     private MapHandler mapHandler;
     private UIMiniMap minMap;
     private FishMiniGame fishy;
+    private GameFrame frame;
 
     //UI COMPONENTS;
     private InventoryCellUI[] inventoryCellsPlayer, inventoryCellsHermes;
     private UISendHermes hermesSendButton;
     
-    public UIHandler(GameFrame frame){ //constructor
+    public UIHandler(GameFrame frame){
+        this.frame = frame; //constructor
         inventoryCellsHermes = new InventoryCellUI[70];
         inventoryCellsPlayer = new InventoryCellUI[70];
         
@@ -54,6 +57,8 @@ public class UIHandler{
 
         minMap = new UIMiniMap(0, 0, frame);
         fishy = frame.getFishy();
+
+        questCards = new BufferedImage[17];
 
         setUpUIComponents();
     }
@@ -122,9 +127,19 @@ public class UIHandler{
             gameTitle = temp.getSubimage(0, 0, 12*tileSize, 5*tileSize);
             inventoryHeader = temp.getSubimage(0, 5*tileSize, 8*tileSize, 2*tileSize); 
             questHeader = temp.getSubimage(0, 7*tileSize, 6*tileSize, 2*tileSize); 
-            hermesHeader = temp.getSubimage(6*tileSize, 7*tileSize, 6*tileSize, 2*tileSize); 
             backgroundImage = ImageIO.read(new File("./res/uiAssets/Background.png"));
 
+            temp = ImageIO.read(new File("./res/uiAssets/questCards.png"));
+            int row = 0; int col = 0; int width = 7 * GameFrame.SCALED; int height = 2 * GameFrame.SCALED;
+
+            for (int i = 0; i < questCards.length; i++){
+                questCards[i] = temp.getSubimage(col * width, row * height, width, height);
+                row++;
+                if (row > 8){
+                    col++;
+                    row = 0;
+                }
+            }
 
             InputStream is = getClass().getResourceAsStream("./res/Fonts/dogicabold.ttf");
             regularFont = Font.createFont(Font.TRUETYPE_FONT, is);
@@ -136,19 +151,19 @@ public class UIHandler{
         hermesSendButton = new UISendHermes((PANEL_RIGHT_X+5)* GameFrame.SCALED, (PANEL_Y+1)*GameFrame.SCALED, this);
     }
     
-    public void drawQuestPanel(Graphics2D g2d,int panelX, int panelY){ //draws quest panel
-        // try{
-        // BufferedImage temp = ImageIO.read(new File("./res/uiAssets/QuestBox.png"));
-        // g2d.drawImage(blankHalfPanel, panelX * GameFrame.SCALED, panelY * GameFrame.SCALED, 9 * GameFrame.SCALED, 14 * GameFrame.SCALED, null);
-        // for(int i=0;i<qh.states.length;i++){
-        //     if(qh.states[i]==1){
-        //         g2d.drawImage(temp, panelX * GameFrame.SCALED-20, panelY * GameFrame.SCALED/5, null);
-        //     }
-        // }
-        // }
-        // catch(IOException ex){
-            
-        // }
+    public void drawQuestPanel(Graphics2D g2d,int panelX, int panelY){
+        QuestHandler qh = frame.getQuestH();
+        g2d.setFont(regularFont.deriveFont(20f));
+        g2d.setColor(Color.BLACK);
+        g2d.drawImage(blankHalfPanel, panelX * GameFrame.SCALED, panelY * GameFrame.SCALED, 9 * GameFrame.SCALED, 14 * GameFrame.SCALED, null); 
+
+        int y = 3 * GameFrame.SCALED;
+        for(int i=0;i<qh.states.length;i++){
+            if(qh.states[i]==1){
+                g2d.drawImage(questCards[i], (panelX + 1)*GameFrame.SCALED, panelY*GameFrame.SCALED + y, 7*GameFrame.SCALED, 2*GameFrame.SCALED, null);
+                y += 3*GameFrame.SCALED;
+            }
+        }
     }
     
     public void setUpCells(){ //sets up needed inventory cells

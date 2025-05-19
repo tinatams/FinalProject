@@ -197,7 +197,7 @@ public class GameServer{
             if (hData != null){
                 String[] sepHermData = hData.split(",");
                 if ( sepHermData[1].equals("SEND")){
-                    System.out.println(hasHermes);
+                    //System.out.println(hasHermes);
                     passHermes();
                     canSwitch = false;
                 } else {

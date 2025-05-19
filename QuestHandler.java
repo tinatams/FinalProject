@@ -31,7 +31,7 @@ public class QuestHandler{
     public QuestHandler() { //Constructor to initialize the quests and their initial states
         quests[0]=new Quest("Talk to Apollo","Starter Quest",null,0);
         quests[1]=new Quest("Find Athena","Give the god of wisdom the prophecy","PROPHECY",1);
-        quests[2]=new Quest("Speak to Artemis","The goddess Artemis should be able to help you!",null,0);
+        quests[2]=new Quest("Speak to Artemis","The goddess Artemis Should be able to help you!",null,0);
         quests[3]=new Quest("Speak to Hephaestus","Ask him what is needed to build a boat.",null,0);
         quests[4]=new Quest("Get string!","It can be found around the island","STRING",3);
         quests[5]=new Quest("Find my Dogs!","The dogs can be captured with the bone","CAPTURED_DOG",3);
