@@ -47,23 +47,23 @@ public class QuestHandler{
         quests[15]=new Quest("Get the key","Finish the labarynth (with help from and assist room) then talk to Hepheastus",null,0);
         quests[16]=new Quest("Give the Wings","Hand over the wings to Hephaestus","WINGS",1);
 
-        states[0]=COMPLETED;
-        states[1]=COMPLETED;
-        states[2]=COMPLETED;
-        states[3]=COMPLETED;
-        states[4]=COMPLETED;
-        states[5]=COMPLETED;
-        states[6]=COMPLETED;
-        states[7]=COMPLETED;
-        states[8]=COMPLETED;
-        states[9]=COMPLETED;
-        states[10]=COMPLETED;
-        states[11]=COMPLETED;
-        states[12]=COMPLETED;
-        states[13]=COMPLETED;
-        states[14]=COMPLETED;
-        states[15]=COMPLETED;
-        states[16]=ACTIVE;
+        states[0]=ACTIVE;
+        states[1]=BEFORE_ASSIGNED;
+        states[2]=BEFORE_ASSIGNED;
+        states[3]=BEFORE_ASSIGNED;
+        states[4]=BEFORE_ASSIGNED;
+        states[5]=BEFORE_ASSIGNED;
+        states[6]=BEFORE_ASSIGNED;
+        states[7]=BEFORE_ASSIGNED;
+        states[8]=BEFORE_ASSIGNED;
+        states[9]=BEFORE_ASSIGNED;
+        states[10]=BEFORE_ASSIGNED;
+        states[11]=BEFORE_ASSIGNED;
+        states[12]=BEFORE_ASSIGNED;
+        states[13]=BEFORE_ASSIGNED;
+        states[14]=BEFORE_ASSIGNED;
+        states[15]=BEFORE_ASSIGNED;
+        states[16]=BEFORE_ASSIGNED;
         // update();
 
     }

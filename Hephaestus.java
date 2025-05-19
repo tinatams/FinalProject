@@ -50,7 +50,7 @@ public class Hephaestus extends NPC{
         before.add("Nice work kid.~Get the other materials now/nYou need to give me the wood so I can~start building");
         during.add("You don't got any wood yet");
         after.add("Nice work kid.~I need one last thing");
-        before.add("It’s in Daedalus’s workshop on the other~island. He always keeps his workshop locked./nThe key is at the center of the labyrinth.~The entrance to the labyrinth should~be somewhere in these mines/nHere take this to open the~labyrinth!");
+        before.add("It’s in Daedalus’s workshop on the other~island. He always keeps his workshop locked/nThe key is at the center of the labyrinth.~The entrance to the labyrinth should~be somewhere in these mines/nHere take this to open the~labyrinth!");
         during.add("*cling* *clang*/nYou need to get the item first kid");
         after.add("Good Job kid./nGive me a second then we can go");
         
