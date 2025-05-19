@@ -60,7 +60,7 @@ public class SoundHandler{
 		    index += rand.nextInt(2);
         }
 
-        System.out.println(effectName[index]);
+        //System.out.println(effectName[index]);
         Clip clipToPlay = getClip(effectName[index]);
         clipToPlay.setMicrosecondPosition(0);
         clipToPlay.start();

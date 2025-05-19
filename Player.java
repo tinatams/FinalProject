@@ -48,9 +48,6 @@ public class Player implements Collidable{
         sprites = new BufferedImage[5][2];
         inventory = new ArrayList<>();
 
-        inventory.add(new AxeItem());
-        inventory.add(new PickaxeItem());
-
         setUpSprites();
         hitBox = new Rectangle(worldX + 10, worldY + 30, spriteW-20, spriteH-30);
     }
@@ -111,13 +108,14 @@ public class Player implements Collidable{
 
     public void draw(Graphics2D g){
         g.drawImage(sprites[direction][version], worldX, worldY, spriteW, spriteH, null);
+        
+        if (direction != IDLE){counter++; 
+            if (counter > 15){
+                if (version == 0) version = 1;
+                else if (version ==1) version = 0;
 
-        counter++; 
-        if (counter > 15){
-            if (version == 0) version = 1;
-            else if (version ==1) version = 0;
-
-            counter = 0;
+                counter = 0;
+            }
         }
     }
 
@@ -204,6 +202,10 @@ public class Player implements Collidable{
 
     public void setDirection(int dir){
         direction = dir;
+        if (dir == IDLE){
+            version = 0;
+            counter = 0;
+        }
     }
 
     public void setOther(int dir, int v){
