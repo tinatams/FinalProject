@@ -86,11 +86,11 @@ public class KeyHandler implements KeyListener{
             
             NPC currentNPC = selectedPlayer.getNPCinteracting();
             if(currentNPC != null){
-                if (!(currentNPC instanceof Hermes))
+                if (!(currentNPC instanceof Hermes) || !(currentNPC instanceof Dog))
                 GameFrame.gameState = GameFrame.DIALOG_STATE;
             }
 
-            if(GameFrame.gameState == GameFrame.PLAYING_STATE)selectedPlayer.interact();
+            if(GameFrame.gameState == GameFrame.PLAYING_STATE) selectedPlayer.interact();
 
             else if (GameFrame.gameState == GameFrame.HERMES_STATE){
                 Hermes hermes = (Hermes) canvas.getMapHandler().getNPC(Hermes.name);
@@ -102,15 +102,18 @@ public class KeyHandler implements KeyListener{
 
             else if(GameFrame.gameState == GameFrame.DIALOG_STATE){
                 if(currentNPC!=null){
-                if(currentNPC.getDialogNumber() > currentNPC.getDialogueSize()){
-                    currentNPC.setDialogNumber(0);
-                    GameFrame.gameState = GameFrame.PLAYING_STATE;
+                    if(currentNPC.getDialogNumber() > currentNPC.getDialogueSize()){
+                        currentNPC.setDialogNumber(0);
+                        GameFrame.gameState = GameFrame.PLAYING_STATE;
+                        if (currentNPC instanceof Dog){
+                            frame.getMapHandler().getNPCs().remove(currentNPC);
+                        }
+                    }
+                    else{
+                        selectedPlayer.interact();
+                        currentNPC.setDialogNumber(currentNPC.getDialogNumber()+1);
+                    }
                 }
-                else{
-                    selectedPlayer.interact();
-                    currentNPC.setDialogNumber(currentNPC.getDialogNumber()+1);
-                }
-            }
             }
 
             else if (GameFrame.gameState == GameFrame.FISHING_STATE){

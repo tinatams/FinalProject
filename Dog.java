@@ -36,7 +36,6 @@ public class Dog extends NPC{
     
 
     public Dog(int x, int y) { //Constructor with location the entity should be drawn and dialogue
-        
         super("Dog",x, y);
         inventory = new ArrayList<SuperItem>();
         eg = new EntityGenerator();
@@ -57,17 +56,15 @@ public class Dog extends NPC{
     @Override
     public void interact(Player player){ //Method that dictates dialogue when players interact with this NPC
         if(super.getDialogNumber()==0){
-                super.setDialogues(check(player).split("/n"));
-                player.getFrame().setQuestH(qh);
+            super.setDialogues(check(player).split("/n"));
+            player.getFrame().setQuestH(qh);
         }
         else{
             super.setDialogues("This dog is really stubborn".split("/n"));
         }
         
         super.speak(); //Changes NPC dialogue
-        
-        
-
+        player.getFrame().getSoundHandler().playEffect(SoundHandler.DOG_SOUND);
     }
 
     public String check(Player player){ //Method that returns current dialogue according to active quest list and removes inventory items when needed
@@ -77,8 +74,6 @@ public class Dog extends NPC{
         for(int i=0;i<qh.states.length;i++){
 
                 if(qh.states[i]==QuestHandler.ACTIVE){
-                    
-                    
                     if(i==5){
                         result=during.get(0);
                         inventory=player.getInventory();

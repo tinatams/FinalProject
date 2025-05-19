@@ -217,22 +217,7 @@ public class MapHandler{
         Map cm = maps[currentMap];
         ArrayList<NPC> NPCs = cm.getNPCs();
         for (NPC npc : NPCs){
-            if (npc instanceof Dog){
-                if(((Dog) npc).isCaptured()){
-                    ((NPC) npc).setInteractionBox(new Rectangle(0,0,0,0));
-                    ((NPC) npc).setHitBox(new Rectangle(0,0,0,0));
-                }
-                else{
-                    npc.draw(g2d);
-                    ((Dog) npc).setInteractionBox(new Rectangle(npc.getWorldX() - GameFrame.SCALED/2,npc.getWorldY() - GameFrame.SCALED/2, npc.getSpriteW() + GameFrame.SCALED, npc.getSpriteH()+GameFrame.SCALED) );
-                    ((Dog) npc).setHitBox(new Rectangle(npc.getWorldX()+10,npc.getWorldY()+20,npc.getSpriteW(),npc.getSpriteH()-5));
-
-                }
-            }
-            else{
-                npc.draw(g2d);
-            }
-            
+            npc.draw(g2d);
         }
         
     }

@@ -125,13 +125,18 @@ public class UIHandler{
     }
     
     public void drawQuestPanel(Graphics2D g2d,int panelX, int panelY){ //draws quest panel
-        try{
-        BufferedImage temp = ImageIO.read(new File("./res/uiAssets/QuestBox.png"));
-        g2d.drawImage(blankHalfPanel, panelX * GameFrame.SCALED, panelY * GameFrame.SCALED, 9 * GameFrame.SCALED, 14 * GameFrame.SCALED, null);
-        }
-        catch(IOException ex){
+        // try{
+        // BufferedImage temp = ImageIO.read(new File("./res/uiAssets/QuestBox.png"));
+        // g2d.drawImage(blankHalfPanel, panelX * GameFrame.SCALED, panelY * GameFrame.SCALED, 9 * GameFrame.SCALED, 14 * GameFrame.SCALED, null);
+        // for(int i=0;i<qh.states.length;i++){
+        //     if(qh.states[i]==1){
+        //         g2d.drawImage(temp, panelX * GameFrame.SCALED-20, panelY * GameFrame.SCALED/5, null);
+        //     }
+        // }
+        // }
+        // catch(IOException ex){
             
-        }
+        // }
     }
     
     public void setUpCells(){ //sets up needed inventory cells
