@@ -52,7 +52,7 @@ public class Hephaestus extends NPC{
         after.add("Nice work kid.~I need one last thing");
         before.add("It’s in Daedalus’s workshop on the other~island. He always keeps his workshop locked./nThe key is at the center of the labyrinth.~The entrance to the labyrinth should~be somewhere in these mines/nHere take this to open the~labyrinth!");
         during.add("*cling* *clang*/nYou need to get the item first kid");
-        after.add("Good Job kid. Give me a second then we can go");
+        after.add("Good Job kid./nGive me a second then we can go");
         
         this.x = x;
         this.y = y;
@@ -71,7 +71,8 @@ public class Hephaestus extends NPC{
     public void interact(Player player){ 
         if(super.getDialogNumber()==0){
             if(completed){
-                super.setDialogues("Please stay steadfast! Our plan will work.".split("/n"));
+                super.setDialogues("Ok then let's go.".split("/n"));
+                GameFrame.gameState=GameFrame.END_STATE;
             }
             else{
                 String result=check(player);
@@ -89,14 +90,13 @@ public class Hephaestus extends NPC{
     /**
      Method that returns current dialogue according to active quest list and removes inventory items when needed
     **/
-    public String check(Player player){
+    public String check(Player player){ 
         
         String result="";
         qh=player.getFrame().getQuestH();
         for(int i=0;i<qh.states.length;i++){
-            System.out.println("HIII");
                 if(qh.states[i]==qh.ACTIVE){
-                    System.out.println(i);
+                    inventory=player.getInventory();
                     if(i<3){
                         result="*cling* *clang*/nI'm busy";
                     }
@@ -158,15 +158,18 @@ public class Hephaestus extends NPC{
                         return result;
                     }
                     else if(i==16){
+                        
                         if(first){
                             result=before.get(3);
                             first=false;
                             player.collect(new KeyItem(1,1,"HEPHEASTUS"));
                             return result;
                         }
+                        System.out.println(inventory.size());
                         result=during.get(3);
                         for(int j=0; j<inventory.size();j++){
-                            if(inventory.get(j).getName().equals(qh.quests[i].getItemname()) && inventory.get(j).getAmount()>=qh.quests[i].getItemnumber()){
+                            System.out.println(inventory.get(j).getName());
+                            if(inventory.get(j).getName().equals("WINGS") && inventory.get(j).getAmount()>=qh.quests[i].getItemnumber()){
                                 for(int inv=0; inv<qh.quests[i].getItemnumber();inv++){
                                     player.discardItem(player.getInventory().get(j));
                                 }

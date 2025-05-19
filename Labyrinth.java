@@ -47,9 +47,11 @@ public class Labyrinth extends Map{
         buttonTwoBaseMap = new int[maxColumn][maxRow];
         buttonTwoCollisionMap = new int[maxColumn][maxRow];
     }
-
+    /**
+    Loads default base of map, decoration, collisions, and buttons
+    **/
     @Override
-    public void loadMap(){ //Loads default base of map, decoration, collisions, and buttons
+    public void loadMap(){ 
         load(decoTileMap, "deco");
         load(collidablesMap, "collidables");
         
@@ -65,8 +67,10 @@ public class Labyrinth extends Map{
         baseTileMap = defaultBaseMap;
         collisionMap = defaultCollisionMap;
     }
-
-    public void loadNewMap(String newMap){ //Loads new map, decoration, collisions, and buttons based on what button is pressed
+    /**
+    Loads new map, decoration, collisions, and buttons based on what button is pressed
+    **/
+    public void loadNewMap(String newMap){ 
         version = newMap;
 
         switch (version){
@@ -83,8 +87,10 @@ public class Labyrinth extends Map{
                 collisionMap = defaultCollisionMap;
         }
     }
-
-    public String getVersion(){ //returns what version of the map is currently being drawn
+    /**
+    returns what version of the map is currently being drawn 
+    **/
+    public String getVersion(){ 
         return version;
     }
 }

@@ -62,7 +62,7 @@ public class QuestHandler{
         states[12]=COMPLETED;
         states[13]=COMPLETED;
         states[14]=COMPLETED;
-        states[15]=ACTIVE;
+        states[15]=COMPLETED;
         states[16]=ACTIVE;
         // update();
 
@@ -102,6 +102,10 @@ public class QuestHandler{
                 states[i-1]=Integer.parseInt(quests[i]);
             }
         } 
+
+        if(sumcurrent==34){
+            GameFrame.gameState=GameFrame.END_STATE;
+        }
 
     }
    

@@ -32,7 +32,7 @@ public class Minotaur extends NPC{
     private int x,y;
     private int dialognumber=0;
     private boolean first=true;
-    private boolean completed=true;
+    private boolean completed=false;
      private QuestHandler qh=new QuestHandler();
     
     /**
@@ -116,9 +116,7 @@ public class Minotaur extends NPC{
                                 result=after.get(0);
                                 player.collect(new KeyItem(1,1,"DIONYSUS"));
                                 completed=true;
-                                
-                               
-                                
+                            
                                 qh.states[14]=QuestHandler.COMPLETED;
                                 qh.states[15]=QuestHandler.ACTIVE;
 

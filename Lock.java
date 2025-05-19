@@ -25,22 +25,30 @@
 public class Lock extends Teleporter{
     private String lockName;
     private boolean locked;
-    
-    public Lock(int x, int y, int w, int h, int map, int newX, int newY, int direction, String n) { //constructor
+    /**
+    Constructor
+    **/
+    public Lock(int x, int y, int w, int h, int map, int newX, int newY, int direction, String n) { 
         super(x, y, w, h, map, newX, newY, direction);
         lockName = n;
         locked = true;
     }
-
-    public String getlockName(){ //returns the name of the lock and the key needed to open it
+    /**
+    returns the name of the lock and the key needed to open it 
+    **/
+    public String getlockName(){ 
         return lockName;
     }
-
-    public void setLocked(boolean lock){ //setter for the state of the lock
+    /**
+    setter for the state of the lock
+    **/
+    public void setLocked(boolean lock){ 
         locked = lock;
     }
-
-    public boolean isLocked(){ //returns the state of the lock
+    /**
+    returns the state of the lock
+    **/
+    public boolean isLocked(){ 
         return locked;
     }
 }
