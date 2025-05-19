@@ -185,8 +185,7 @@ public class MapHandler{
 
     public void drawInteracts(Graphics2D g2d){ //draw function for the interactables based on the dimensions and tiles read from the text file
         Map cm = maps[currentMap];
-        ArrayList<Interactable> interacts = cm.getInteractables();
-
+        ArrayList<Interactable> interacts = cm.getInteractables();;
         for (Interactable interactObj : interacts){
             if (interactObj instanceof Tree){
                 if(demeter_sacrifice){

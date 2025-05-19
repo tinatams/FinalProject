@@ -72,10 +72,6 @@ public class Minotaur extends NPC{
                 super.setDialogues("*snore*".split("/n"));
                 x=5*GameFrame.SCALED;
                 y=5*GameFrame.SCALED;
-                super.worldX=x;
-                super.worldY=y;
-                super.hitBox = new Rectangle(x + 5 ,y + 15 ,2*spriteW , (2*spriteH)-5);
-                super.interactionBox = new Rectangle(worldX - GameFrame.SCALED/2 ,worldY - GameFrame.SCALED/2 , 2*spriteW + GameFrame.SCALED, 2*spriteH + GameFrame.SCALED);
             }
             else{
                 super.setDialogues(check(player).split("/n"));
@@ -83,10 +79,14 @@ public class Minotaur extends NPC{
             }
         }
         
-        super.speak();
-
-        
-
+        super.speak(); //Changes NPC dialogue
+    }
+    
+    public void moveMino(){
+        super.worldX=x;
+        super.worldY=y;
+        super.hitBox = new Rectangle(x + 5 ,y + 15 ,2*spriteW , (2*spriteH)-5);
+        super.interactionBox = new Rectangle(worldX - GameFrame.SCALED/2 ,worldY - GameFrame.SCALED/2 , 2*spriteW + GameFrame.SCALED, 2*spriteH + GameFrame.SCALED);
     }
     /**
      Method that returns current dialogue according to active quest list and removes inventory items when needed
