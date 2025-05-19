@@ -27,13 +27,19 @@ import javax.imageio.*;
 public class MeatItem extends SuperItem {
     public static final String ITEMNAME = "MEAT";
 
-    public MeatItem(){ //Constructor determines the size of the entity drawn in inventory and whether it is stackable
+    /**
+    Constructor determines the size of the entity drawn in inventory and whether it is stackable
+    **/
+    public MeatItem(){ //
         super(ITEMNAME,0, 0, 16, 16);
         setStackable(true);
     }
+    /**
+    reads what png needs to be drawn
+    **/
 
     @Override
-    public void loadImage() { //reads what png needs to be drawn
+    public void loadImage() {
         try{
             sprite = ImageIO.read(new File("./res/items/Meat.png"));
         } catch (IOException e){
