@@ -35,7 +35,7 @@ public class UIHandler{
     public static Font regularFont;
     public static String currentDialog = "";
     private BufferedImage dialogueBox, blankHalfPanel;
-    private BufferedImage gameTitle, inventoryHeader, questHeader, hermesHeader;
+    private BufferedImage gameTitle, inventoryHeader, questHeader, hermesHeader, backgroundImage, instructions;
     private Player selectedPlayer;
     private MapHandler mapHandler;
     private UIMiniMap minMap;
@@ -60,6 +60,9 @@ public class UIHandler{
 
     public void draw(Graphics2D g2d){ //draws according to current game state
         switch (GameFrame.gameState) {
+            case GameFrame.INSTRUCTIONS:
+                g2d.drawImage(instructions, 0, 0, GameFrame.WIDTH, GameFrame.HEIGHT, null);
+                break;
             case GameFrame.DIALOG_STATE:
                 drawDialogScreen(g2d);
                 break;
@@ -93,6 +96,13 @@ public class UIHandler{
             case GameFrame.FISHING_STATE:
                 fishy.draw(g2d);
                 break;
+            case GameFrame.END_STATE:
+                g2d.drawImage(backgroundImage, 0, 0, GameFrame.WIDTH, GameFrame.HEIGHT, null);
+                g2d.setColor(new Color(0,0,0,90));
+                g2d.fillRect(0,0,GameFrame.WIDTH, GameFrame.HEIGHT);
+
+                g2d.drawImage(gameTitle, 5 * GameFrame.SCALED, 3*GameFrame.SCALED, 12 * GameFrame.SCALED, 5 * GameFrame.SCALED, null);
+                break;
             default:
                 if (selectedPlayer.getFrame().getMapHandler().getCurrentMap() == MapHandler.ASSIST1) minMap.draw(g2d);
                 break;
@@ -104,6 +114,7 @@ public class UIHandler{
             //Basic Components
             dialogueBox = ImageIO.read(new File("./res/uiAssets/BasicComponents/DialogueBoxSimple.png"));
             blankHalfPanel = ImageIO.read(new File("./res/uiAssets/BasicComponents/BlankTemplate.png"));
+            instructions = ImageIO.read(new File("./res/uiAssets/INSTRUCTIONS.png"));
 
             //Text Components
             int tileSize = GameFrame.PIXELRATIO;
@@ -112,6 +123,7 @@ public class UIHandler{
             inventoryHeader = temp.getSubimage(0, 5*tileSize, 8*tileSize, 2*tileSize); 
             questHeader = temp.getSubimage(0, 7*tileSize, 6*tileSize, 2*tileSize); 
             hermesHeader = temp.getSubimage(6*tileSize, 7*tileSize, 6*tileSize, 2*tileSize); 
+            backgroundImage = ImageIO.read(new File("./res/uiAssets/Background.png"));
 
 
             InputStream is = getClass().getResourceAsStream("./res/Fonts/dogicabold.ttf");

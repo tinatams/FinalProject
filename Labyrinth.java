@@ -33,8 +33,12 @@ public class Labyrinth extends Map{
 
     private int[][] buttonTwoBaseMap;
     private int[][] buttonTwoCollisionMap;
+
+    /**
+    Constructor for the labyrinth 
+    **/
     
-    public Labyrinth() { //Constructor for the labyrinth 
+    public Labyrinth() { //
         super("labyrinth");
         defaultBaseMap = new int[maxColumn][maxRow];
         defaultCollisionMap = new int[maxColumn][maxRow];

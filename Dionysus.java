@@ -35,8 +35,10 @@ public class Dionysus extends NPC{
     private boolean completed=false;
      private QuestHandler qh=new QuestHandler();
     
-
-    public Dionysus(int x, int y) { //Constructor with location the entity should be drawn and dialogue
+    /**
+    Constructor with location the entity should be drawn and dialogue   
+    **/
+    public Dionysus(int x, int y) { 
         
         super("Dionysus",x, y);
         inventory = new ArrayList<SuperItem>();
@@ -49,14 +51,18 @@ public class Dionysus extends NPC{
         this.x = x;
         this.y = y;
     }
-
+    /**
+     Draw method that calls NPC draw method
+    **/
     @Override 
-    public void draw(Graphics2D g2d){ //Draw method that calls NPC draw method
+    public void draw(Graphics2D g2d){ 
         super.draw(g2d,name);
     }
-
+    /**
+     Method that dictates dialogue when players interact with this NPC
+    **/
     @Override
-    public void interact(Player player){ //Method that dictates dialogue when players interact with this NPC
+    public void interact(Player player){
         if(super.getDialogNumber()==0){
             if(completed){
                 super.setDialogues("*grunts*/nGet out".split("/n"));
@@ -67,12 +73,14 @@ public class Dionysus extends NPC{
             }
         }
         
-        super.speak(); //Changes NPC dialogue
+        super.speak(); 
     
 
     }
-
-    public String check(Player player){ //Method that returns current dialogue according to active quest list and removes inventory items when needed
+    /**
+     Method that returns current dialogue according to active quest list and removes inventory items when needed
+    **/
+    public String check(Player player){ 
         String result="";
         qh=player.getFrame().getQuestH();
         for(int i=0;i<qh.states.length;i++){
@@ -105,7 +113,6 @@ public class Dionysus extends NPC{
                                 qh.states[11]=QuestHandler.COMPLETED;
                                 qh.states[12]=QuestHandler.COMPLETED;
                                 qh.states[13]=QuestHandler.COMPLETED;
-                                // qh.states[14]=QuestHandler.ACTIVE;
                                 completed=true;
                                 return result;
                             }

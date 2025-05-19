@@ -34,8 +34,10 @@ public class Hephaestus extends NPC{
     public static boolean first=true;
     private QuestHandler qh=new QuestHandler();
     
-
-    public Hephaestus(int x, int y) { //Constructor with location the entity should be drawn and dialogue
+    /**
+    Constructor with location the entity should be drawn and dialogue   
+    **/
+    public Hephaestus(int x, int y) {
         
         super("Hephaestus",x, y);
         inventory = new ArrayList<SuperItem>();
@@ -45,27 +47,28 @@ public class Hephaestus extends NPC{
         after.add("Here you go kid/nI’d suggest you hand that over to your~friend then come back I need you~to get me more materials!");
         before.add("*grunts*/nHey kid./nIf we’re travelling by ship we need~to give an offering for safe travel./nYou’ll need to go to sacrifice fish to~Poseidon.I think his statue should be near~the entrance to the mines.");
         during.add("Hint: you might wanna talk to a statue");
-        // after.add("Nice work kid. Get the other materials now");
         before.add("Nice work kid.~Get the other materials now/nYou need to give me the wood so I can~start building");
         during.add("You don't got any wood yet");
         after.add("Nice work kid.~I need one last thing");
         before.add("It’s in Daedalus’s workshop on the other~island. He always keeps his workshop locked./nThe key is at the center of the labyrinth.~The entrance to the labyrinth should~be somewhere in these mines/nHere take this to open the~labyrinth!");
         during.add("*cling* *clang*/nYou need to get the item first kid");
         after.add("Good Job kid. Give me a second then we can go");
-
-        // 
         
         this.x = x;
         this.y = y;
     }
-
+    /**
+     Draw method that calls NPC draw method
+    **/
     @Override 
-    public void draw(Graphics2D g2d){ //Draw method that calls NPC draw method
+    public void draw(Graphics2D g2d){ 
         super.draw(g2d,name);
     }
-
+    /**
+     Method that dictates dialogue when players interact with this NPC
+    **/
     @Override
-    public void interact(Player player){ //Method that dictates dialogue when players interact with this NPC
+    public void interact(Player player){ 
         if(super.getDialogNumber()==0){
             if(completed){
                 super.setDialogues("Please stay steadfast! Our plan will work.".split("/n"));
@@ -83,8 +86,10 @@ public class Hephaestus extends NPC{
         
 
     }
-
-    public String check(Player player){ //Method that returns current dialogue according to active quest list and removes inventory items when needed
+    /**
+     Method that returns current dialogue according to active quest list and removes inventory items when needed
+    **/
+    public String check(Player player){
         
         String result="";
         qh=player.getFrame().getQuestH();

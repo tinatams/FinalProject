@@ -63,6 +63,10 @@ public class KeyHandler implements KeyListener{
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
+        if (GameFrame.gameState == GameFrame.INSTRUCTIONS){
+            GameFrame.gameState = GameFrame.PLAYING_STATE;
+        }
+
         //PLAYER MOVEMENT
         if (GameFrame.gameState == GameFrame.PLAYING_STATE){
             switch (code){
@@ -86,11 +90,11 @@ public class KeyHandler implements KeyListener{
             
             NPC currentNPC = selectedPlayer.getNPCinteracting();
             if(currentNPC != null){
-                if (!(currentNPC instanceof Hermes) || !(currentNPC instanceof Dog))
+                if (!(currentNPC instanceof Hermes))
                 GameFrame.gameState = GameFrame.DIALOG_STATE;
             }
 
-            if(GameFrame.gameState == GameFrame.PLAYING_STATE) selectedPlayer.interact();
+            if(GameFrame.gameState == GameFrame.PLAYING_STATE)selectedPlayer.interact();
 
             else if (GameFrame.gameState == GameFrame.HERMES_STATE){
                 Hermes hermes = (Hermes) canvas.getMapHandler().getNPC(Hermes.name);

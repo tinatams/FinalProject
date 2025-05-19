@@ -38,8 +38,11 @@ public class Demeter extends NPC{
     private boolean completed=false;
     private QuestHandler qh=new QuestHandler();
     
+    /**
+    Constructor with location the entity should be drawn and dialogue   
+    **/
 
-    public Demeter(int x, int y) { //Constructor with location the entity should be drawn and dialogue
+    public Demeter(int x, int y) { 
         
         super("Demeter",x, y);
         inventory = new ArrayList<SuperItem>();
@@ -56,14 +59,18 @@ public class Demeter extends NPC{
         this.x = x;
         this.y = y;
     }
-
+    /**
+     Draw method that calls NPC draw method
+    **/
     @Override 
-    public void draw(Graphics2D g2d){ //Draw method that calls NPC draw method
+    public void draw(Graphics2D g2d){
         super.draw(g2d,name);
     }
-
+    /**
+     Method that dictates dialogue when players interact with this NPC
+    **/
     @Override
-    public void interact(Player player){ //Method that dictates dialogue when players interact with this NPC
+    public void interact(Player player){
         if(super.getDialogNumber()==0){
             if(completed){
                 super.setDialogues("The world is no longer barren!".split("/n"));
@@ -74,13 +81,14 @@ public class Demeter extends NPC{
             }
         }
         
-        super.speak(); //Changes NPC dialogue
-    
+        super.speak();    
         
 
     }
-
-    public String check(Player player){ //Method that returns current dialogue according to active quest list and removes inventory items when needed
+    /**
+     Method that returns current dialogue according to active quest list and removes inventory items when needed
+    **/
+    public String check(Player player){ 
         String result="";
         qh=player.getFrame().getQuestH();
         for(int i=0;i<qh.states.length;i++){
@@ -105,7 +113,10 @@ public class Demeter extends NPC{
                                 result=after.get(0);
                                 qh.states[9]=QuestHandler.COMPLETED;
                                 qh.states[10]=QuestHandler.ACTIVE;
-                                MapHandler.setDemeter_sacrifice(true); //Makes it so that the trees are drawn and interactable
+                                /**
+                                Makes it so that the trees are drawn and interactable
+                                **/
+                                MapHandler.setDemeter_sacrifice(true); 
                                 completed=true;
                                 return result;
                             }

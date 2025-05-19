@@ -34,8 +34,10 @@ public class Dog extends NPC{
     private boolean captured=false;
     private QuestHandler qh=new QuestHandler();
     
-
-    public Dog(int x, int y) { //Constructor with location the entity should be drawn and dialogue
+    /**
+    Constructor with location the entity should be drawn and dialogue   
+    **/
+    public Dog(int x, int y) { 
         super("Dog",x, y);
         inventory = new ArrayList<SuperItem>();
         eg = new EntityGenerator();
@@ -47,14 +49,18 @@ public class Dog extends NPC{
         this.x = x;
         this.y = y;
     }
-
+     /**
+     Draw method that calls NPC draw method
+    **/
     @Override 
-    public void draw(Graphics2D g2d){ //Draw method that calls NPC draw method
+    public void draw(Graphics2D g2d){
         super.draw(g2d,name);
     }
-
+    /**
+     Method that dictates dialogue when players interact with this NPC
+    **/
     @Override
-    public void interact(Player player){ //Method that dictates dialogue when players interact with this NPC
+    public void interact(Player player){
         if(super.getDialogNumber()==0){
             super.setDialogues(check(player).split("/n"));
             player.getFrame().setQuestH(qh);
@@ -66,8 +72,11 @@ public class Dog extends NPC{
         super.speak(); //Changes NPC dialogue
         player.getFrame().getSoundHandler().playEffect(SoundHandler.DOG_SOUND);
     }
-
-    public String check(Player player){ //Method that returns current dialogue according to active quest list and removes inventory items when needed
+    /**
+     Method that returns current dialogue according to active quest list and removes inventory items when needed
+     and updates variable for when a dog meets the captured criteria
+    **/
+    public String check(Player player){ 
         String result="";
         qh=player.getFrame().getQuestH();
         result=before.get(0);
@@ -82,7 +91,7 @@ public class Dog extends NPC{
                                 result=after.get(0);
                                 player.collect(new Captured_Dog());
                                 dialognumber++;
-                                captured=true; //variable for when a dog meets the captured criteria
+                                captured=true; 
                                 return result;
                             }
                         }
@@ -92,9 +101,10 @@ public class Dog extends NPC{
         return result;
                   
     }
-
-
-    public boolean isCaptured() {//getter method for captured boolean
+    /**
+     getter method for captured boolean
+    **/
+    public boolean isCaptured() {
         return captured;
     }
     
