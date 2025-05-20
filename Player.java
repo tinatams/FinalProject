@@ -32,6 +32,7 @@ public class Player implements Collidable{
     private String skin;
 
     private MapHandler mapH;
+    private QuestHandler questH= new QuestHandler();
     private GameFrame frame;
     private boolean walkSound = true;
 
@@ -173,6 +174,16 @@ public class Player implements Collidable{
         if (cannotMove()){
             worldY = origY;
             worldX = origX;
+        }
+
+        for(SuperItem i:inventory){
+            if(i.getName().equals("KEY")){
+                qh=frame.getQuestH();
+                if(qh.states[15]==1){
+                    qh.states[15]=2;
+                    frame.setQuestH(qh);
+                }
+            }
         }
     }
 
