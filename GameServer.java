@@ -100,6 +100,7 @@ public class GameServer{
                 sockets.add(sock);
 
                 ClientRunnable cr = new ClientRunnable(sock, clientNum);
+                System.out.println("CLIENT " + clientNum +" joined");
                 clientNum++;
                 cr.startThread();
                 clients.add(cr);
@@ -275,7 +276,7 @@ public class GameServer{
         tempString += result;
         serverData = tempString;
         //System.out.println(newInteraction);
-        // System.out.println(serverData);
+        System.out.println(serverData);
     }
 
     /**
