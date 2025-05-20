@@ -37,7 +37,7 @@ public class Ore implements Interactable{
     private Rectangle hitBox, interactionBox;
 
     /**
-       Constructor where the entity is drawn and it's health bar
+       @param int x, int y Constructor where the entity is drawn and it's health bar
     **/
     public Ore(int x, int y){ 
         spriteW = GameFrame.SCALED;
@@ -69,7 +69,7 @@ public class Ore implements Interactable{
     }
 
     /**
-        calls the draw method for interactable
+        @param Graphics2D g2d calls the draw method for interactable
     **/
     @Override
     public void draw(Graphics2D g2d){ 
@@ -77,7 +77,7 @@ public class Ore implements Interactable{
     }
 
     /**
-        calls the collect method whenever health is zero and sound effects
+        @param Player player calls the collect method whenever health is zero and sound effects
     **/
     @Override
     public void interact(Player player) { 
@@ -95,7 +95,7 @@ public class Ore implements Interactable{
     }
     
     /**
-        returns where the item is (x-coordinates)
+        @return int returns where the item is (x-coordinates)
     **/
     @Override
     public int getWorldX() { //
@@ -103,7 +103,7 @@ public class Ore implements Interactable{
     }
 
     /**
-        returns where the item is (y-coordinates)
+       @return int  returns where the item is (y-coordinates)
     **/
     @Override
     public int getWorldY() { 
@@ -111,7 +111,7 @@ public class Ore implements Interactable{
     }
 
     /**
-        returns the width of the item
+        @return int returns the width of the item
     **/
     @Override
     public int getSpriteW() { 
@@ -119,7 +119,7 @@ public class Ore implements Interactable{
     }
 
     /**
-        returns the height of the item
+        @return int returns the height of the item
     **/
     @Override
     public int getSpriteH() { 
@@ -127,7 +127,7 @@ public class Ore implements Interactable{
     }
 
     /**
-        returns the hitbox dimensions
+       @return Rectangle returns the hitbox dimensions
     **/
     @Override
     public Rectangle getHitBox() { 
@@ -136,7 +136,7 @@ public class Ore implements Interactable{
 
 
     /**
-        returns the interaction box dimensions
+       @return Rectangle returns the interaction box dimensions
     **/
     @Override
     public Rectangle getInteractionBox() { 
@@ -144,7 +144,7 @@ public class Ore implements Interactable{
     }
 
     /**
-        gets health
+       @return int gets health
     **/
     public int getHealth() {
         return health;

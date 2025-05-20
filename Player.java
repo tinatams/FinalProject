@@ -48,7 +48,10 @@ public class Player implements Collidable{
 
     private ArrayList<SuperItem> inventory;
 
-    public Player(String s, int x, int y, GameFrame f){ //constructer based on frame
+    /**
+        @param String s, int x, int y, GameFrame f constructer based on frame
+    **/
+    public Player(String s, int x, int y, GameFrame f){ 
         frame = f;
         clientNumber = frame.getClientNumber();
 
@@ -74,8 +77,10 @@ public class Player implements Collidable{
         setUpSprites();
         hitBox = new Rectangle(worldX + 10, worldY + 30, spriteW-20, spriteH-30);
     }
-
-    public Player(String s, int x, int y, int cn){ //constructer based on client number
+    /**
+        @param String s, int x, int y, int cn constructer based on client number
+    **/
+    public Player(String s, int x, int y, int cn){ 
         clientNumber = cn;
 
         worldX = x;
@@ -100,8 +105,10 @@ public class Player implements Collidable{
         setUpSprites();
         hitBox = new Rectangle(worldX + 10, worldY + 30, spriteW-20, spriteH-30);
     }
-
-    public void setUpSprites(){ //sets up the player sprites
+    /**
+        sets up the player sprites
+    **/
+    public void setUpSprites(){ 
         try{
             spriteSheet = ImageIO.read(new File(String.format("./res/playerSkins/%s.png",skin)));
             int tileSize = 16;
@@ -128,8 +135,10 @@ public class Player implements Collidable{
         } catch (IOException e){
         }
     }
-
-    public void draw(Graphics2D g){ //draw for the needed asset based on player direction
+    /**
+        @param Graphics2D g draw for the needed asset based on player direction
+    **/
+    public void draw(Graphics2D g){ 
         g.drawImage(sprites[direction][version], worldX, worldY, spriteW, spriteH, null);
         
         if (direction != IDLE){counter++; 
@@ -141,12 +150,16 @@ public class Player implements Collidable{
             }
         }
     }
-
-    public void drawSpecific(Graphics2D g2d, int x, int y, int w, int h){ //draws the player in a specific area
+    /**
+        @param Graphics2D g2d, int x, int y, int w, int h draws the player in a specific area
+    **/
+    public void drawSpecific(Graphics2D g2d, int x, int y, int w, int h){ 
         g2d.drawImage(sprites[direction][version], x, y, w, h, null);
     }
-
-    public void update(){ //updates player position according to collisions and player actions
+    /**
+        updates player position according to collisions and player actions
+    **/
+    public void update(){ 
         int origX = worldX, origY = worldY;
         // System.out.println(String.format("%d, %d", worldX/48, worldY/48));
         switch (direction){
@@ -175,11 +188,10 @@ public class Player implements Collidable{
             worldY = origY;
             worldX = origX;
         }
-
-        for(SuperItem i:inventory){
+        qh=frame.getQuestH();
+        if(qh.states[15]==1){
+            for(SuperItem i:inventory){
             if(i.getName().equals("KEY")){
-                qh=frame.getQuestH();
-                if(qh.states[15]==1){
                     qh.states[15]=2;
                     frame.setQuestH(qh);
                 }
@@ -187,7 +199,10 @@ public class Player implements Collidable{
         }
     }
 
-    public void drawSelected(Graphics2D g){//draw selected sprites
+    /**
+        @param Graphics2D g draw selected sprites
+    **/
+    public void drawSelected(Graphics2D g){
         g.drawImage(sprites[direction][version], screenX, screenY, spriteW, spriteH, null);
 
         counter++; 
@@ -199,7 +214,10 @@ public class Player implements Collidable{
         }
     }
 
-    public boolean cannotMove(){//checks if it's colliding with an object or NPC if so it can't move
+    /**
+        @return boolean checks if it's colliding with an object or NPC if so it can't move
+    **/
+    public boolean cannotMove(){
         int worldXPos = hitBox.x/GameFrame.SCALED;
         int worldX2Pos = (hitBox.x + hitBox.width)/GameFrame.SCALED;
         int worldYPos = hitBox.y/GameFrame.SCALED;
@@ -233,7 +251,10 @@ public class Player implements Collidable{
         return false;
     } 
 
-    public void setDirection(int dir){ //setter for the direction
+    /**
+        @param int dir setter for the direction and where the player is facing
+    **/
+    public void setDirection(int dir){ 
         direction = dir;
         if (dir == IDLE){
             version = 0;
@@ -241,17 +262,24 @@ public class Player implements Collidable{
         }
     }
 
-    public void setOther(int dir, int v){ //setter for the direction and where the player is facing
+    /**
+        @param int x int y setter for the direction and where the player is facing
+    **/
+    public void setOther(int dir, int v){ 
         direction = dir;
         version = v;
     }
-
-    public void teleportPlayer(int x, int y){ //changes x and y when it encounters a teleporter
+    /**
+        @param int x int y changes x and y when it encounters a teleporter
+    **/
+    public void teleportPlayer(int x, int y){ 
         worldX = x;
         worldY = y;
     }
-
-    public void collect(SuperItem item){ //adds item to the player inventory if there's space
+    /**
+        @param item SuperItem adds item to the player inventory if there's space
+    **/
+    public void collect(SuperItem item){ //
         boolean itemCollected = false;
         SuperItem itemCollect = getItem(item.getName());
         if (itemCollect != null && itemCollect.isStackable()){
@@ -274,7 +302,10 @@ public class Player implements Collidable{
         
     }
 
-    public void discardItem(SuperItem item){ //removes item from inventory
+    /**
+        @param item SuperItem removes item from inventory
+    **/
+    public void discardItem(SuperItem item){ //
         SuperItem discardItem = getItem(item.getName());
         if (discardItem != null){
             if (discardItem.isStackable()){
@@ -291,7 +322,10 @@ public class Player implements Collidable{
         } 
     }
 
-    public SuperItem getItem(String name){ //gets item in player inventory
+    /**
+        @return SuperItem gets item in player inventory
+    **/
+    public SuperItem getItem(String name){ 
         for(SuperItem item : inventory){
             if ((item.getName()).equals(name)){
                 return item;
@@ -301,7 +335,10 @@ public class Player implements Collidable{
         return null;
     }
 
-    public ArrayList<SuperItem> getNotStackableItem(String name){   //gets non stackable in player inventory
+    /**
+        @return ArrayList<SuperItem> gets non stackable in player inventory
+    **/
+    public ArrayList<SuperItem> getNotStackableItem(String name){  
         ArrayList<SuperItem> notStackItems = new ArrayList<SuperItem>();
         for(SuperItem item : inventory){
             if ((item.getName()).equals(name)){
@@ -312,7 +349,10 @@ public class Player implements Collidable{
         return notStackItems;
     }
 
-    public boolean isColliding(Collidable c){ //checks if the player is colliding with anything
+    /**
+        @return boolean checks if the player is colliding with anything
+    **/
+    public boolean isColliding(Collidable c){ 
         Rectangle itemHitBox = c.getHitBox();
 
         if (c instanceof Interactable){
@@ -323,7 +363,10 @@ public class Player implements Collidable{
         return hitBox.intersects(itemHitBox);
     }
 
-    public Interactable getInteractable(ArrayList<Interactable> interactables) { //gets what the player is interacting with
+    /**
+        @return Interactable gets what the player is interacting with
+    **/
+    public Interactable getInteractable(ArrayList<Interactable> interactables) { 
         for (Interactable other: interactables){
             if (isColliding(other))
                 return other;
@@ -332,7 +375,10 @@ public class Player implements Collidable{
         return null;
     }
 
-    public NPC getNPC(ArrayList<NPC> interactables) { //gets what the player is interacting with
+    /**
+        @return NPC gets what the player is interacting with
+    **/
+    public NPC getNPC(ArrayList<NPC> interactables) {
         for (NPC other: interactables){
             if (isColliding(other))
                 return other;
@@ -341,7 +387,10 @@ public class Player implements Collidable{
         return null;
     }
 
-    public void interact(){ //based on what it interacts with the player it calls the interactable interact method
+    /**
+        based on what it interacts with the player it calls the interactable interact method
+    **/
+    public void interact(){ 
         Interactable interactionObj = getInteractable(mapH.getInteractables());
         NPC interactionNPC = getNPC(mapH.getNPCs());
         if (interactionObj != null) interactionObj.interact(this);
@@ -351,64 +400,107 @@ public class Player implements Collidable{
         }
     }
 
-    public ArrayList<SuperItem> getInventory(){ //gets inventory
+    /**
+        @return ArrayList<SuperItem> gets inventory
+    **/
+    public ArrayList<SuperItem> getInventory(){ 
         return inventory;
     }
 
+    /**
+        @return int gets sprite width
+    **/
     @Override
-    public int getSpriteW() { //gets sprite width
+    public int getSpriteW() {
         return spriteW;
     }
 
+    /**
+        @return gets sprite height
+    **/
     @Override
-    public int getSpriteH() {  //gets sprite height
+    public int getSpriteH() { 
         return spriteH;
     }
+
+    /**
+        @return int gets sprite x-coordinates
+    **/
     @Override
-    public int getWorldX() {  //gets sprite x-coordinates
+    public int getWorldX() { 
         return worldX;
     }
 
+    /**
+        @return int gets sprite y-coordinates
+    **/
     @Override
-    public int getWorldY() { //gets sprite y-coordinates
+    public int getWorldY() { 
         return worldY;
     }
 
+    /**
+       @return Rectangle gets hitbox
+    **/
     @Override
-    public Rectangle getHitBox() { //gets hitbox
+    public Rectangle getHitBox() { 
         return hitBox;
     }
     
-    public int getDirection() { //gets direction
+    /**
+        @return gets direction
+    **/
+    public int getDirection() {
         return direction;
     }
 
-    public String getSkin(){ //gets skin
+    /**
+        @return String gets skin
+    **/
+    public String getSkin(){
         return skin;
     }
 
-    public int getVer(){ //gets version
+    /**
+        @return int gets version
+    **/
+    public int getVer(){ 
         return  version;
     }
 
-    public void setMapHandler(MapHandler mh){ //setter for maphandler
+    /**
+        @param mh setter for maphandler
+    **/
+    public void setMapHandler(MapHandler mh){ 
         mapH = mh;
     }
 
-    public NPC getNPCinteracting(){ //gets which NPC player is currently interacting with
+    /**
+        @return NPC gets which NPC player is currently interacting with
+    **/
+    public NPC getNPCinteracting(){ 
         NPC interactionNPC = getNPC(mapH.getNPCs());
         return interactionNPC;
     }
 
-    public int getCliNum(){ //gets client number
+    /**
+        @return int gets client number
+    **/
+    public int getCliNum(){ 
         return clientNumber;
     }
 
-    public GameFrame getFrame(){ //gets frame
+    /**
+        @return GameFrame gets frame
+    **/
+    public GameFrame getFrame(){ 
         return frame;
     }
 
-    public MapHandler getMapH() { //gets mapHandler
+    /**
+        @return MapHandler gets mapHandler
+    **/
+    public MapHandler getMapH() { 
         return mapH;
     }
 }   

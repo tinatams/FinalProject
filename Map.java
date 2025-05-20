@@ -1,3 +1,26 @@
+/**
+    Map Class in charge of the collidables, decorations and borders needed to be drawn. It also handles the 
+    interactable items.
+ 
+	@author Martina Amale M. Llamas (242648); Zoe Angeli G. Uy (246707)
+	@version May 19, 2025
+	
+	I have not discussed the Java language code in my program 
+	with anyone other than my instructor or the teaching assistants 
+	assigned to this course.
+
+	I have not used Java language code obtained from another student, 
+	or any other unauthorized source, either modified or unmodified.
+
+	If any Java language code or documentation used in my program 
+	was obtained from another source, such as a textbook or website, 
+	that has been clearly noted with a proper citation in the comments 
+	of my program.
+
+    
+
+**/
+
 import java.io.*;
 import java.util.*;
 
@@ -20,7 +43,9 @@ public class Map{
     private ArrayList<NPC> NPCs;
 
     private EntityGenerator eg;
-
+    /**
+        @param String n Constructor for a map per map name given
+    **/
     public Map(String n){
         baseTileMap = new int[maxColumn][maxRow];
         decoTileMap = new int[maxColumn][maxRow];
@@ -38,7 +63,10 @@ public class Map{
 
         eg = new EntityGenerator();
     }
-
+    
+    /**
+        calls the load method for all the assests needed like decoration and collisions.
+    **/
     public void loadMap(){
         load(decoTileMap, "deco");
         load(collisionMap, "collisions");
@@ -48,6 +76,9 @@ public class Map{
         loadInteract();
     }
 
+    /**
+        @param int[][] mapArray, String version. loads the map and reads every line
+    **/
     protected void load(int[][] mapArray, String version){
         int row = 0, col = 0;
         try {
@@ -73,6 +104,9 @@ public class Map{
         }
     }
 
+    /**
+        sets up all the different assets for the map.
+    **/
     public void setUpMaps(){
         setUpMap(baseTileMap);
         setUpMap(decoTileMap);
@@ -80,6 +114,9 @@ public class Map{
         setUpMap(collidablesMap);
     }
 
+    /**
+        @param int[][] specificMap sets up the array for the specific map
+    **/
     public void setUpMap(int[][] specificMap){
         int originalCol = 0, originalRow = 0;
         while (originalCol < maxColumn && originalRow < maxRow){
@@ -99,6 +136,9 @@ public class Map{
         }
     }
 
+    /**
+        loads the Teleporters by reading from the txt file
+    **/
     protected void loadTeleporters() {
         try {
             File map = new File(String.format("./res/maps/%s/teleporters.txt",mapName));
@@ -134,6 +174,9 @@ public class Map{
         }
     }
 
+    /**
+        loads the Interactables by reading from the txt file
+    **/
     protected void loadInteract() {
         try {
             File map = new File(String.format("./res/maps/%s/interact.txt", this.mapName));
@@ -164,6 +207,9 @@ public class Map{
         }
     }
 
+    /**
+        loads the NPCs by reading from the txt file
+    **/
     private void loadNPCs() {
         try {
             File map = new File(String.format("./res/maps/%s/NPCs.txt",mapName));
@@ -222,38 +268,65 @@ public class Map{
         }
     }
 
+    /**
+        @return int[][] getter for basemap
+    **/
     public int[][] getBaseMap(){
         return baseTileMap;
     }
 
+    /**
+        @return int[][] getter for decorations
+    **/
     public int[][] getDecoMap(){
         return decoTileMap;
     }
 
+    /**
+         @return int[][] getter for collitions
+    **/
     public int[][] getColMap(){
         return collisionMap;
     }
 
+    /**
+        @return int[][] getter for collidables
+    **/
     public int[][] getColAbleMap(){
         return collidablesMap;
     }
 
+    /**
+        @param ArrayList<Teleporter> getter for Teleporters
+    **/
     public ArrayList<Teleporter> getTeleporters(){
         return teleporters;
     }
 
+    /**
+        @return ArrayList<Interactable> getter for Interactables
+    **/
     public ArrayList<Interactable> getInteractables() {
         return interacts;
     }
 
+    /**
+        @return ArrayList<NPC> getter for NPC 
+    **/
     public ArrayList<NPC> getNPCs(){
         return NPCs;
     }
 
+    /**
+        @return int getter for height
+    **/
     public int getHeight() {
         return mapHeight;
     }
 
+    /**
+        @return int getter for width
+    **/
     public int getWidth() {
         return mapWidth;
     }

@@ -121,7 +121,7 @@ public class GameCanvas extends JComponent{
         selectedPlayer.draw(g2d);
         mapH.drawColAbles(g2d);
 
-        if (mapH.getCurrentMap() != MapHandler.LABYRINTH){
+        if (mapH.getCurrentMap() == MapHandler.LABYRINTH){
             Area rectangle = new Area(new Rectangle2D.Double(0, 0, mapH.getMapWidth()*GameFrame.SCALED, mapH.getMapHeight()*GameFrame.SCALED));
             Area circleSpot = new Area(new Ellipse2D.Double(selectedPlayer.getWorldX()-2*GameFrame.SCALED, selectedPlayer.getWorldY()-2*GameFrame.SCALED, 5*GameFrame.SCALED, 5*GameFrame.SCALED));
 
@@ -129,6 +129,7 @@ public class GameCanvas extends JComponent{
 
             g2d.setColor(new Color(0,0,0,240));
             g2d.fill(rectangle);
+            
         }
         g2d.setTransform(reset);
 
