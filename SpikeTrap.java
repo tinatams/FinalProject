@@ -97,7 +97,7 @@ public class SpikeTrap extends Teleporter{
             };
 
             warnTime.schedule(warning, randomInterval - 1000);
-            System.out.println("scheduled");
+            //System.out.println("scheduled");
         }
     }
 

@@ -113,7 +113,7 @@ public class Hermes extends NPC{
         SuperItem itemCollect = getItem(item.getName());
         if (itemCollect != null && itemCollect.isStackable()){
             itemCollect.setAmount(itemCollect.getAmount() + 1);
-            System.out.println("collected "+ itemCollect.getName());
+            //.out.println("collected "+ itemCollect.getName());
         } else {
             if (inventory.size() < 70){
                 inventory.add(item);

@@ -282,10 +282,10 @@ public class Player implements Collidable{
                 if (discardItem.getAmount() <= 0){
                     inventory.remove(discardItem);
                 }
-                System.out.println("removed stackable item" + item.getName());
+                //System.out.println("removed stackable item" + item.getName());
             } else {
                 inventory.remove(discardItem);
-                System.out.println("removed non-stackable item" + item.getName());
+                //System.out.println("removed non-stackable item" + item.getName());
                 item.setOwner(null);
             }
         } 

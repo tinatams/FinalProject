@@ -28,12 +28,18 @@ import javax.imageio.*;
 public class WoodItem extends SuperItem{
     public static final String ITEMNAME = "WOOD";
 
-    public WoodItem (int x, int y){ //Constructor determines the size of the entity drawn in inventory and whether it is stackable
+    /**
+      Constructor determines the size of the entity drawn in inventory and whether it is stackable
+    **/
+    public WoodItem (int x, int y){
         super(ITEMNAME,x, y, 16, 16);
         super.hitBox = new Rectangle(worldX ,worldY ,spriteH, spriteW);
         // make this a set hitbox
     }
 
+    /**
+      loads the png image to be drawn
+    **/
     @Override
     public void loadImage() { //reads what png needs to be drawn
         try{

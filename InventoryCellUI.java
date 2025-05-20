@@ -185,10 +185,10 @@ public class InventoryCellUI implements UIButton{
                     if (owner.equals("Player")){
                         ui.getSelectedPlayer().discardItem(itemToTransfer);
                         ((Hermes) ui.getMapHandler().getNPC(Hermes.name)).collect(itemToTransfer);
-                        System.out.println("swapped P TO H");
+                        //System.out.println("swapped P TO H");
                     } else if (owner.equals(Hermes.name)){
                         ((Hermes) ui.getMapHandler().getNPC(Hermes.name)).discardItem(itemToTransfer);
-                        System.out.println("swapped H TO P");
+                        //System.out.println("swapped H TO P");
                         ui.getSelectedPlayer().collect(itemToTransfer);
                     }
                 }

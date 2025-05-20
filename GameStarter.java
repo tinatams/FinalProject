@@ -84,7 +84,9 @@ public class GameStarter{
             //GETS CLIENT NUMBER
             //FIRST THING THAT THE SERVER SENDS
             clientNumber = Integer.parseInt(dataIn.readUTF()); 
-            //setUpFrame();
+            if (clientNumber > 1){
+                System.out.println("Server is full");
+            }
         } catch (IOException e) {
             connected = false;
             System.out.println("IOException from connectToServer() method");
@@ -105,6 +107,7 @@ public class GameStarter{
         System.out.println("starting game up");
         menuFrame.closeMenu();
         frame = new GameFrame(serverData, clientNumber, skin);
+        if (clientNumber > 1) frame.gameState = GameFrame.END_STATE;
         frame.setUpGUI();
 
         WriteToServer wts = new WriteToServer();
