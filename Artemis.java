@@ -138,7 +138,7 @@ public class Artemis extends NPC{
                                 result=after.get(1);
                                 completed=true;
                                 qh.states[5]=QuestHandler.COMPLETED;
-                                qh.states[6]=QuestHandler.ACTIVE;
+                                qh.states[9]=QuestHandler.ACTIVE;
                                 player.collect(new MeatItem());
                                 completed=true;
                                 return result;
