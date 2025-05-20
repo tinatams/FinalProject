@@ -27,13 +27,19 @@ import javax.imageio.*;
 public class PickaxeItem extends SuperItem {
     public static final String ITEMNAME = "PICKAXE";
 
-    public PickaxeItem(){ //Constructor determines the size of the entity drawn in inventory and whether it is stackable
+    /**
+       Constructor determines the size of the entity drawn in inventory and whether it is stackable
+    **/
+    public PickaxeItem(){ //
         super(ITEMNAME,0, 0, 16, 16);
         setStackable(false);
     }
 
+    /**
+       reads what png needs to be drawn
+    **/
     @Override
-    public void loadImage() { //reads what png needs to be drawn
+    public void loadImage() { 
         try{
             sprite = ImageIO.read(new File("./res/items/Pickaxe.png"));
         } catch (IOException e){
