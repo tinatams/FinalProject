@@ -37,6 +37,12 @@ public class UITextBox implements UIButton {
     private boolean highlighted,mousePressed,mouseOver, selected;
     private Rectangle bounds;
 
+    /**
+        @param xPos xPosition of the textbox
+        @param yPos yPosition of the textbox
+
+        initializes other attributes
+    **/
     public UITextBox(int xPos, int yPos){ //constructor
 
         x = xPos;
@@ -64,6 +70,10 @@ public class UITextBox implements UIButton {
         bounds = new Rectangle(x, y, 7*GameFrame.SCALED, 1*GameFrame.SCALED);
     }
 
+    /**
+        @param g2d object used to draw
+        draws the textbox and the text inside
+    **/
     @Override
     public void draw(Graphics2D g2d) { //draws the text box and the text inside
         BufferedImage toDraw = containerIMG;
@@ -78,6 +88,9 @@ public class UITextBox implements UIButton {
         g2d.drawString(contents, x + 4 * GameFrame.SCALER, y + 1 * GameFrame.SCALED - 4 * GameFrame.SCALER);
     }
 
+    /**
+      updates the assests based on mouse action
+    **/
     @Override
     public void update(){ //updates the assets based on mouse action
         if (mouseOver || mousePressed || selected){
@@ -87,50 +100,80 @@ public class UITextBox implements UIButton {
         }
     }
 
+    /**
+        @return mousePressed
+    **/
     @Override
     public boolean isMousePressed() { //getter for mousePressed
         return mousePressed;
     }
 
+    /**
+       setter for mousePressed
+    **/
     @Override
     public void setMousePressed(boolean mousePressed) { //setter for mousePressed
         this.mousePressed = mousePressed;
     }
 
+    /**
+      @return mouseOver
+    **/
     @Override
     public boolean isMouseOver() { //getter for mouseOver
         return mouseOver;
     }
 
+    /**
+      setter for mouse over
+    **/
     @Override
     public void setMouseOver(boolean mouseOver) { //setter for mouseOver
         this.mouseOver = mouseOver;
     }
 
+    /**
+      @return the bounds dimensions
+    **/
     @Override
     public Rectangle getBounds() { //getter for bounds
         return bounds;
     }
 
+    /**
+       action when textbox is filled, changes the status of the selected box. 
+    **/
     @Override
     public void clicked() {//changes the status of selected
         selected = !selected;
     }
 
+    /**
+     * resets for the mouse actions
+    **/
     @Override
     public void resetBools(){ //reset for the mouse actions
         mousePressed = false;
         mouseOver = false;
     }
 
+    /**
+      @return selected 
+    **/
     public boolean isSelected() { //getter for selected
         return selected;
     }
 
+    /**
+      setter for selected
+    **/
     public void setSelected(boolean selected) {
         this.selected = selected; //setter for selected
     }
 
+    /**
+     * based on the character typed by the player and types it into the textbox
+    **/
     public void type(KeyEvent e) { //based on the character typed by the player and types it into the UI
         int code = e.getKeyCode();
 
@@ -143,6 +186,9 @@ public class UITextBox implements UIButton {
         }
     }
 
+    /**
+     * @return contents of the textbox
+    **/
     public String getContents() { //getter for contents of text box
         return contents;
     }

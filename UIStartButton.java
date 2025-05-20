@@ -37,6 +37,14 @@ public class UIStartButton implements UIButton {
     private boolean mousePressed,mouseOver;
     private Rectangle bounds;
     
+    /**
+     * @param xPos x position of button
+     * @param yPos y position of button
+     * @param gs GameStarter object
+     * @param mh MenuHandler object
+     * 
+     * initializes the other attributes, and gets images
+    **/
     public UIStartButton(int xPos, int yPos, GameStarter gs, MenuHandler mh){//constructor
         gameStarter = gs;
         menuHandler = mh;
@@ -62,11 +70,17 @@ public class UIStartButton implements UIButton {
         bounds = new Rectangle(x, y, 5 * GameFrame.SCALED, 2*GameFrame.SCALED);
     }
 
+    /**
+     * draws chosen assets
+    **/
     @Override
     public void draw(Graphics2D g2d) { //draws the chosen assets
         g2d.drawImage(sprites[indexNum], x, y, 5 * GameFrame.SCALED, 2*GameFrame.SCALED, null);
     }
 
+    /**
+     * updates the assets based on mouse action
+    **/
     @Override
     public void update() {  //updates the assets based on mouse action
         indexNum = 0;
@@ -80,7 +94,9 @@ public class UIStartButton implements UIButton {
         }
     }
 
-
+    /**
+     * @return mousePressed
+    **/
     @Override
     public boolean isMousePressed() { //getter for mousePressed
         return mousePressed;

@@ -276,7 +276,7 @@ public class GameServer{
         tempString += result;
         serverData = tempString;
         //System.out.println(newInteraction);
-        System.out.println(serverData);
+        //System.out.println(serverData);
     }
 
     /**
