@@ -32,7 +32,7 @@ public class Player implements Collidable{
     private String skin;
 
     private MapHandler mapH;
-    private QuestHandler questH= new QuestHandler();
+    private QuestHandler qh= new QuestHandler();
     private GameFrame frame;
     private boolean walkSound = true;
 
